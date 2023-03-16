@@ -1,0 +1,74 @@
+[
+  {
+    "ID_Hoa": 1,
+    "Image_Hoa": "https://hoahanoi.com.vn/wp-content/uploads/2020/08/b%C3%B3-hoa-h%E1%BB%93ng-%C4%91%E1%BB%8F-baby-e1598241329965.jpg",
+    "TenHoa": "Hoa Hồng",
+    "LoaiHoa": "Hoa cắt cành",
+    "Gia": 50000,
+    "MoTa": "Hoa hồng đỏ đẹp",
+    "HangDanhGia": 4,
+    "SoLuongDanhGia": 10,
+    "IsDelete": false,
+    "ID_DanhMuc": "01"
+  },
+  {
+    "ID_Hoa": 2,
+    "Image_Hoa": "https://hoatuoi555.com/files/assets/bo-hoa-cuc-tana-yeu-thuong.jpg",
+    "TenHoa": "Hoa Cúc",
+    "LoaiHoa": "Hoa cắt cành",
+    "Gia": 30000,
+    "MoTa": "Hoa cúc trắng",
+    "HangDanhGia": 3,
+    "SoLuongDanhGia": 5,
+    "IsDelete": false,
+    "ID_DanhMuc": "01"
+  },
+  {
+    "ID_Hoa": 3,
+    "Image_Hoa": "https://sagogifts.vn/wp-content/uploads/z2857348413527_bad08fdc902e23c7a5301f2e200da042.jpg",
+    "TenHoa": "Hoa Lan",
+    "LoaiHoa": "Hoa cắt cành",
+    "Gia": 80000,
+    "MoTa": "Hoa lan đẹp",
+    "HangDanhGia": 5,
+    "SoLuongDanhGia": 15,
+    "IsDelete": false,
+    "ID_DanhMuc": "01"
+  },
+  {
+    "ID_Hoa": 4,
+    "Image_Hoa": "https://dienhoatuoihanoi.com/wp-content/uploads/2019/07/hoa-hue-2.jpg",
+    "TenHoa": "Hoa Huệ",
+    "LoaiHoa": "Hoa cắt cành",
+    "Gia": 40000,
+    "MoTa": "Hoa huệ tím",
+    "HangDanhGia": 2,
+    "SoLuongDanhGia": 3,
+    "IsDelete": false,
+    "ID_DanhMuc": "01"
+  },
+  {
+    "ID_Hoa": 5,
+    "Image_Hoa": "http://hoatuoi360.vn/upload/hinhanh/bo-hoa-sen-hong-su-thanh-tao346.jpg",
+    "TenHoa": "Hoa Sen",
+    "LoaiHoa": "Hoa cắt cành",
+    "Gia": 20000,
+    "MoTa": "Hoa sen trắng",
+    "HangDanhGia": 4,
+    "SoLuongDanhGia": 8,
+    "IsDelete": false,
+    "ID_DanhMuc": "01"
+  },
+  {
+    "ID_Hoa": 6,
+    "Image_Hoa": "https://img.mayflower.vn/2019/08/bo-hoa-gian-di.jpg",
+    "TenHoa": "Hoa Nhài",
+    "LoaiHoa": "Hoa cắt cành",
+    "Gia": 25000,
+    "MoTa": "Hoa nhài trắng",
+    "HangDanhGia": 3,
+    "SoLuongDanhGia": 6,
+    "IsDelete": false,
+    "ID_DanhMuc": "01"
+  }
+]
