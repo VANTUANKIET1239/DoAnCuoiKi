@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "483645085047",
+    "project_id": "doanbanhoa",
+    "storage_bucket": "doanbanhoa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483645085047:android:a816a092fc2419dd7afd72",
+        "android_client_info": {
+          "package_name": "com.example.doanbanhoa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483645085047-snu3i36f3fv0k2g11nqaahdf9nhivhtj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChlZQHeOg4RfXFiSTwPjKTJGiSbvsvApY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483645085047-snu3i36f3fv0k2g11nqaahdf9nhivhtj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

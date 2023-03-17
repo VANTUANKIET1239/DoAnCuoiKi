@@ -39,7 +39,7 @@
             android:layout_marginTop="10dp"
             />-->
         <EditText
-            android:id="@+id/Email_dn"
+            android:id="@+id/Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User Name"
@@ -48,7 +48,7 @@
             android:background="@drawable/editdesign"
             />
         <EditText
-            android:id="@+id/matkhau_dn"
+            android:id="@+id/matkhau"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -57,25 +57,33 @@
             android:background="@drawable/editdesign"
             android:inputType="textPassword"
             />
-
+        <EditText
+            android:id="@+id/xacnhanmatkhau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/editdesign"
+            android:inputType="textPassword"
+            />
         <Button
-            android:id="@+id/dangnhap"
+            android:id="@+id/dangky"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Đăng Nhập"
+            android:text="Đăng Ký"
             android:textAllCaps="false"
-            android:layout_gravity="right"
+            android:layout_gravity ="left"
             android:background="@drawable/btndesign"
             android:layout_marginTop="20dp"
             />
-         <TextView
-             android:id="@+id/regis"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center"
-             android:text="Don't have an Account? Register"
-             android:layout_marginTop="20dp"
-             />
+       <!-- <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Don't have an Account? Register"
+            android:layout_marginTop="20dp"
+            />-->
 
     </LinearLayout>
 
