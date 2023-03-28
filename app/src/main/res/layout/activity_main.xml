@@ -8,30 +8,82 @@
     android:orientation="vertical"
     >
     <!--để carousel -->
+<!--<androidx.recyclerview.widget.RecyclerView-->
+<!--    android:id="@+id/recle"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:paddingBottom="8dp"-->
+<!--    android:paddingTop="8dp"-->
+<!--    >-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
 
+        <EditText
+            android:id="@+id/Email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/editdesign"
+            android:hint="User Name"
+            android:text="vkt@gmail.com"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/dangnhap"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textAllCaps="false"
+            android:layout_gravity="right"
+            android:background="@drawable/ic_action_name"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Add your carousel views here -->
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/image_slider"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             app:iss_auto_cycle="true"
+            app:iss_delay="0"
             app:iss_period="3000"
             app:iss_placeholder="@color/black"
-            app:iss_delay="0"
-            app:iss_corner_radius="20"
 
             />
-        <!--để carousel -->
-        <GridView
+    </LinearLayout>
+<!--</androidx.recyclerview.widget.RecyclerView>-->
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="530dp"
+        android:background="@color/white"
+        android:numColumns="auto_fit"
+        tools:context=".MainActivity">
+
+    </GridView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".MainActivity"
-            android:id="@+id/gridview"
-            android:background="@color/purple_200"
-            android:numColumns="auto_fit"
-            android:padding="15px">
+            android:layout_height="wrap_content"></com.google.android.material.bottomnavigation.BottomNavigationView>
+    </LinearLayout>
 
-        </GridView>
-
-
+</LinearLayout>
 
 </LinearLayout>

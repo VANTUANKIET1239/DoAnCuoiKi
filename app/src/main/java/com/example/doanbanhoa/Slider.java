@@ -1,9 +1,21 @@
 package com.example.doanbanhoa;
 
-public class Slider {
-    private String imageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 
-    public Slider(String imageSlider) {
+import java.util.List;
+
+public class Slider {
+    private List<SlideModel> imageSlider;
+
+    public Slider(List<SlideModel> imageSlider) {
+        this.imageSlider = imageSlider;
+    }
+
+    public List<SlideModel> getImageSlider() {
+        return imageSlider;
+    }
+
+    public void setImageSlider(List<SlideModel> imageSlider) {
         this.imageSlider = imageSlider;
     }
 }
