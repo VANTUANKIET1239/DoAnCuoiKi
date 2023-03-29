@@ -5,10 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".TaiKhoanFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+
+       >
+      <ImageView
+          android:layout_width="150dp"
+          android:layout_height="150dp"
+          android:background="@drawable/imgcir"
+          android:layout_gravity="center"
+          />
+      <ListView
+             android:id="@+id/optiontaikhoan"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+   </LinearLayout>
 
 </FrameLayout>
