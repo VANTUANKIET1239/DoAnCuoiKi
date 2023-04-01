@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -37,6 +40,9 @@ public class TrangChuFragment extends Fragment {
     GridView gridView;
     //
     ImageSlider imgslider;
+    ArrayAdapter<String> itemthutugia;
+    String[] itemsthutu = {"Gía từ cao đến thấp", "Gía từ thấp đến cao"};
+    AutoCompleteTextView autocomple;
     public TrangChuFragment() {
         // Required empty public constructor
     }
@@ -45,21 +51,42 @@ public class TrangChuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         imgslider = view.findViewById(R.id.image_slider);
+        gridView = view.findViewById(R.id.gridview);
         readJson();
         List<SlideModel> im = new ArrayList<>();
+
         im.add(new SlideModel("https://picsum.photos/id/237/200/300", ScaleTypes.FIT));
         im.add(new SlideModel("https://picsum.photos/seed/picsum/200/300",ScaleTypes.FIT));
         im.add(new SlideModel("https://picsum.photos/200/300?grayscale",ScaleTypes.FIT));
         im.add(new SlideModel("https://picsum.photos/200/300/?blur",ScaleTypes.FIT));
         im.add(new SlideModel("https://picsum.photos/200/300.jpg",ScaleTypes.FIT));
         imgslider.setImageList(im,ScaleTypes.FIT );
+        autocomple = view.findViewById(R.id.thutugia);
+        itemthutugia = new ArrayAdapter<>(getContext(),R.layout.listitem_thutugia,itemsthutu);
+        autocomple.setAdapter(itemthutugia);
+        autocomple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // từ cao đến thấp
+                if(position == 0){
+                   HoaData.xapxepcaothap(true);
+                    HoaAdapter adapter = new HoaAdapter(HoaData.GeneratePhotoData(),getContext());
+                    gridView.setAdapter(adapter);
+                }
+                else {
+                    HoaData.xapxepcaothap(false);
+                    HoaAdapter adapter = new HoaAdapter(HoaData.GeneratePhotoData(),getContext());
+                    gridView.setAdapter(adapter);
+                }
+            }
+        });
 
 
-        gridView = view.findViewById(R.id.gridview);
     //    List<Hoa> listHoa = new ArrayList<>();
         HoaAdapter adapter = new HoaAdapter(HoaData.GeneratePhotoData(),getContext());
         gridView.setAdapter(adapter);
     }
+
 
     public static TrangChuFragment newInstance() {
         TrangChuFragment fragment = new TrangChuFragment();

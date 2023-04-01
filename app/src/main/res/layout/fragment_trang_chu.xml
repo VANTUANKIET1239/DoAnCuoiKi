@@ -11,38 +11,38 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            >-->
 
-            <EditText
-                android:id="@+id/Email"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/editdesign"
-                android:hint="Search"
-                android:textSize="12sp" />
+<!--            <EditText-->
+<!--                android:id="@+id/Email"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:background="@drawable/editdesign"-->
+<!--                android:hint="Search"-->
+<!--                android:textSize="12sp" />-->
 
-            <Button
-                android:id="@+id/dangnhap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:layout_gravity="right"
+<!--            <Button-->
+<!--                android:id="@+id/dangnhap"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:layout_gravity="right"-->
 
-                android:layout_marginTop="20dp"
-                />
-        </LinearLayout>
+<!--                android:layout_marginTop="20dp"-->
+<!--                />-->
+<!--        </LinearLayout>-->
 
 
         <!-- Add your carousel views here -->
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/image_slider"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="125dp"
             app:iss_auto_cycle="true"
             app:iss_delay="0"
             app:iss_period="3000"
@@ -54,6 +54,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_margin="12dp"
+                android:textColorHint="@color/black"
+                android:hint="Thứ Tự Gía"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                >
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/thutugia"
+                    android:inputType="none"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
             <GridView
                 android:id="@+id/gridview"
                 android:layout_width="match_parent"
@@ -61,6 +77,7 @@
                 android:background="@color/white"
                 android:numColumns="auto_fit"
                 tools:context=".MainActivity">
+
 
             </GridView>
         </LinearLayout>

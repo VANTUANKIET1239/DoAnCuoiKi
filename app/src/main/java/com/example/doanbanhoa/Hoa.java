@@ -23,6 +23,31 @@ public class Hoa {
         IsDelete = isDelete;
         this.ID_DanhMuc = ID_DanhMuc;
     }
+    public Hoa(Hoa k) {
+        this.ID_Hoa = k.ID_Hoa;
+        Image_Hoa = k.Image_Hoa;
+        TenHoa = k.getTenHoa();
+        LoaiHoa = k.LoaiHoa;
+        Gia = k.getGia();
+        MoTa = k.getMoTa();
+        HangDanhGia = k.getHangDanhGia();
+        SoLuongDanhGia = k.getSoLuongDanhGia();
+        IsDelete = k.isDelete();
+        this.ID_DanhMuc = k.getID_DanhMuc();
+    }
+
+    public void LayHoa(Hoa k) {
+        this.ID_Hoa = k.ID_Hoa;
+        this.Image_Hoa = k.Image_Hoa;
+        this.TenHoa = k.getTenHoa();
+        this.LoaiHoa = k.LoaiHoa;
+        this.Gia = k.getGia();
+        this. MoTa = k.getMoTa();
+        this.HangDanhGia = k.getHangDanhGia();
+        this.SoLuongDanhGia = k.getSoLuongDanhGia();
+        this.IsDelete = k.isDelete();
+        this.ID_DanhMuc = k.getID_DanhMuc();
+    }
     public Hoa() {
         this.ID_Hoa = 0;
         Image_Hoa = "";

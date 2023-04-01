@@ -5,22 +5,53 @@
     android:layout_height="match_parent"
     tools:context=".TaiKhoanFragment">
 
-   <LinearLayout
+   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+       android:id="@+id/pullToRefresh"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-
-       >
-      <ImageView
-          android:layout_width="150dp"
-          android:layout_height="150dp"
-          android:background="@drawable/imgcir"
-          android:layout_gravity="center"
-          />
-      <ListView
-             android:id="@+id/optiontaikhoan"
+       android:layout_height="match_parent">
+      <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent" />
-   </LinearLayout>
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+
+
+          >
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/imgcir"
+                android:id="@+id/anhtaikhoan"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                />
+            <TextView
+                android:id="@+id/Username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="van tuan kiet"
+                android:layout_gravity="center"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
+                >   </TextView>
+
+         </LinearLayout>
+
+
+
+         <ListView
+             android:id="@+id/optiontaikhoan"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" />
+      </LinearLayout>
+
+   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </FrameLayout>

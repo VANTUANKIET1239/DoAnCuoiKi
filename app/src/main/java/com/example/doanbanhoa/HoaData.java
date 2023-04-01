@@ -21,6 +21,31 @@ public class HoaData {
         this.HoaDT = k;
     }
 
+    public static void xapxepcaothap(boolean k){
+        if(k == true){
+            for(int i = 0; i < HoaDT.size() - 1; i++){
+                for( int j = i + 1; j < HoaDT.size(); j++){
+                    if(HoaDT.get(i).getGia() < HoaDT.get(j).getGia()){
+                        Hoa tam = new Hoa(HoaDT.get(i));
+                        HoaDT.get(i).LayHoa(HoaDT.get(j));
+                        HoaDT.get(j).LayHoa(tam);
+                    }
+                }
+            }
+        }
+        else {
+            for(int i = 0; i < HoaDT.size() - 1; i++){
+                for( int j = i + 1; j < HoaDT.size(); j++){
+                    if(HoaDT.get(i).getGia() > HoaDT.get(j).getGia()){
+                        Hoa tam = new Hoa(HoaDT.get(i));
+                        HoaDT.get(i).LayHoa(HoaDT.get(j));
+                        HoaDT.get(j).LayHoa(tam);
+                    }
+                }
+            }
+        }
+
+    }
     public static void AddHoa(Hoa k){
         HoaDT.add(k);
     }
