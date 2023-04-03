@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mViewpaper = findViewById(R.id.view_pager);
         fragmentArrayList.add(new TrangChuFragment());
         fragmentArrayList.add(new TaiKhoanFragment());
+        fragmentArrayList.add(new GioHangFragment());
         mViewpaper.setAdapter(setupviewpager(fragmentArrayList));
         mViewpaper.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0: navigationView.setSelectedItemId(R.id.trangchu);break;
                     case 1: navigationView.setSelectedItemId(R.id.taikhoan);break;
-
+                    case 2: navigationView.setSelectedItemId(R.id.giohang); break;
                 }
 
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                switch (item.getItemId()){
                    case R.id.trangchu: mViewpaper.setCurrentItem(0); break;
                    case R.id.taikhoan: mViewpaper.setCurrentItem(1);break;
+                   case R.id.giohang:mViewpaper.setCurrentItem(2); break;
 
                }
                return true;

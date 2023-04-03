@@ -93,8 +93,8 @@ public class TaiKhoanFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
-                    case 0: break;
-                    case 1: startActivity(new Intent(getContext(),HoSoNguoiDungActivity.class));
+                    case 0: startActivity(new Intent(getContext(),DiaChiActivity.class));break;
+                    case 1: startActivity(new Intent(getContext(),HoSoNguoiDungActivity.class));break;
                 }
             }
         });
