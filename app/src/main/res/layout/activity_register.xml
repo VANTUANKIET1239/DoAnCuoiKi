@@ -78,6 +78,14 @@
             android:background="@drawable/btndesign"
             android:layout_marginTop="20dp"
             />
+        <TextView
+            android:id="@+id/quaylaitaikhoan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Quay lại Tài Khoản ?"
+            android:layout_marginTop="20dp"
+            />
        <!-- <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

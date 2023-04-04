@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    TextView quaylaiDN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         Email = findViewById(R.id.Email);
         matkhau = findViewById(R.id.matkhau);
         register = findViewById(R.id.dangky);
+        quaylaiDN = findViewById(R.id.quaylaitaikhoan);
         xacnhanmatkhau = findViewById(R.id.xacnhanmatkhau);
         auth = FirebaseAuth.getInstance();
         register.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +54,12 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, txt_matkhau + " " +txt_xacnhanmk, Toast.LENGTH_SHORT).show();
                 }
                 else dangky(txt_email,txt_matkhau);
+            }
+        });
+        quaylaiDN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(),LoginActivity.class));
             }
         });
     }

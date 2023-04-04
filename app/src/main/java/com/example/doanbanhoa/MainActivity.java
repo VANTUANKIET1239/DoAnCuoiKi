@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private ViewPager2 mViewpaper;
 
+
         private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigationView = findViewById(R.id.navmenu);
-        mViewpaper = findViewById(R.id.view_pager);
+       // mViewpaper = findViewById(R.id.view_pager);
+
         fragmentArrayList.add(new TrangChuFragment());
         fragmentArrayList.add(new TaiKhoanFragment());
         fragmentArrayList.add(new GioHangFragment());
-        mViewpaper.setAdapter(setupviewpager(fragmentArrayList));
+
+        loadFragment(new TrangChuFragment());
+       /* mViewpaper.setAdapter(setupviewpager(fragmentArrayList));
+        mViewpaper.setOffscreenPageLimit(1);
         mViewpaper.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -65,16 +70,26 @@ public class MainActivity extends AppCompatActivity {
 
                 super.onPageSelected(position);
             }
-        });
+        });*/
         navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-               switch (item.getItemId()){
-                   case R.id.trangchu: mViewpaper.setCurrentItem(0); break;
-                   case R.id.taikhoan: mViewpaper.setCurrentItem(1);break;
-                   case R.id.giohang:mViewpaper.setCurrentItem(2); break;
+                Fragment fragment = null;
+//               switch (item.getItemId()){
+//                   case R.id.trangchu: mViewpaper.setCurrentItem(0); break;
+//                   case R.id.taikhoan: mViewpaper.setCurrentItem(1);break;
+//                   case R.id.giohang:mViewpaper.setCurrentItem(2); break;
+//               }
 
-               }
+                switch (item.getItemId()){
+                    case R.id.trangchu: fragment = new TrangChuFragment(); break;
+                    case R.id.taikhoan: fragment = new TaiKhoanFragment();break;
+                    case R.id.giohang:fragment = new GioHangFragment(); break;
+                }
+
+                if(fragment != null){
+                    loadFragment(fragment);
+                }
                return true;
             }
         });
@@ -83,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter setupviewpager(ArrayList<Fragment> arr){
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,arr);
         return viewPagerAdapter;
+    }
+    void loadFragment(Fragment fragment) {
+        //to attach fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout, fragment).commit();
     }
 
 }

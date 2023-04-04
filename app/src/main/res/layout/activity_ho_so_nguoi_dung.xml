@@ -87,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="20dp"
+
         android:background="@drawable/btndesign"
         android:text="Cật Nhật Thông Tin"
         android:textAllCaps="false" />

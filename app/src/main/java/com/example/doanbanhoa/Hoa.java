@@ -1,55 +1,56 @@
 package com.example.doanbanhoa;
 public class Hoa {
-    private int ID_Hoa;
+
     private String Image_Hoa;
     private String TenHoa;
     private String LoaiHoa;
     private int Gia;
     private String MoTa;
+
+
     private int HangDanhGia;
     private int SoLuongDanhGia;
-    private  boolean IsDelete;
+    //private  boolean IsDelete;
     private String ID_DanhMuc;
 
-    public Hoa(int ID_Hoa, String image_Hoa, String tenHoa, String loaiHoa, int gia, String moTa, int hangDanhGia, int soLuongDanhGia, boolean isDelete, String ID_DanhMuc) {
-        this.ID_Hoa = ID_Hoa;
-        Image_Hoa = image_Hoa;
-        TenHoa = tenHoa;
-        LoaiHoa = loaiHoa;
-        Gia = gia;
-        MoTa = moTa;
-        HangDanhGia = hangDanhGia;
-        SoLuongDanhGia = soLuongDanhGia;
-        IsDelete = isDelete;
+    public Hoa(int ID_Hoa, String Image_Hoa, String TenHoa, String LoaiHoa, int Gia, String MoTa, int HangDanhGia, int SoLuongDanhGia, boolean isDelete, String ID_DanhMuc) {
+      //  this.ID_Hoa = ID_Hoa;
+        this.Image_Hoa = Image_Hoa;
+        this.TenHoa = TenHoa;
+        this.LoaiHoa = LoaiHoa;
+        this.Gia = Gia;
+        this.MoTa = MoTa;
+        this.HangDanhGia = HangDanhGia;
+        this.SoLuongDanhGia = SoLuongDanhGia;
+     //   IsDelete = isDelete;
         this.ID_DanhMuc = ID_DanhMuc;
     }
     public Hoa(Hoa k) {
-        this.ID_Hoa = k.ID_Hoa;
-        Image_Hoa = k.Image_Hoa;
+//        Image_Hoa = k.Image_Hoa;
         TenHoa = k.getTenHoa();
-        LoaiHoa = k.LoaiHoa;
+        LoaiHoa = k.getLoaiHoa();
         Gia = k.getGia();
         MoTa = k.getMoTa();
         HangDanhGia = k.getHangDanhGia();
         SoLuongDanhGia = k.getSoLuongDanhGia();
-        IsDelete = k.isDelete();
+      //  IsDelete = k.isDelete();
         this.ID_DanhMuc = k.getID_DanhMuc();
     }
 
     public void LayHoa(Hoa k) {
-        this.ID_Hoa = k.ID_Hoa;
-        this.Image_Hoa = k.Image_Hoa;
+        //this.ID_Hoa = k.ID_Hoa;
+        this.Image_Hoa = k.getImage_Hoa();
         this.TenHoa = k.getTenHoa();
-        this.LoaiHoa = k.LoaiHoa;
+        this.LoaiHoa = k.getLoaiHoa();
         this.Gia = k.getGia();
         this. MoTa = k.getMoTa();
         this.HangDanhGia = k.getHangDanhGia();
         this.SoLuongDanhGia = k.getSoLuongDanhGia();
-        this.IsDelete = k.isDelete();
+     //   this.IsDelete = k.isDelete();
         this.ID_DanhMuc = k.getID_DanhMuc();
     }
     public Hoa() {
-        this.ID_Hoa = 0;
+       // this.ID_Hoa = 0;
         Image_Hoa = "";
         TenHoa = "";
         LoaiHoa = "";
@@ -57,18 +58,19 @@ public class Hoa {
         MoTa = "";
         HangDanhGia = 0;
         SoLuongDanhGia = 0;
-        IsDelete = true;
+     //   IsDelete = true;
         this.ID_DanhMuc = "";
     }
 
 
-    public int getID_Hoa() {
-        return ID_Hoa;
-    }
+//    public int getID_Hoa() {
+//        return ID_Hoa;
+//    }
+//
+//    public void setID_Hoa(int ID_Hoa) {
+//        this.ID_Hoa = ID_Hoa;
+//    }
 
-    public void setID_Hoa(int ID_Hoa) {
-        this.ID_Hoa = ID_Hoa;
-    }
 
     public String getImage_Hoa() {
         return Image_Hoa;
@@ -124,14 +126,6 @@ public class Hoa {
 
     public void setSoLuongDanhGia(int soLuongDanhGia) {
         SoLuongDanhGia = soLuongDanhGia;
-    }
-
-    public boolean isDelete() {
-        return IsDelete;
-    }
-
-    public void setDelete(boolean delete) {
-        IsDelete = delete;
     }
 
     public String getID_DanhMuc() {

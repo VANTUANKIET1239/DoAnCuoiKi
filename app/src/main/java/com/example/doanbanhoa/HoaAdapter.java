@@ -33,7 +33,8 @@ public class HoaAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return Hoa.get(position).getID_Hoa();
+        //return Hoa.get(position).getID_Hoa();
+        return 0;
     }
 
     @Override

@@ -16,12 +16,19 @@
 <!--    android:paddingTop="8dp"-->
 <!--    >-->
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+<!--    <androidx.viewpager2.widget.ViewPager2-->
+<!--        android:id="@+id/view_pager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/navmenu"-->
+<!--        />-->
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/relativelayout"
         android:layout_above="@+id/navmenu"
-        />
+        ></RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navmenu"

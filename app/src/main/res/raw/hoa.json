@@ -9,7 +9,7 @@
     "HangDanhGia": 4,
     "SoLuongDanhGia": 10,
     "IsDelete": false,
-    "ID_DanhMuc": "01"
+    "ID_DanhMuc": "2"
   },
   {
     "ID_Hoa": 2,
@@ -33,7 +33,7 @@
     "HangDanhGia": 5,
     "SoLuongDanhGia": 15,
     "IsDelete": false,
-    "ID_DanhMuc": "01"
+    "ID_DanhMuc": "2"
   },
   {
     "ID_Hoa": 4,
@@ -45,7 +45,7 @@
     "HangDanhGia": 2,
     "SoLuongDanhGia": 3,
     "IsDelete": false,
-    "ID_DanhMuc": "01"
+    "ID_DanhMuc": "2"
   },
   {
     "ID_Hoa": 5,
@@ -57,7 +57,7 @@
     "HangDanhGia": 4,
     "SoLuongDanhGia": 8,
     "IsDelete": false,
-    "ID_DanhMuc": "01"
+    "ID_DanhMuc": "2"
   },
   {
     "ID_Hoa": 6,
@@ -69,6 +69,6 @@
     "HangDanhGia": 3,
     "SoLuongDanhGia": 6,
     "IsDelete": false,
-    "ID_DanhMuc": "01"
+    "ID_DanhMuc": "2"
   }
 ]

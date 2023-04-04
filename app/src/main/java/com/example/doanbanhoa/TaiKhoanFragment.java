@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class TaiKhoanFragment extends Fragment {
     ImageView anhcanhan;
 
     TextView username;
+
+    Button btnTKhoan;
     private StorageReference mSttorageRef;
 
     private DatabaseReference mDatabaseRef;
@@ -56,7 +59,7 @@ public class TaiKhoanFragment extends Fragment {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).resize(150,150).into(anhcanhan);
-                //    Toast.makeText(HoSoNguoiDungActivity.this,uri.toString(),Toast.LENGTH_SHORT).show();
+
             }
         });
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -74,7 +77,8 @@ public class TaiKhoanFragment extends Fragment {
         anhcanhan = view.findViewById(R.id.anhtaikhoan);
         username = view.findViewById(R.id.Username);
         pullToRefresh = view.findViewById(R.id.pullToRefresh);
-        String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Theo Dõi Đơn Hàng","Lịch Sử Mua Hàng"};
+        btnTKhoan = view.findViewById(R.id.btnTK);
+        String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Theo Dõi Đơn Hàng","Lịch Sử Mua Hàng","Đăng Xuất"};
 
         auth = FirebaseAuth.getInstance();
         mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
@@ -92,10 +96,21 @@ public class TaiKhoanFragment extends Fragment {
         lstoptaikhoan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0: startActivity(new Intent(getContext(),DiaChiActivity.class));break;
-                    case 1: startActivity(new Intent(getContext(),HoSoNguoiDungActivity.class));break;
-                }
+
+
+
+
+                        switch (position){
+                            case 0: startActivity(new Intent(getContext(),DiaChiActivity.class));break;
+                            case 1: startActivity(new Intent(getContext(),HoSoNguoiDungActivity.class));break;
+                            case 4: auth.signOut();
+                                startActivity(new Intent(getContext(),LoginActivity.class));
+                                getActivity().finish();
+                                break;
+
+                        }
+
+
             }
         });
         mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
