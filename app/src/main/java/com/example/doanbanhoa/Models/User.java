@@ -1,14 +1,15 @@
 package com.example.doanbanhoa.Models;
 
 public class User {
+    private String Id;
     private String Imagea;
     private String HoTen;
     private String Email;
     private String SDT;
     private String NgaySinh;
 
-    public User( String imagea, String hoTen, String email, String SDT, String ngaySinh) {
-
+    public User(String Id, String imagea, String hoTen, String email, String SDT, String ngaySinh) {
+        this.Id = Id;
         this.Imagea = imagea;
         this.HoTen = hoTen;
         this.Email = email;
@@ -16,7 +17,7 @@ public class User {
         this.NgaySinh = ngaySinh;
     }
     public User() {
-
+        this.Id = "";
         this.Imagea = "";
         this.HoTen = "";
         this.Email = "";
@@ -24,7 +25,13 @@ public class User {
         this.NgaySinh = "";
     }
 
+    public String getId() {
+        return Id;
+    }
 
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getImagea() {
         return Imagea;

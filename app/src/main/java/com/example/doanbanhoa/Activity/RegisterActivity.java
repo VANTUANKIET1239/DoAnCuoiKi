@@ -61,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getBaseContext(),LoginActivity.class));
+
             }
         });
     }

@@ -15,7 +15,7 @@
         android:id="@+id/labelthemdiachi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm Địa Chỉ Mới"
+        android:text="Chỉnh Sửa Địa Chỉ"
         android:layout_gravity="center"
         android:textSize="20sp"
         android:textColor="@color/black"
@@ -76,14 +76,14 @@
 
 
     <Button
-        android:id="@+id/themdiachi"
+        android:id="@+id/chinhsuadiachi"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="20dp"
 
         android:background="@drawable/btndesign"
-        android:text="Thêm Địa Chỉ"
+        android:text="Cật Nhật Địa Chỉ"
         android:textAllCaps="false" />
 
 </LinearLayout>

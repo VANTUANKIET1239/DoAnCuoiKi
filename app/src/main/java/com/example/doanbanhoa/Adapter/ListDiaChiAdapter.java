@@ -1,12 +1,20 @@
 package com.example.doanbanhoa.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.doanbanhoa.Activity.ChinhSuaDiaChiActivity;
+import com.example.doanbanhoa.Activity.LoginActivity;
+import com.example.doanbanhoa.Activity.ThemDiaChiActivity;
 import com.example.doanbanhoa.Models.DiaChi;
 import com.example.doanbanhoa.R;
 
@@ -16,6 +24,8 @@ public class ListDiaChiAdapter extends BaseAdapter {
 
 
     TextView Hoten,DiaChi,SDT;
+
+    Button ChinhSua, XoaBo;
     private List<DiaChi> lsdiachi;
     Context context;
 
@@ -49,10 +59,32 @@ public class ListDiaChiAdapter extends BaseAdapter {
         Hoten = view.findViewById(R.id.HoTen);
         SDT = view.findViewById(R.id.SDT);
         DiaChi = view.findViewById(R.id.DiaChi);
+        ChinhSua = view.findViewById(R.id.chinhsua);
+        XoaBo = view.findViewById(R.id.xoabo);
 
         Hoten.setText(lsdiachi.get(position).getHoTen());
         SDT.setText(lsdiachi.get(position).getSDT());
         DiaChi.setText(lsdiachi.get(position).getDiaChi());
+
+        ChinhSua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChinhSuaDiaChiActivity.class);
+                intent.putExtra("Id",lsdiachi.get(position).getId());
+                intent.putExtra("Hoten",lsdiachi.get(position).getHoTen());
+                intent.putExtra("SDT",lsdiachi.get(position).getSDT());
+                intent.putExtra("DiaChi",lsdiachi.get(position).getDiaChi());
+                startActivity(context,intent,null);
+            }
+        });
+
+        XoaBo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lsdiachi.remove(position);
+                Toast.makeText(context, "Xóa Địa Chỉ Thành Công!", Toast.LENGTH_SHORT);
+            }
+        });
         return view;
     }
 }

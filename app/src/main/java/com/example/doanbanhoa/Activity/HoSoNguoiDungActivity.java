@@ -138,7 +138,7 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
             mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    User user = new User(uri.toString(),txtHoTen.getText().toString(),email.getText().toString(),txtSDT.getText().toString(),
+                    User user = new User(auth.getCurrentUser().getUid(),uri.toString(),txtHoTen.getText().toString(),email.getText().toString(),txtSDT.getText().toString(),
                             txtNgaySinh.getText().toString());
                     mDatabaseRef.child(currentuser.getUid()).setValue(user);
                     Toast.makeText(HoSoNguoiDungActivity.this,"Cật nhật thành công!",Toast.LENGTH_SHORT).show();

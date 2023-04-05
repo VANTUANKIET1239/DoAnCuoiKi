@@ -1,6 +1,7 @@
 package com.example.doanbanhoa.Models;
 public class Hoa {
 
+    private String Id;
     private String Image_Hoa;
     private String TenHoa;
     private String LoaiHoa;
@@ -13,8 +14,8 @@ public class Hoa {
     //private  boolean IsDelete;
     private String ID_DanhMuc;
 
-    public Hoa(int ID_Hoa, String Image_Hoa, String TenHoa, String LoaiHoa, int Gia, String MoTa, int HangDanhGia, int SoLuongDanhGia, boolean isDelete, String ID_DanhMuc) {
-      //  this.ID_Hoa = ID_Hoa;
+    public Hoa(String ID_Hoa, String Image_Hoa, String TenHoa, String LoaiHoa, int Gia, String MoTa, int HangDanhGia, int SoLuongDanhGia, boolean isDelete, String ID_DanhMuc) {
+        this.Id = ID_Hoa;
         this.Image_Hoa = Image_Hoa;
         this.TenHoa = TenHoa;
         this.LoaiHoa = LoaiHoa;
@@ -26,7 +27,7 @@ public class Hoa {
         this.ID_DanhMuc = ID_DanhMuc;
     }
     public Hoa(Hoa k) {
-//        Image_Hoa = k.Image_Hoa;
+        Image_Hoa = k.getImage_Hoa();
         TenHoa = k.getTenHoa();
         LoaiHoa = k.getLoaiHoa();
         Gia = k.getGia();
@@ -71,6 +72,14 @@ public class Hoa {
 //        this.ID_Hoa = ID_Hoa;
 //    }
 
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getImage_Hoa() {
         return Image_Hoa;

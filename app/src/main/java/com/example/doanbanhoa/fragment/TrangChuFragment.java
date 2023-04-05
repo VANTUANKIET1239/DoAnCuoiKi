@@ -85,7 +85,7 @@ public class TrangChuFragment extends Fragment {
                 if(task.isComplete()){
                     List<SlideModel> im = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : task.getResult()){
-                        Slider slider = new Slider(new SlideModel(doc.get("imageSlider").toString(),ScaleTypes.FIT));
+                        Slider slider = new Slider(doc.getId(), new SlideModel(doc.get("imageSlider").toString(),ScaleTypes.FIT));
                         im.add(slider.getImageSlider());
                     }
 //

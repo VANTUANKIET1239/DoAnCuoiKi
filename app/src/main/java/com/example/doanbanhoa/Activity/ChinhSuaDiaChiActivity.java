@@ -14,12 +14,11 @@ import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ThemDiaChiActivity extends AppCompatActivity {
+import java.util.Map;
+
+public class ChinhSuaDiaChiActivity extends AppCompatActivity {
 
     TextView txthoten,txtsdt,txtdiachi,label;
 
@@ -27,37 +26,47 @@ public class ThemDiaChiActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     FirebaseDatabase firebaseDatabase;
+
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_them_dia_chi);
+        setContentView(R.layout.activity_chinh_sua_dia_chi);
         txthoten = findViewById(R.id.HoTen);
         txtsdt = findViewById(R.id.SDT);
         txtdiachi = findViewById(R.id.DiaChi);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        btnthemdichi = findViewById(R.id.themdiachi);
+        btnthemdichi = findViewById(R.id.chinhsuadiachi);
         auth = FirebaseAuth.getInstance();
         label = findViewById(R.id.labelthemdiachi);
         FirebaseUser currentuser = auth.getCurrentUser();
+        intent = getIntent();
         btnthemdichi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = firebaseDatabase.getReference("DiaChi").child(currentuser.getUid()).push();
-                DiaChi newdiachi = new DiaChi(databaseReference.getKey(),txthoten.getText().toString(),txtsdt.getText().toString(),txtdiachi.getText().toString());
-
-               databaseReference.setValue(newdiachi).addOnSuccessListener(new OnSuccessListener<Void>() {
+                String id = intent.getStringExtra("Id");
+                DiaChi newdiachi = new DiaChi(id,txthoten.getText().toString(),txtsdt.getText().toString(),txtdiachi.getText().toString());
+                Map<String,Object> hehe = newdiachi.toMap();
+                firebaseDatabase.getReference("DiaChi").child(currentuser.getUid()).child("-"+id).updateChildren(hehe).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(getBaseContext(), "Thêm Địa Chỉ Thành Công",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getBaseContext(),DiaChiActivity.class));
+                        Toast.makeText(getBaseContext(),"Chỉnh Sửa Địa Chỉ Thành Công",Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });
             }
         });
-
-
-
+        ChinhSuaDuLieu();
     }
+    private void ChinhSuaDuLieu(){
 
+
+        String hoten = intent.getStringExtra("Hoten");
+        String SDT = intent.getStringExtra("SDT");
+        String DiaChi = intent.getStringExtra("DiaChi");
+
+        txthoten.setText(hoten);
+        txtsdt.setText(SDT);
+        txtdiachi.setText(DiaChi);
+    }
 }
