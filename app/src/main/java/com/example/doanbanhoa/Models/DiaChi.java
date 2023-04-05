@@ -6,11 +6,17 @@ public class DiaChi {
     private String SDT;
     private String DiaChi;
 
-    public DiaChi(String id, String hoTen, String SDT, String diaChi) {
+    public DiaChi(String hoTen, String SDT, String diaChi) {
    //     this.id = id;
         HoTen = hoTen;
         this.SDT = SDT;
         DiaChi = diaChi;
+    }
+    public DiaChi() {
+        //     this.id = id;
+        HoTen = "";
+        this.SDT = "";
+        DiaChi = "";
     }
 
 //    public String getId() {
