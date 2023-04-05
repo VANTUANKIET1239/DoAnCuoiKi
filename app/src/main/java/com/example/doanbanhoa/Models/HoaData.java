@@ -1,7 +1,8 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Models;
+
+import com.example.doanbanhoa.Models.Hoa;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HoaData {
     public static ArrayList<Hoa> HoaDT = new ArrayList<>();

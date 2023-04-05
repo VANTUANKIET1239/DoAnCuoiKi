@@ -1,40 +1,22 @@
-package com.example.doanbanhoa;
-
-import static com.example.doanbanhoa.HoaData.AddHoa;
+package com.example.doanbanhoa.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.doanbanhoa.Adapter.ViewPagerAdapter;
+import com.example.doanbanhoa.R;
+import com.example.doanbanhoa.fragment.GioHangFragment;
+import com.example.doanbanhoa.fragment.TaiKhoanFragment;
+import com.example.doanbanhoa.fragment.TrangChuFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
@@ -82,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
 //               }
 
                 switch (item.getItemId()){
-                    case R.id.trangchu: fragment = new TrangChuFragment(); break;
-                    case R.id.taikhoan: fragment = new TaiKhoanFragment();break;
-                    case R.id.giohang:fragment = new GioHangFragment(); break;
+                    case R.id.trangchu: fragment = fragmentArrayList.get(0); break;
+                    case R.id.taikhoan: fragment = fragmentArrayList.get(1);break;
+                    case R.id.giohang:fragment = fragmentArrayList.get(2); break;
                 }
 
                 if(fragment != null){

@@ -1,14 +1,18 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class DiaChiActivity extends AppCompatActivity {
+import com.example.doanbanhoa.R;
+
+public class ThemDiaChiActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dia_chi);
+        setContentView(R.layout.activity_them_dia_chi);
+
+
     }
 }

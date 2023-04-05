@@ -1,4 +1,4 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.doanbanhoa.R;
 
 public class HoaViewHolder extends RecyclerView.ViewHolder  {
     ImageView iv_photo;

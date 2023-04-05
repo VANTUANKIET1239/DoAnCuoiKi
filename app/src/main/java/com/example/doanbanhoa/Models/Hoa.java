@@ -1,4 +1,4 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Models;
 public class Hoa {
 
     private String Image_Hoa;

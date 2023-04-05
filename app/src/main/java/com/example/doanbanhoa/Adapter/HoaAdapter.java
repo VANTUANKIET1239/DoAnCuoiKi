@@ -1,4 +1,4 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Adapter;
 
 
 
@@ -12,10 +12,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.doanbanhoa.Models.Hoa;
+import com.example.doanbanhoa.R;
+
 import java.util.ArrayList;
 
 public class HoaAdapter extends BaseAdapter {
-    private ArrayList<Hoa> Hoa;
+    private ArrayList<com.example.doanbanhoa.Models.Hoa> Hoa;
     private Context context;
     public HoaAdapter(ArrayList<Hoa> photo, Context context){
         this.Hoa = photo;

@@ -1,15 +1,17 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Adapter;
 
 import static com.example.doanbanhoa.LayHinhAnh.loadImageFromUrl;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.doanbanhoa.Models.Hoa;
+import com.example.doanbanhoa.R;
 
 import java.util.ArrayList;
 import java.util.List;

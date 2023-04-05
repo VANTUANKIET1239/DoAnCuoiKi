@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaiKhoanFragment">
+    tools:context=".fragment.TaiKhoanFragment">
 
    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
        android:id="@+id/pullToRefresh"
@@ -33,19 +33,27 @@
                 android:id="@+id/Username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="van tuan kiet"
+                android:text="..."
                 android:layout_gravity="center"
                 android:textSize="24sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="50dp"
-                >   </TextView>
+                ></TextView>
 
          </LinearLayout>
 
 
 
-         <ListView
+         <?xml version="1.0" encoding="utf-8"?>
+         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".Activity.ThemDiaChiActivity">
+
+         </androidx.constraintlayout.widget.ConstraintLayout><ListView
              android:id="@+id/optiontaikhoan"
              android:layout_width="match_parent"
              android:layout_height="match_parent" />

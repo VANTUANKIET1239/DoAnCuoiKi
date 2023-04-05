@@ -1,6 +1,4 @@
-package com.example.doanbanhoa;
-
-import static com.example.doanbanhoa.LayHinhAnh.loadImageFromUrl;
+package com.example.doanbanhoa.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doanbanhoa.Models.User;
+import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,14 +25,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.io.Console;
-import java.util.PrimitiveIterator;
 
 public class HoSoNguoiDungActivity extends AppCompatActivity {
 

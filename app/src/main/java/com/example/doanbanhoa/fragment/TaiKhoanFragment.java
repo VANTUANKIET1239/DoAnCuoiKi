@@ -1,6 +1,4 @@
-package com.example.doanbanhoa;
-
-import static com.example.doanbanhoa.LayHinhAnh.loadImageFromUrl;
+package com.example.doanbanhoa.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.doanbanhoa.Activity.DiaChiActivity;
+import com.example.doanbanhoa.Activity.HoSoNguoiDungActivity;
+import com.example.doanbanhoa.Activity.LoginActivity;
+import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -101,10 +103,10 @@ public class TaiKhoanFragment extends Fragment {
 
 
                         switch (position){
-                            case 0: startActivity(new Intent(getContext(),DiaChiActivity.class));break;
-                            case 1: startActivity(new Intent(getContext(),HoSoNguoiDungActivity.class));break;
+                            case 0: startActivity(new Intent(getContext(), DiaChiActivity.class));break;
+                            case 1: startActivity(new Intent(getContext(), HoSoNguoiDungActivity.class));break;
                             case 4: auth.signOut();
-                                startActivity(new Intent(getContext(),LoginActivity.class));
+                                startActivity(new Intent(getContext(), LoginActivity.class));
                                 getActivity().finish();
                                 break;
 

@@ -1,25 +1,25 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Models;
 
 public class DiaChi {
-    private String id;
+   // private String id;
     private String HoTen;
     private String SDT;
     private String DiaChi;
 
     public DiaChi(String id, String hoTen, String SDT, String diaChi) {
-        this.id = id;
+   //     this.id = id;
         HoTen = hoTen;
         this.SDT = SDT;
         DiaChi = diaChi;
     }
 
-    public String getId() {
-        return id;
-    }
+//    public String getId() {
+//        return id;
+//    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+//    public void setId(String id) {
+//        this.id = id;
+//    }
 
     public String getHoTen() {
         return HoTen;

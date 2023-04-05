@@ -6,52 +6,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.HoSoNguoiDungActivity"
+    android:gravity="center"
     android:padding="25dp"
 
     >
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@drawable/imgcir"
-        android:id="@+id/anhhoso"
-        android:layout_gravity="center"
-
-        />
 
     <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="vantuankiet@gmail.com"
+        android:text="Thêm Địa Chỉ Mới"
         android:layout_gravity="center"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
+        android:textStyle="bold"
         ></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-<!--        <TextView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:text="Họ Tên:"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:gravity="center"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            >-->
+        <!--        <TextView-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="30dp"-->
+        <!--            android:text="Họ Tên:"-->
+        <!--            android:textSize="20sp"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginBottom="10dp"-->
+        <!--            >-->
 
-<!--        </TextView>-->
+        <!--        </TextView>-->
         <EditText
             android:id="@+id/HoTen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Họ Tên"
+            android:hint= "Họ Tên"
             android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:background="@drawable/editdesign"
@@ -71,15 +64,16 @@
         android:layout_marginBottom="15dp"
         />
     <EditText
-        android:id="@+id/NgaySinh"
+        android:id="@+id/DiaChi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ngày Sinh"
+        android:hint="Địa Chỉ"
         android:textSize="12sp"
         android:layout_marginTop="5dp"
         android:background="@drawable/editdesign"
         android:layout_marginBottom="15dp"
         />
+
 
     <Button
         android:id="@+id/catnhatthongtin"

@@ -1,4 +1,4 @@
-package com.example.doanbanhoa;
+package com.example.doanbanhoa.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
+
+import com.example.doanbanhoa.R;
 
 import java.util.ArrayList;
 import java.util.concurrent.RecursiveTask;
