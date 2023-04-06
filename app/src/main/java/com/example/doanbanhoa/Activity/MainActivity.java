@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.doanbanhoa.Adapter.ViewPagerAdapter;
 import com.example.doanbanhoa.R;
+import com.example.doanbanhoa.fragment.DanhMucFragment;
 import com.example.doanbanhoa.fragment.GioHangFragment;
 import com.example.doanbanhoa.fragment.TaiKhoanFragment;
 import com.example.doanbanhoa.fragment.TrangChuFragment;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentArrayList.add(new TrangChuFragment());
         fragmentArrayList.add(new TaiKhoanFragment());
         fragmentArrayList.add(new GioHangFragment());
+        fragmentArrayList.add(new DanhMucFragment());
 
         loadFragment(new TrangChuFragment());
        /* mViewpaper.setAdapter(setupviewpager(fragmentArrayList));
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.trangchu: fragment = fragmentArrayList.get(0); break;
                     case R.id.taikhoan: fragment = fragmentArrayList.get(1);break;
                     case R.id.giohang:fragment = fragmentArrayList.get(2); break;
+                    case R.id.danhmuc:fragment = fragmentArrayList.get(3); break;
                 }
 
                 if(fragment != null){
@@ -77,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private ViewPagerAdapter setupviewpager(ArrayList<Fragment> arr){
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,arr);
-        return viewPagerAdapter;
-    }
+//    private ViewPagerAdapter setupviewpager(ArrayList<Fragment> arr){
+//        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,arr);
+//        return viewPagerAdapter;
+//    }
     void loadFragment(Fragment fragment) {
         //to attach fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout, fragment).commit();

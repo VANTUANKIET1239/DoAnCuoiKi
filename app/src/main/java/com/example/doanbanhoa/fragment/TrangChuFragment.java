@@ -45,11 +45,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TrangChuFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TrangChuFragment extends Fragment {
     GridView gridView;
 
@@ -64,7 +60,7 @@ public class TrangChuFragment extends Fragment {
     String[] itemsthutu = {"Gía từ cao đến thấp", "Gía từ thấp đến cao"};
     AutoCompleteTextView autocomple;
     public TrangChuFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -152,7 +148,7 @@ public class TrangChuFragment extends Fragment {
                             Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
                             listHoaa.add(newhoa);
                         }
-                        HoaListAdapter adapter = new HoaListAdapter(getContext(),listHoaa);
+                        HoaListAdapter adapter = new HoaListAdapter(getActivity().getBaseContext(),listHoaa);
                         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
                         recyclerView.setAdapter(adapter);
 

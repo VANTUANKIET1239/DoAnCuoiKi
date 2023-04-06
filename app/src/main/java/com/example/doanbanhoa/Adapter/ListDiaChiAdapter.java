@@ -17,6 +17,9 @@ import com.example.doanbanhoa.Activity.LoginActivity;
 import com.example.doanbanhoa.Activity.ThemDiaChiActivity;
 import com.example.doanbanhoa.Models.DiaChi;
 import com.example.doanbanhoa.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -28,6 +31,9 @@ public class ListDiaChiAdapter extends BaseAdapter {
     Button ChinhSua, XoaBo;
     private List<DiaChi> lsdiachi;
     Context context;
+
+    FirebaseAuth auth;
+    FirebaseDatabase firebaseDatabase;
 
     public ListDiaChiAdapter(Context context, List<DiaChi> lsdiachi){
         this.lsdiachi = lsdiachi;
@@ -61,10 +67,11 @@ public class ListDiaChiAdapter extends BaseAdapter {
         DiaChi = view.findViewById(R.id.DiaChi);
         ChinhSua = view.findViewById(R.id.chinhsua);
         XoaBo = view.findViewById(R.id.xoabo);
-
+        firebaseDatabase = FirebaseDatabase.getInstance();
         Hoten.setText(lsdiachi.get(position).getHoTen());
         SDT.setText(lsdiachi.get(position).getSDT());
         DiaChi.setText(lsdiachi.get(position).getDiaChi());
+        auth = FirebaseAuth.getInstance();
 
         ChinhSua.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +88,13 @@ public class ListDiaChiAdapter extends BaseAdapter {
         XoaBo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lsdiachi.remove(position);
-                Toast.makeText(context, "Xóa Địa Chỉ Thành Công!", Toast.LENGTH_SHORT);
+                firebaseDatabase.getReference("DiaChi").child(auth.getCurrentUser().getUid()).child(lsdiachi.get(position).getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(context, "Xóa Địa Chỉ Thành Công!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
         return view;
