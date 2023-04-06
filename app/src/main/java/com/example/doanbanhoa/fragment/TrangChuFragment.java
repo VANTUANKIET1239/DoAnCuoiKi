@@ -34,14 +34,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +82,6 @@ public class TrangChuFragment extends Fragment {
                 }
             }
         });
-
 
         autocomple = view.findViewById(R.id.thutugia);
         itemthutugia = new ArrayAdapter<>(getContext(),R.layout.listitem_thutugia,itemsthutu);
@@ -172,12 +164,6 @@ public class TrangChuFragment extends Fragment {
                 }
             }
         });
-
-
-
-
-
-
 
     }
 

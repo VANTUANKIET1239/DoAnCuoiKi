@@ -10,6 +10,11 @@ public class DanhMuc {
         TenDanhMuc = tenDanhMuc;
         ImageDanhMuc = imageDanhMuc;
     }
+    public DanhMuc() {
+        Id = "";
+        TenDanhMuc = "";
+        ImageDanhMuc = "";
+    }
 
     public String getId() {
         return Id;

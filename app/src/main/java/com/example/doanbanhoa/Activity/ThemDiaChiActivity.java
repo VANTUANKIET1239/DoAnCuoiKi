@@ -49,7 +49,7 @@ public class ThemDiaChiActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(getBaseContext(), "Thêm Địa Chỉ Thành Công",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getBaseContext(),DiaChiActivity.class));
+                       // startActivity(new Intent(getBaseContext(),DiaChiActivity.class));
                         finish();
                     }
                 });
