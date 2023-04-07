@@ -1,99 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Activity.HoSoNguoiDungActivity"
-    android:gravity="center"
-    android:padding="25dp"
-
-    >
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thêm Địa Chỉ Mới"
-        android:layout_gravity="center"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="30dp"
-        android:textStyle="bold"
-        ></TextView>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/giohang"
         >
-        <!--        <TextView-->
-        <!--            android:layout_width="100dp"-->
-        <!--            android:layout_height="30dp"-->
-        <!--            android:text="Họ Tên:"-->
-        <!--            android:textSize="20sp"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:gravity="center"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginBottom="10dp"-->
-        <!--            >-->
-
-        <!--        </TextView>-->
-        <EditText
-            android:id="@+id/HoTen"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint= ""
-            android:textSize="12sp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/editdesign"
-            android:layout_marginBottom="15dp"
-            />
+            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EAD5D5">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:id="@+id/btn_trove"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/arrow"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="Giỏ hàng"
+                        android:textSize="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"/>
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            >
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="Tạm tính"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/id_giatamtinh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="giá"
+                android:textColor="@color/red"
+                android:textSize="20dp"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/SDT"
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/giohang"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Số Điện Thoại"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/editdesign"
-        android:layout_marginBottom="15dp"
-        />
-    <EditText
-        android:id="@+id/NgaySinh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ngày Sinh"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/editdesign"
-        android:layout_marginBottom="15dp"
-        />
-    <EditText
-        android:id="@+id/NgaySinh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ngày Sinh"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/editdesign"
-        android:layout_marginBottom="15dp"
-        />
-
-
-    <Button
-        android:id="@+id/catnhatthongtin"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="20dp"
-
-        android:background="@drawable/btndesign"
-        android:text="Cật Nhật Thông Tin"
-        android:textAllCaps="false" />
-
-</LinearLayout>
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/menu_item_giohang"
+        android:background="#EAAFAF"
+        app:itemTextColor="@color/white"
+        app:itemTextAppearanceActive="@style/navTextInactive"/>
+</RelativeLayout>

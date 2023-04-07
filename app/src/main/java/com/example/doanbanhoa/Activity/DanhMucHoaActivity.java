@@ -11,12 +11,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.doanbanhoa.Adapter.HoaListAdapter;
 import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -30,6 +34,9 @@ public class DanhMucHoaActivity extends AppCompatActivity {
 
     RecyclerView listhoadanhmuc;
 
+    EditText timkiemdanhmuc;
+
+    ImageButton btntimkiem;
     Button loc;
     AutoCompleteTextView autocompleloaihoa;
     AutoCompleteTextView autocomplethutugia;
@@ -57,6 +64,9 @@ public class DanhMucHoaActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         tendanhmuc = findViewById(R.id.tendanhmuc);
         loc = findViewById(R.id.loc);
+        btntimkiem = findViewById(R.id.btntimkiem);
+        timkiemdanhmuc = findViewById(R.id.timkiemhoadanhmuc);
+
 
         itemthutugiaAD = new ArrayAdapter<>(getBaseContext(),R.layout.listitem_thutugia,itemthutugia);
         itemloaihoaAD = new ArrayAdapter<>(getBaseContext(),R.layout.listitem_thutugia,itemloaihoa);
@@ -84,50 +94,74 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btntimkiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tensp = timkiemdanhmuc.getText().toString();
+                firebaseFirestore.collection("Hoa").whereEqualTo("tenHoa",tensp).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<Hoa> lshoa = queryDocumentSnapshots.toObjects(Hoa.class);
+
+
+                            //lshoa.add(hoa);
+                        HoaListAdapter adapter = new HoaListAdapter(getBaseContext(), lshoa);
+                        listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
+                        listhoadanhmuc.setAdapter(adapter);
+                    }
+                });
+            }
+        });
         loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String queryloaihoa = autocompleloaihoa.getText().toString();
                 String querythutugia = autocomplethutugia.getText().toString();
-                if(querythutugia == "Giá Từ Cao Đến Thấp"){
-                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.DESCENDING).whereEqualTo("loaiHoa",queryloaihoa).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                List<Hoa> lshoa = new ArrayList<>();
-                                for (QueryDocumentSnapshot doc : task.getResult()){
-                                    Hoa hoa = doc.toObject(Hoa.class);
-                                    lshoa.add(hoa);
-                                }
-                                HoaListAdapter adapter = new HoaListAdapter(getBaseContext(),lshoa);
-                                listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(),2));
-                                listhoadanhmuc.setAdapter(adapter);
-                            }
-                        }
-                    });
-                }
-                else {
-                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.ASCENDING).whereEqualTo("loaiHoa",queryloaihoa).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                List<Hoa> lshoa = new ArrayList<>();
-                                for (QueryDocumentSnapshot doc : task.getResult()){
-                                    Hoa hoa = doc.toObject(Hoa.class);
-                                    lshoa.add(hoa);
-                                }
-                                HoaListAdapter adapter = new HoaListAdapter(getBaseContext(),lshoa);
-                                listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(),2));
-                                listhoadanhmuc.setAdapter(adapter);
-                            }
-                        }
-                    });
-                }
 
+                if (querythutugia.equals("") || querythutugia.equals("Thứ Tự Giá") || queryloaihoa.equals("") || queryloaihoa.equals("Loại Hoa")) {
+                    Toast.makeText(getBaseContext(), "Chưa chọn hoặc để trống điều kiện lọc", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (querythutugia == "Giá Từ Cao Đến Thấp") {
+                        firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.DESCENDING).whereEqualTo("loaiHoa", queryloaihoa).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    List<Hoa> lshoa = new ArrayList<>();
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                        Hoa hoa = doc.toObject(Hoa.class);
+                                        lshoa.add(hoa);
+                                    }
+                                    HoaListAdapter adapter = new HoaListAdapter(getBaseContext(), lshoa);
+                                    listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
+                                    listhoadanhmuc.setAdapter(adapter);
+                                }
+                            }
+                        });
+                    } else {
+                        firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.ASCENDING).whereEqualTo("loaiHoa", queryloaihoa).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    List<Hoa> lshoa = new ArrayList<>();
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                        Hoa hoa = doc.toObject(Hoa.class);
+                                        lshoa.add(hoa);
+                                    }
+                                    HoaListAdapter adapter = new HoaListAdapter(getBaseContext(), lshoa);
+                                    listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
+                                    listhoadanhmuc.setAdapter(adapter);
+                                }
+                            }
+                        });
+                    }
+
+                }
             }
-        });
+            });
 
+
+        }
 
     }
 
-}

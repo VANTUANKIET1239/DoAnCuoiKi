@@ -56,28 +56,28 @@ public class TaiKhoanFragment extends Fragment {
         // Required empty public constructor
 
     }
-    private void refreshdata(){
-        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).resize(150,150).into(anhcanhan);
-
-            }
-        });
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
-        mDatabaseRef.child(auth.getCurrentUser().getUid()).child("hoTen").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                username.setText(dataSnapshot.getValue().toString());
-            }
-        });
-    }
+//    private void refreshdata(){
+//        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).resize(150,150).into(anhcanhan);
+//
+//            }
+//        });
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
+//        mDatabaseRef.child(auth.getCurrentUser().getUid()).child("hoTen").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+//            @Override
+//            public void onSuccess(DataSnapshot dataSnapshot) {
+//                username.setText(dataSnapshot.getValue().toString());
+//            }
+//        });
+//    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lstoptaikhoan = view.findViewById(R.id.optiontaikhoan);
         anhcanhan = view.findViewById(R.id.anhtaikhoan);
-        username = view.findViewById(R.id.Username);
+       // username = view.findViewById(R.id.Username);
         pullToRefresh = view.findViewById(R.id.pullToRefresh);
         btnTKhoan = view.findViewById(R.id.btnTK);
         String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Theo Dõi Đơn Hàng","Lịch Sử Mua Hàng","Đăng Xuất"};
@@ -88,13 +88,13 @@ public class TaiKhoanFragment extends Fragment {
         lstoptaikhoan.setAdapter(op);
 
 
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshdata();
-                pullToRefresh.setRefreshing(false);
-            }
-        });
+//        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                refreshdata();
+//                pullToRefresh.setRefreshing(false);
+//            }
+//        });
         lstoptaikhoan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,7 +107,7 @@ public class TaiKhoanFragment extends Fragment {
                             case 1: startActivity(new Intent(getContext(), HoSoNguoiDungActivity.class));break;
                             case 4: auth.signOut();
                                 startActivity(new Intent(getContext(), LoginActivity.class));
-                                getActivity().finish();
+                                    getActivity().finish();
                                 break;
 
                         }
@@ -115,20 +115,20 @@ public class TaiKhoanFragment extends Fragment {
 
             }
         });
-        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).resize(150,150).into(anhcanhan);
-                //    Toast.makeText(HoSoNguoiDungActivity.this,uri.toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
-        mDatabaseRef.child(auth.getCurrentUser().getUid()).child("hoTen").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                username.setText(dataSnapshot.getValue().toString());
-            }
-        });
+//        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).resize(150,150).into(anhcanhan);
+//                //    Toast.makeText(HoSoNguoiDungActivity.this,uri.toString(),Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
+//        mDatabaseRef.child(auth.getCurrentUser().getUid()).child("hoTen").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+//            @Override
+//            public void onSuccess(DataSnapshot dataSnapshot) {
+//                username.setText(dataSnapshot.getValue().toString());
+//            }
+//        });
     }
 
     public static TaiKhoanFragment newInstance() {

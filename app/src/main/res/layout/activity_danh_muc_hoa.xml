@@ -28,13 +28,14 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/editdesign"
                 />
+
             <ImageButton
+                android:id="@+id/btntimkiem"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_gravity="center"
                 android:background="@color/hong"
-                android:src="@android:drawable/ic_menu_search"
-                ></ImageButton>
+                android:src="@android:drawable/ic_menu_search"></ImageButton>
         </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
