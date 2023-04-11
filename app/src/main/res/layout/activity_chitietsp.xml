@@ -4,109 +4,153 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EAD5D5">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/btn_trove"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/arrow"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="Chi tiết sản phẩm"
-                    android:textSize="25dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:textStyle="bold"/>
-                <ImageButton
-                    android:id="@+id/btn_giohang"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/baseline_shopping_cart_24"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="110dp"/>
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-        <com.denzcoskun.imageslider.ImageSlider
-            android:id="@+id/image_slider"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:iss_auto_cycle="true"
-            app:iss_period="3000"
-            app:iss_placeholder="@color/black"
-            app:iss_delay="0"
-            app:iss_corner_radius="20"
-            />
-        <!--    Thông tin -->
-        <!-- Size   -->
+        android:layout_height="wrap_content"
+        android:background="#EAD5D5">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
-            <Button
-                android:id="@+id/btn_sizenho"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/btn_trove"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/arrow"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Chi tiết sản phẩm"
+                android:textSize="25dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:backgroundTint="@color/gray"
-                android:text="size nhỏ"/>
-            <Button
-                android:id="@+id/btn_sizelon"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:backgroundTint="@color/gray"
-                android:text="size lớn"/>
+                android:textStyle="bold"/>
+            <ImageButton
+                android:id="@+id/btn_giohang"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/baseline_shopping_cart_24"
+                android:layout_gravity="center"
+                android:layout_marginLeft="75dp"/>
         </LinearLayout>
-        <!-- Tên sản phẩm   -->
-        <TextView
-            android:id="@+id/txt_tensanpham"
+    </androidx.appcompat.widget.Toolbar>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="45dp"
+        android:layout_marginTop="50dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/black"
-            android:text="tên"
-            android:textSize="20dp"/>
-        <!-- Giá   -->
-        <TextView
-            android:id="@+id/txt_giá"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/red"
-            android:text="giá"
-            android:textSize="20dp"/>
-        <TextView
-            android:id="@+id/txt_chitietsp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="chi tiết"
-            android:textSize="20dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <!--    Thông tin -->
+            <!-- Tên sản phẩm   -->
+            <ImageView
+                android:id="@+id/image_anh"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:iss_auto_cycle="true"
+                app:iss_corner_radius="20"
+                app:iss_delay="0"
+                app:iss_period="3000"
+                app:iss_placeholder="@color/black" />
+
+            <TextView
+                android:id="@+id/txt_tensanpham"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+                android:textStyle="bold"/>
+            <!-- Giá   -->
+            <TextView
+                android:id="@+id/txt_giá"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/red"
+                android:text="giá"
+                android:textSize="20dp"
+                android:layout_marginLeft="270dp"/>
+            <TextView
+                android:id="@+id/txt_loai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/red"
+                android:text="loại"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Mô tả"
+                android:textSize="21dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/txt_motasp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="16dp"/>
+            <!--List comment-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Nhận xét"
+                android:textSize="21dp"
+                android:textStyle="bold"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"/>
+            <!-- Comment-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+>
+                <ImageView
+                    android:id="@+id/img_anhdaidien"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/oval"/>
+
+                <EditText
+                    android:id="@id/edittext_comment"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/elip"
+                    android:ems="10"
+                    android:hint="Comment"
+                    android:inputType="textPersonName" />
+
+                <Button
+                    android:id="@+id/btn_add"
+                    android:background="@drawable/elip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Đăng"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/menu_item_chitiet"
         android:background="#EAAFAF"
+        app:itemTextAppearanceActive="@style/navTextInactive"
         app:itemTextColor="@color/white"
-        app:itemTextAppearanceActive="@style/navTextInactive" />
+        app:menu="@menu/menu_item_chitiet" />
 </RelativeLayout>

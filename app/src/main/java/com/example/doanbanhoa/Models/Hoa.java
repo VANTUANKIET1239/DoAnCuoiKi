@@ -144,4 +144,19 @@ public class Hoa {
     public void setID_DanhMuc(String ID_DanhMuc) {
         this.ID_DanhMuc = ID_DanhMuc;
     }
+
+    @Override
+    public String toString() {
+        return "Hoa{" +
+                "Id='" + Id + '\'' +
+                ", Image_Hoa='" + Image_Hoa + '\'' +
+                ", TenHoa='" + TenHoa + '\'' +
+                ", LoaiHoa='" + LoaiHoa + '\'' +
+                ", Gia=" + Gia +
+                ", MoTa='" + MoTa + '\'' +
+                ", HangDanhGia=" + HangDanhGia +
+                ", SoLuongDanhGia=" + SoLuongDanhGia +
+                ", ID_DanhMuc='" + ID_DanhMuc + '\'' +
+                '}';
+    }
 }

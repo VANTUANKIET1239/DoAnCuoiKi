@@ -7,9 +7,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.R;
 
-public class HoaViewHolder extends RecyclerView.ViewHolder  {
+public class HoaViewHolder extends RecyclerView.ViewHolder {
     ImageView iv_photo;
     TextView tv_caption;
 
@@ -27,6 +28,5 @@ public class HoaViewHolder extends RecyclerView.ViewHolder  {
 //        Ho.setOnClickListener(this);
        this.mContext = context;
     }
-
 
 }

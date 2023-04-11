@@ -16,6 +16,12 @@ public class User {
         this.SDT = SDT;
         this.NgaySinh = ngaySinh;
     }
+    public User(String Id, String imagea, String hoTen) {
+        this.Id = Id;
+        this.Imagea = imagea;
+        this.HoTen = hoTen;
+
+    }
     public User() {
         this.Id = "";
         this.Imagea = "";
