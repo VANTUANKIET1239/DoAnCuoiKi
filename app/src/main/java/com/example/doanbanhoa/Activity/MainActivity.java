@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigationView = findViewById(R.id.navmenu);
-       // mViewpaper = findViewById(R.id.view_pager);
+
 
         fragmentArrayList.add(new TrangChuFragment());
         fragmentArrayList.add(new TaiKhoanFragment());
@@ -55,29 +55,25 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageSelected(position);
             }
         });*/
-        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
-//               switch (item.getItemId()){
-//                   case R.id.trangchu: mViewpaper.setCurrentItem(0); break;
-//                   case R.id.taikhoan: mViewpaper.setCurrentItem(1);break;
-//                   case R.id.giohang:mViewpaper.setCurrentItem(2); break;
-//               }
-
-                switch (item.getItemId()){
-                    case R.id.trangchu: fragment = fragmentArrayList.get(0); break;
-                    case R.id.taikhoan: fragment = fragmentArrayList.get(1);break;
-                    case R.id.giohang:fragment = fragmentArrayList.get(2); break;
-                    case R.id.danhmuc:fragment = fragmentArrayList.get(3); break;
-                }
-
-                if(fragment != null){
-                    loadFragment(fragment);
-                }
-               return true;
-            }
-        });
+//        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                Fragment fragment = null;
+//
+//
+//                switch (item.getItemId()){
+//                    case R.id.trangchu: fragment = fragmentArrayList.get(0); break;
+//                    case R.id.taikhoan: fragment = fragmentArrayList.get(1);break;
+//                    case R.id.giohang:fragment = fragmentArrayList.get(2); break;
+//                    case R.id.danhmuc:fragment = fragmentArrayList.get(3); break;
+//                }
+//
+//                if(fragment != null){
+//                    loadFragment(fragment);
+//                }
+//               return true;
+//            }
+//        });
 
     }
 //    private ViewPagerAdapter setupviewpager(ArrayList<Fragment> arr){

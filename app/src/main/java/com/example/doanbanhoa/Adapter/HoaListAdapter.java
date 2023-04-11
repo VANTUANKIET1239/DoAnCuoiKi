@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.R;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,10 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
         return new HoaViewHolder(mItemView, this,context);
     }
 
+    private String convertpricetostring(int a){
+        NumberFormat kiet = new DecimalFormat("#,###");
+        return kiet.format(a);
+    }
     @Override
     public void onBindViewHolder(@NonNull HoaViewHolder holder, int position) {
 //        Hoa mCurrent = mHoaList.get(position);
@@ -47,20 +53,20 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
 
         holder.tv_caption.setText(mHoaList.get(position).getTenHoa());
         loadImageFromUrl(mHoaList.get(position).getImage_Hoa(), holder.iv_photo);
-        holder.tv_giahoa.setText(String.valueOf(mHoaList.get(position).getGia()) + "Đ");
-        holder.tv_danhgia.setText(mHoaList.get(position).getHangDanhGia() + "(" + mHoaList.get(position).getSoLuongDanhGia() + ")");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.tv_giahoa.setText(convertpricetostring(mHoaList.get(position).getGia()) + "Đ");
+      //  holder.tv_danhgia.setText(mHoaList.get(position).getHangDanhGia() + "(" + mHoaList.get(position).getSoLuongDanhGia() + ")");
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //                // Create an intent to move to the other activity and pass the item information
 //                Intent intent = new Intent(context, ShowItem.class);
 //                intent.putExtra("imageUrl", mCurrent.getSource_photo());
 //                intent.putExtra("caption", mCurrent.getTitle_photo());
 //                intent.putExtra("description", mCurrent.getDescription_photo());
 //                context.startActivity(intent);
-            }
-
-        });
+//            }
+//
+//        });
     }
     @Override
     public int getItemCount() {

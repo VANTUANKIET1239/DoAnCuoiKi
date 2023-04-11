@@ -16,8 +16,8 @@
         android:layout_marginTop="130dp"
         >
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/hoae"
             android:layout_gravity="center"
             />

@@ -80,7 +80,7 @@ public class TaiKhoanFragment extends Fragment {
        // username = view.findViewById(R.id.Username);
         pullToRefresh = view.findViewById(R.id.pullToRefresh);
         btnTKhoan = view.findViewById(R.id.btnTK);
-        String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Theo Dõi Đơn Hàng","Lịch Sử Mua Hàng","Đăng Xuất"};
+        String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Lịch Sử Mua Hàng","Đăng Xuất"};
 
         auth = FirebaseAuth.getInstance();
         mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
