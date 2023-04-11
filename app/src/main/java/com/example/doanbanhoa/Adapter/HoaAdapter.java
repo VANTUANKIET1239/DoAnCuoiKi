@@ -70,8 +70,6 @@ public class HoaAdapter extends BaseAdapter {
         dataitem.tv_giahoa.setText(String.valueOf(lsHoa.get(position).getGia()) + "Đ");
         dataitem.tv_danhgia.setText(lsHoa.get(position).getHangDanhGia() + "(" + lsHoa.get(position).getSoLuongDanhGia() + ")");
 
-        Intent intent = new Intent(context, HoaActivity.class);
-        intent.putExtra("tenhoa", lsHoa.get(position).getTenHoa());
       return convertView;
     }
 

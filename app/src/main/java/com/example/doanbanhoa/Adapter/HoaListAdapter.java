@@ -1,5 +1,6 @@
 package com.example.doanbanhoa.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static com.example.doanbanhoa.LayHinhAnh.loadImageFromUrl;
 
 import android.content.Context;
@@ -57,6 +58,9 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
             @Override
             public void onClick(View v) {
                 // Create an intent to move to the other activity and pass the item information
+                Intent intent = new Intent(context,HoaActivity.class);
+                intent.putExtra("tenhoa", hoa.getTenHoa());
+                startActivity(context,intent,null);
 
             }
         });
