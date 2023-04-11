@@ -5,6 +5,7 @@ package com.example.doanbanhoa.Adapter;
 import static com.example.doanbanhoa.LayHinhAnh.loadImageFromUrl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,26 +13,31 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.doanbanhoa.Activity.HoaActivity;
 import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class HoaAdapter extends BaseAdapter {
-    private ArrayList<com.example.doanbanhoa.Models.Hoa> Hoa;
+    private ArrayList<com.example.doanbanhoa.Models.Hoa> lsHoa;
     private Context context;
+    ImageView img_anh;
+    TextView txt_ten, txt_gia, txt_mota;
     public HoaAdapter(ArrayList<Hoa> photo, Context context){
-        this.Hoa = photo;
+        this.lsHoa = photo;
         this.context = context;
     }
     @Override
     public int getCount(){
-        return Hoa.size();
+        return lsHoa.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return Hoa.get(position);
+        return lsHoa.get(position);
     }
 
     @Override
@@ -59,12 +65,16 @@ public class HoaAdapter extends BaseAdapter {
             dataitem = (MyView) convertView.getTag();
         }
 
-        dataitem.tv_caption.setText(Hoa.get(position).getTenHoa());
-        loadImageFromUrl(Hoa.get(position).getImage_Hoa(),dataitem.iv_photo);
-        dataitem.tv_giahoa.setText(String.valueOf(Hoa.get(position).getGia()) + "Đ");
-        dataitem.tv_danhgia.setText(Hoa.get(position).getHangDanhGia() + "(" + Hoa.get(position).getSoLuongDanhGia() + ")");
+        dataitem.tv_caption.setText(lsHoa.get(position).getTenHoa());
+        loadImageFromUrl(lsHoa.get(position).getImage_Hoa(),dataitem.iv_photo);
+        dataitem.tv_giahoa.setText(String.valueOf(lsHoa.get(position).getGia()) + "Đ");
+        dataitem.tv_danhgia.setText(lsHoa.get(position).getHangDanhGia() + "(" + lsHoa.get(position).getSoLuongDanhGia() + ")");
+
+        Intent intent = new Intent(context, HoaActivity.class);
+        intent.putExtra("tenhoa", lsHoa.get(position).getTenHoa());
       return convertView;
     }
+
     private static class MyView{
         ImageView iv_photo;
         TextView tv_caption;

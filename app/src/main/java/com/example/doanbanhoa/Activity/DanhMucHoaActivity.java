@@ -104,7 +104,6 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         List<Hoa> lshoa = queryDocumentSnapshots.toObjects(Hoa.class);
 
-
                             //lshoa.add(hoa);
                         HoaListAdapter adapter = new HoaListAdapter(getBaseContext(), lshoa);
                         listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));

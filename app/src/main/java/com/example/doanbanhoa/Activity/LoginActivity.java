@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doanbanhoa.R;
+import com.example.doanbanhoa.fragment.DanhMucFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String txt_mail = Email.getText().toString();
                 String txt_matkhau = matkhau.getText().toString();
-                LoginUser(txt_mail,txt_matkhau);
+
+               LoginUser(txt_mail,txt_matkhau);
             }
         });
     }
