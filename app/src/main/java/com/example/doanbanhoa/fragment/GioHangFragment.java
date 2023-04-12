@@ -4,19 +4,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.ConditionVariable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.doanbanhoa.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GioHangFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class GioHangFragment extends Fragment {
 
+
+public class GioHangFragment extends Fragment {
 
     public GioHangFragment() {
         // Required empty public constructor

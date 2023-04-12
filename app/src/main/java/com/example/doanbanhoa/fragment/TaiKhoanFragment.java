@@ -1,5 +1,6 @@
 package com.example.doanbanhoa.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.doanbanhoa.Activity.DiaChiActivity;
+import com.example.doanbanhoa.Activity.DoiMatKhauActivity;
 import com.example.doanbanhoa.Activity.HoSoNguoiDungActivity;
 import com.example.doanbanhoa.Activity.LoginActivity;
 import com.example.doanbanhoa.R;
@@ -43,18 +45,17 @@ public class TaiKhoanFragment extends Fragment {
     ListView lstoptaikhoan;
     ImageView anhcanhan;
 
-    TextView username;
-
     Button btnTKhoan;
     private StorageReference mSttorageRef;
 
-//    private DatabaseReference mDatabaseRef;
     private FirebaseAuth auth;
 
-    private SwipeRefreshLayout pullToRefresh;
-    public TaiKhoanFragment() {
-        // Required empty public constructor
+    private Context context;
 
+    private SwipeRefreshLayout pullToRefresh;
+    public TaiKhoanFragment(Context context) {
+        // Required empty public constructor
+        this.context = context;
     }
 //    private void refreshdata(){
 //        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -77,10 +78,9 @@ public class TaiKhoanFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         lstoptaikhoan = view.findViewById(R.id.optiontaikhoan);
         anhcanhan = view.findViewById(R.id.anhtaikhoan);
-       // username = view.findViewById(R.id.Username);
         pullToRefresh = view.findViewById(R.id.pullToRefresh);
         btnTKhoan = view.findViewById(R.id.btnTK);
-        String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Lịch Sử Mua Hàng","Đăng Xuất"};
+        String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Lịch Sử Mua Hàng","Đổi Mật Khẩu","Đăng Xuất"};
 
         auth = FirebaseAuth.getInstance();
         mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
@@ -99,7 +99,11 @@ public class TaiKhoanFragment extends Fragment {
                         switch (position){
                             case 0: startActivity(new Intent(getContext(), DiaChiActivity.class));break;
                             case 1: startActivity(new Intent(getContext(), HoSoNguoiDungActivity.class));break;
-                            case 3: auth.signOut();
+                            case 3:
+                                Intent intent = new Intent(context, DoiMatKhauActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 4: auth.signOut();
                                 startActivity(new Intent(getContext(), LoginActivity.class));
                                     getActivity().finish();
                                 break;
@@ -113,7 +117,7 @@ public class TaiKhoanFragment extends Fragment {
     }
 
     public static TaiKhoanFragment newInstance() {
-        TaiKhoanFragment fragment = new TaiKhoanFragment();
+        TaiKhoanFragment fragment = new TaiKhoanFragment(newInstance().context);
 
         return fragment;
     }

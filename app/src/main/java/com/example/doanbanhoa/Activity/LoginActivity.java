@@ -66,11 +66,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private String getFileEx(Uri uri){
-        ContentResolver cr = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cr.getType(uri));
-    }
     private void LoginUser(String email, String matkhau){
         auth.signInWithEmailAndPassword(email,matkhau).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override

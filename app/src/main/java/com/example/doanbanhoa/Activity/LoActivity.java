@@ -1,21 +1,16 @@
-package com.example.doanbanhoa;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.doanbanhoa.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 
-import com.example.doanbanhoa.Activity.LoginActivity;
-import com.example.doanbanhoa.Activity.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.doanbanhoa.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoActivity extends AppCompatActivity {
 
@@ -38,12 +33,9 @@ public class LoActivity extends AppCompatActivity {
                 if (user != null) {
 
 
-                                Intent intent = new Intent(LoActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-
-
-
+                    Intent intent = new Intent(LoActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
 
 
                 } else {

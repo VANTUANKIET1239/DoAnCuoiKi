@@ -3,6 +3,7 @@ package com.example.doanbanhoa.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -45,13 +50,19 @@ public class TrangChuFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView recyclerViewngang;
     ImageSlider imgslider;
-    ArrayAdapter<String> itemthutugia;
+    private ArrayAdapter<String> itemthutugia;
+
+    EditText timkiemtrangchu;
+
+     ImageButton btntimkiem,btnreset;
 
     private Context context;
-    FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firebaseFirestore;
 
-    String[] itemsthutu = {"Gía từ cao đến thấp", "Gía từ thấp đến cao"};
+   private String[] itemsthutu = {"Gía từ cao đến thấp", "Gía từ thấp đến cao"};
     AutoCompleteTextView autocomple;
+
+    private String tensp = "";
     public TrangChuFragment(Context context) {
         this.context = context;
 
@@ -64,11 +75,66 @@ public class TrangChuFragment extends Fragment {
         gridView = view.findViewById(R.id.gridview);
         recyclerView = view.findViewById(R.id.recycleviewhoa);
         recyclerViewngang = view.findViewById(R.id.recycleviewhoangang);
-
+        timkiemtrangchu = view.findViewById(R.id.timkiemtrangchu);
+        btntimkiem = view.findViewById(R.id.btntimkiem);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        //readJson();
+        recyclerViewngang.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
+        btnreset = view.findViewById(R.id.btnreset);
+        btnreset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()){
+                                List<Hoa> lshoa = new ArrayList<>();
+                                for (QueryDocumentSnapshot doc : task.getResult()){
+                                    Hoa hoa = doc.toObject(Hoa.class);
+                                    lshoa.add(hoa);
+                                }
+                                HoaListAdapter adapter = new HoaListAdapter(context,lshoa);
+                                recyclerView.setAdapter(adapter);
+                            }
+                        }
+                    });
+                tensp = "";
+            }
+        });
 
+        btntimkiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tensp = timkiemtrangchu.getText().toString();
+                if(tensp.length() != 0){
 
+                    firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                List<Hoa> lshoa = new ArrayList<>();
+
+                                for(QueryDocumentSnapshot doc : task.getResult()){
+                                    Hoa hoa = doc.toObject(Hoa.class);
+                                    if (hoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
+                                        lshoa.add(hoa);
+
+                                    }
+                                }
+                                HoaListAdapter adapter = new HoaListAdapter(context, lshoa);
+                                recyclerView.setAdapter(adapter);
+                            }
+                        }
+
+                    });
+                }
+                else {
+
+                    Toast.makeText(context,"Chưa Nhập Nội Dung Tìm Kiếm",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
         firebaseFirestore.collection("Sliders").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -85,48 +151,38 @@ public class TrangChuFragment extends Fragment {
         });
 
         autocomple = view.findViewById(R.id.thutugia);
-        itemthutugia = new ArrayAdapter<>(getActivity().getBaseContext(),R.layout.listitem_thutugia,itemsthutu);
+        itemthutugia = new ArrayAdapter<>(context,R.layout.listitem_thutugia,itemsthutu);
         autocomple.setAdapter(itemthutugia);
         autocomple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Query.Direction direction;
                 // từ cao đến thấp
                 if(position == 0){
-                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                List<Hoa> listHoaa = new ArrayList<>();
-                                for(QueryDocumentSnapshot doc : task.getResult()){
-                                    Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
-                                    listHoaa.add(newhoa);
-                                }
-                                HoaListAdapter adapter = new HoaListAdapter(getActivity().getBaseContext(),listHoaa);
-                                recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
-                                recyclerView.setAdapter(adapter);
-
-                            }
-                        }
-                    });
+                    direction = Query.Direction.DESCENDING;
                 }
                 else {
-                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                List<Hoa> listHoaa = new ArrayList<>();
-                                for(QueryDocumentSnapshot doc : task.getResult()){
-                                    Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
+                   direction = Query.Direction.ASCENDING;
+                }
+                firebaseFirestore.collection("Hoa").orderBy("gia", direction).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            List<Hoa> listHoaa = new ArrayList<>();
+                            for(QueryDocumentSnapshot doc : task.getResult()){
+                                Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
+                                if (newhoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
                                     listHoaa.add(newhoa);
                                 }
-                                HoaListAdapter adapter = new HoaListAdapter(getActivity().getBaseContext(),listHoaa);
-                                recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
-                                recyclerView.setAdapter(adapter);
 
                             }
+                            HoaListAdapter adapter = new HoaListAdapter(context,listHoaa);
+//                                recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
+                            recyclerView.setAdapter(adapter);
+
                         }
-                    });
-                }
+                    }
+                });
             }
         });
 
@@ -150,8 +206,7 @@ public class TrangChuFragment extends Fragment {
 //            });
 
           //  List<Hoa> listHoaa = new ArrayList<>();
-        recyclerViewngang.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.HORIZONTAL,false));
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
+
 
 
         firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

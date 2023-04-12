@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -25,29 +26,27 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
 
+    public static Activity main;
     ActivityMainBinding binding;
         private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        main = this;
         setContentView(R.layout.activity_main);
         navigationView = findViewById(R.id.navmenu);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        fragmentArrayList.add(new TrangChuFragment());
-//        fragmentArrayList.add(new TaiKhoanFragment());
-//        fragmentArrayList.add(new GioHangFragment());
-//        fragmentArrayList.add(new DanhMucFragment());
         replace(new TrangChuFragment(MainActivity.this));
         binding.navmenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.trangchu: replace(new TrangChuFragment(MainActivity.this)); break;
-                    case R.id.taikhoan:replace(new TaiKhoanFragment());break;
+                    case R.id.taikhoan:replace(new TaiKhoanFragment(MainActivity.this));break;
                     case R.id.giohang:replace(new GioHangFragment()); break;
-                    case R.id.danhmuc:replace(new DanhMucFragment()); break;
+                    case R.id.danhmuc:replace(new DanhMucFragment(MainActivity.this)); break;
                 }
                 return true;
             }
@@ -55,42 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       // loadFragment(new TrangChuFragment());
-       /* mViewpaper.setAdapter(setupviewpager(fragmentArrayList));
-        mViewpaper.setOffscreenPageLimit(1);
-        mViewpaper.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-
-                switch (position){
-                    case 0: navigationView.setSelectedItemId(R.id.trangchu);break;
-                    case 1: navigationView.setSelectedItemId(R.id.taikhoan);break;
-                    case 2: navigationView.setSelectedItemId(R.id.giohang); break;
-                }
-
-
-                super.onPageSelected(position);
-            }
-        });*/
-//        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                Fragment fragment = null;
-//
-//
-//                switch (item.getItemId()){
-//                    case R.id.trangchu: fragment = fragmentArrayList.get(0); break;
-//                    case R.id.taikhoan: fragment = fragmentArrayList.get(1);break;
-//                    case R.id.giohang:fragment = fragmentArrayList.get(2); break;
-//                    case R.id.danhmuc:fragment = fragmentArrayList.get(3); break;
-//                }
-//
-//                if(fragment != null){
-//                    loadFragment(fragment);
-//                }
-//               return true;
-//            }
-//        });
 
     }
     private void replace(Fragment fragment){
@@ -99,13 +62,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.relativelayout,fragment);
         fragmentTransaction.commit();
     }
-//    private ViewPagerAdapter setupviewpager(ArrayList<Fragment> arr){
-//        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,arr);
-//        return viewPagerAdapter;
-//    }
-    void loadFragment(Fragment fragment) {
-        //to attach fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout, fragment).commit();
-    }
+
 
 }

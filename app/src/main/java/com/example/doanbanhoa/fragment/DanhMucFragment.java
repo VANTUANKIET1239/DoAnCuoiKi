@@ -1,5 +1,6 @@
 package com.example.doanbanhoa.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,8 +36,11 @@ public class DanhMucFragment extends Fragment {
 
     FirebaseFirestore firebaseFirestore;
 
-    public DanhMucFragment() {
+    private Context context;
+
+    public DanhMucFragment(Context context) {
         // Required empty public constructor
+        this.context = context;
     }
 
     @Override
@@ -69,7 +73,7 @@ public class DanhMucFragment extends Fragment {
     }
 
     public static DanhMucFragment newInstance() {
-        DanhMucFragment fragment = new DanhMucFragment();
+        DanhMucFragment fragment = new DanhMucFragment(newInstance().context);
 
         return fragment;
     }

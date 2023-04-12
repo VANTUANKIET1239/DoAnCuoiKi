@@ -55,7 +55,7 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
         btnCatNhat = findViewById(R.id.catnhatthongtin);
         email = findViewById(R.id.email);
 
-        mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
+            mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
 //        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //            @Override
@@ -122,36 +122,37 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
         FirebaseUser currentuser = auth.getCurrentUser();
 
 
-        if(ImageCaNhan.getDrawable() != null){
-           if(Image != null){
+        if(Image != null){
+
                StorageReference fileRef = mSttorageRef.child(currentuser.getUid() +  "." +
                        getFileEx(Image));
 
                fileRef.putFile(Image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                    @Override
                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-
-                   }
-               }).addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-                       Toast.makeText(HoSoNguoiDungActivity.this,e.getMessage(), Toast.LENGTH_SHORT).show();
+                       mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                           @Override
+                           public void onSuccess(Uri uri) {
+                               User user = new User(auth.getCurrentUser().getUid(),uri.toString(),txtHoTen.getText().toString(),email.getText().toString(),txtSDT.getText().toString(),
+                                       txtNgaySinh.getText().toString());
+                               mDatabaseRef.child(auth.getCurrentUser().getUid()).setValue(user);
+                               Toast.makeText(HoSoNguoiDungActivity.this,"Cật nhật thành công!",Toast.LENGTH_SHORT).show();
+                           }
+                       });
                    }
                });
            }
-            mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        else {
+            mDatabaseRef.child(auth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                 @Override
-                public void onSuccess(Uri uri) {
-                    User user = new User(auth.getCurrentUser().getUid(),uri.toString(),txtHoTen.getText().toString(),email.getText().toString(),txtSDT.getText().toString(),
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    User us = dataSnapshot.getValue(User.class);
+                    User user = new User(auth.getCurrentUser().getUid(),us.getImagea(),txtHoTen.getText().toString(),email.getText().toString(),txtSDT.getText().toString(),
                             txtNgaySinh.getText().toString());
-                    mDatabaseRef.child(currentuser.getUid()).setValue(user);
+                    mDatabaseRef.child(auth.getCurrentUser().getUid()).setValue(user);
                     Toast.makeText(HoSoNguoiDungActivity.this,"Cật nhật thành công!",Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        else {
-            Toast.makeText(this,"Chưa chọn file",Toast.LENGTH_SHORT).show();
         }
     }
 }

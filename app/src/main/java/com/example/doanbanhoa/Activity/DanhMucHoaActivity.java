@@ -102,49 +102,48 @@ public class DanhMucHoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String tensp = timkiemdanhmuc.getText().toString();
-                if(tensp.length() != 0){
-
-                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if(task.isSuccessful()){
-                                List<Hoa> lshoa = new ArrayList<>();
-
-                                for(QueryDocumentSnapshot doc : task.getResult()){
-                                    Hoa hoa = doc.toObject(Hoa.class);
-                                    if (hoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
-                                        lshoa.add(hoa);
-
-                                    }
-                                }
-                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
- //                               listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                listhoadanhmuc.setAdapter(adapter);
-                            }
-                        }
-
-                    });
-                }
-                else {
-                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()){
-                                List<Hoa> lshoa = new ArrayList<>();
-                                for (QueryDocumentSnapshot doc : task.getResult()){
-                                    Hoa hoa = doc.toObject(Hoa.class);
-                                    lshoa.add(hoa);
-                                }
-                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
-//                                listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
-                                listhoadanhmuc.setAdapter(adapter);
-                            }
-                        }
-                    });
-                   Toast.makeText(getBaseContext(),"Không tìm thấy sản phẩm",Toast.LENGTH_SHORT).show();
-
-                }
+//                String tensp = timkiemdanhmuc.getText().toString();
+//                if(tensp.length() != 0){
+//
+//                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if(task.isSuccessful()){
+//                                List<Hoa> lshoa = new ArrayList<>();
+//
+//                                for(QueryDocumentSnapshot doc : task.getResult()){
+//                                    Hoa hoa = doc.toObject(Hoa.class);
+//                                    if (hoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
+//                                        lshoa.add(hoa);
+//
+//                                    }
+//                                }
+//                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
+// //                               listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+//                                listhoadanhmuc.setAdapter(adapter);
+//                            }
+//                        }
+//
+//                    });
+//                }
+//                else {
+//                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()){
+//                                List<Hoa> lshoa = new ArrayList<>();
+//                                for (QueryDocumentSnapshot doc : task.getResult()){
+//                                    Hoa hoa = doc.toObject(Hoa.class);
+//                                    lshoa.add(hoa);
+//                                }
+//                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
+//                                listhoadanhmuc.setAdapter(adapter);
+//                            }
+//                        }
+//                    });
+//                   Toast.makeText(getBaseContext(),"Không tìm thấy sản phẩm",Toast.LENGTH_SHORT).show();
+//
+//                }
 
             }
         });

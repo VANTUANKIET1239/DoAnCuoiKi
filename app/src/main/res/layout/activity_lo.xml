@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:background="#FDC0D8"
-    tools:context=".LoActivity">
+    tools:context=".Activity.LoActivity">
 
     <ImageView
         android:layout_width="170dp"

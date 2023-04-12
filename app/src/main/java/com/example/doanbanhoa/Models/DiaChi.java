@@ -17,17 +17,6 @@ public class DiaChi {
         this.SDT = SDT;
         DiaChi = diaChi;
     }
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("id", id);
-        result.put("hoTen", HoTen);
-        result.put("sdt", SDT);
-        result.put("diaChi", DiaChi);
-
-
-        return result;
-    }
     public DiaChi() {
              this.id = "";
         HoTen = "";

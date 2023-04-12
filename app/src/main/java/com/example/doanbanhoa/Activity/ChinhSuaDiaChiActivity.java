@@ -46,8 +46,7 @@ public class ChinhSuaDiaChiActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String id = intent.getStringExtra("Id");
                 DiaChi newdiachi = new DiaChi(id,txthoten.getText().toString(),txtsdt.getText().toString(),txtdiachi.getText().toString());
-                Map<String,Object> hehe = newdiachi.toMap();
-                firebaseDatabase.getReference("DiaChi").child(currentuser.getUid()).child(id).updateChildren(hehe).addOnSuccessListener(new OnSuccessListener<Void>() {
+                firebaseDatabase.getReference("DiaChi").child(currentuser.getUid()).child(id).setValue(newdiachi).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(getBaseContext(),"Chỉnh Sửa Địa Chỉ Thành Công",Toast.LENGTH_SHORT).show();
