@@ -14,7 +14,7 @@ public class Hoa {
     //private  boolean IsDelete;
     private String ID_DanhMuc;
 
-    public Hoa(String ID_Hoa, String Image_Hoa, String TenHoa, String LoaiHoa, int Gia, String MoTa, int HangDanhGia, int SoLuongDanhGia, boolean isDelete, String ID_DanhMuc) {
+    public Hoa(String ID_Hoa, String Image_Hoa, String TenHoa, String LoaiHoa, int Gia, String MoTa, int HangDanhGia, int SoLuongDanhGia, String ID_DanhMuc) {
         this.Id = ID_Hoa;
         this.Image_Hoa = Image_Hoa;
         this.TenHoa = TenHoa;

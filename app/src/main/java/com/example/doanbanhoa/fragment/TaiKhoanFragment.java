@@ -48,7 +48,7 @@ public class TaiKhoanFragment extends Fragment {
     Button btnTKhoan;
     private StorageReference mSttorageRef;
 
-    private DatabaseReference mDatabaseRef;
+//    private DatabaseReference mDatabaseRef;
     private FirebaseAuth auth;
 
     private SwipeRefreshLayout pullToRefresh;
@@ -88,13 +88,7 @@ public class TaiKhoanFragment extends Fragment {
         lstoptaikhoan.setAdapter(op);
 
 
-//        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refreshdata();
-//                pullToRefresh.setRefreshing(false);
-//            }
-//        });
+
         lstoptaikhoan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,7 +99,7 @@ public class TaiKhoanFragment extends Fragment {
                         switch (position){
                             case 0: startActivity(new Intent(getContext(), DiaChiActivity.class));break;
                             case 1: startActivity(new Intent(getContext(), HoSoNguoiDungActivity.class));break;
-                            case 4: auth.signOut();
+                            case 3: auth.signOut();
                                 startActivity(new Intent(getContext(), LoginActivity.class));
                                     getActivity().finish();
                                 break;
@@ -115,20 +109,7 @@ public class TaiKhoanFragment extends Fragment {
 
             }
         });
-//        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Picasso.get().load(uri).resize(150,150).into(anhcanhan);
-//                //    Toast.makeText(HoSoNguoiDungActivity.this,uri.toString(),Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
-//        mDatabaseRef.child(auth.getCurrentUser().getUid()).child("hoTen").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-//            @Override
-//            public void onSuccess(DataSnapshot dataSnapshot) {
-//                username.setText(dataSnapshot.getValue().toString());
-//            }
-//        });
+
     }
 
     public static TaiKhoanFragment newInstance() {

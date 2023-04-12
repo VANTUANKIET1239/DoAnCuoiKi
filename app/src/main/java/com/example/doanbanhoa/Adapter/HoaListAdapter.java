@@ -1,8 +1,10 @@
 package com.example.doanbanhoa.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static com.example.doanbanhoa.LayHinhAnh.loadImageFromUrl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doanbanhoa.Activity.HoaActivity;
 import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.R;
 
@@ -38,7 +41,7 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
     @Override
     public HoaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.hoa_disp_tpl, parent, false);
-        return new HoaViewHolder(mItemView, this,context);
+        return new HoaViewHolder(mItemView);
     }
 
     private String convertpricetostring(int a){
@@ -54,19 +57,17 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
         holder.tv_caption.setText(mHoaList.get(position).getTenHoa());
         loadImageFromUrl(mHoaList.get(position).getImage_Hoa(), holder.iv_photo);
         holder.tv_giahoa.setText(convertpricetostring(mHoaList.get(position).getGia()) + "Đ");
-      //  holder.tv_danhgia.setText(mHoaList.get(position).getHangDanhGia() + "(" + mHoaList.get(position).getSoLuongDanhGia() + ")");
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Create an intent to move to the other activity and pass the item information
-//                Intent intent = new Intent(context, ShowItem.class);
-//                intent.putExtra("imageUrl", mCurrent.getSource_photo());
-//                intent.putExtra("caption", mCurrent.getTitle_photo());
-//                intent.putExtra("description", mCurrent.getDescription_photo());
-//                context.startActivity(intent);
-//            }
-//
-//        });
+        Hoa hoa = mHoaList.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to move to the other activity and pass the item information
+                Intent intent = new Intent(context, HoaActivity.class);
+                intent.putExtra("tenhoa", hoa.getId());
+                startActivity(context,intent,null);
+
+            }
+        });
     }
     @Override
     public int getItemCount() {

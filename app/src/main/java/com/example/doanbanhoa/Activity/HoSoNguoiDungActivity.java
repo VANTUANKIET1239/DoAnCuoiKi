@@ -57,22 +57,27 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
 
         mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
-        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).resize(150,150).into(ImageCaNhan);
-            //    Toast.makeText(HoSoNguoiDungActivity.this,uri.toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
+//        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).resize(150,150).into(ImageCaNhan);
+//            //    Toast.makeText(HoSoNguoiDungActivity.this,uri.toString(),Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         email.setText(auth.getCurrentUser().getEmail());
 
         mDatabaseRef.child(auth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 User user = (User) dataSnapshot.getValue(User.class);
-                txtHoTen.setText(user.getHoTen());
-                txtSDT.setText(user.getSDT());
-                txtNgaySinh.setText(user.getNgaySinh());
+
+                    Picasso.get().load(user.getImagea()).resize(150,150).into(ImageCaNhan);
+                    txtHoTen.setText(user.getHoTen());
+                    txtSDT.setText(user.getSDT());
+                    txtNgaySinh.setText(user.getNgaySinh());
+
+
             }
         });
 

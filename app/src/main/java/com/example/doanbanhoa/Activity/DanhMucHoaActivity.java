@@ -80,6 +80,7 @@ public class DanhMucHoaActivity extends AppCompatActivity {
         String iddm =  intent.getStringExtra("iddanhmuc");
         String tendm = intent.getStringExtra("tendanhmuc");
 
+        listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         tendanhmuc.setText(tendm);
         firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -90,8 +91,8 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                         Hoa hoa = doc.toObject(Hoa.class);
                         lshoa.add(hoa);
                     }
-                    HoaListAdapter adapter = new HoaListAdapter(getBaseContext(),lshoa);
-                    listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(),2));
+                    HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
+ //                   listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
                     listhoadanhmuc.setAdapter(adapter);
                 }
             }
@@ -104,7 +105,7 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                 String tensp = timkiemdanhmuc.getText().toString();
                 if(tensp.length() != 0){
 
-                    firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
@@ -117,8 +118,8 @@ public class DanhMucHoaActivity extends AppCompatActivity {
 
                                     }
                                 }
-                                HoaListAdapter adapter = new HoaListAdapter(getBaseContext(), lshoa);
-                                listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
+                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
+ //                               listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                                 listhoadanhmuc.setAdapter(adapter);
                             }
                         }
@@ -126,7 +127,23 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                     });
                 }
                 else {
+                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()){
+                                List<Hoa> lshoa = new ArrayList<>();
+                                for (QueryDocumentSnapshot doc : task.getResult()){
+                                    Hoa hoa = doc.toObject(Hoa.class);
+                                    lshoa.add(hoa);
+                                }
+                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
+//                                listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+                                listhoadanhmuc.setAdapter(adapter);
+                            }
+                        }
+                    });
                    Toast.makeText(getBaseContext(),"Không tìm thấy sản phẩm",Toast.LENGTH_SHORT).show();
+
                 }
 
             }
@@ -165,8 +182,7 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                             Hoa hoa = doc.toObject(Hoa.class);
                             lshoa.add(hoa);
                         }
-                        HoaListAdapter adapter = new HoaListAdapter(getBaseContext(), lshoa);
-                        listhoadanhmuc.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
+                        HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
                         listhoadanhmuc.setAdapter(adapter);
                     }
                 }

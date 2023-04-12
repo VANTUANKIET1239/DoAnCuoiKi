@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,11 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doanbanhoa.Models.User;
 import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -26,6 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
     private  EditText xacnhanmatkhau;
 
     private FirebaseAuth auth;
+
+    private FirebaseDatabase firebaseDatabase;
+
+    private StorageReference storageReference;
 
     TextView quaylaiDN;
 
@@ -39,6 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
         quaylaiDN = findViewById(R.id.quaylaitaikhoan);
         xacnhanmatkhau = findViewById(R.id.xacnhanmatkhau);
         auth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +81,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+
+                    User newus = new User();
+                    newus.setEmail(email);
+                    String defaultimage = "https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang.jpg";
+                    Uri uri = Uri.parse(defaultimage);
+                    newus.setImagea(defaultimage);
+                    newus.setId(auth.getCurrentUser().getUid());
+                    storageReference.child(auth.getCurrentUser().getUid() + ".jpg");
+                    firebaseDatabase.getReference("Users").child(auth.getCurrentUser().getUid()).setValue(newus);
                     Toast.makeText(RegisterActivity.this, "đăng ký thành công", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getBaseContext(), LoginActivity.class));
                    // finish();

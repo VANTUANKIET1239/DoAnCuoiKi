@@ -23,12 +23,12 @@
 <!--        android:layout_above="@+id/navmenu"-->
 <!--        />-->
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relativelayout"
         android:layout_above="@+id/navmenu"
-        ></RelativeLayout>
+        ></FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navmenu"

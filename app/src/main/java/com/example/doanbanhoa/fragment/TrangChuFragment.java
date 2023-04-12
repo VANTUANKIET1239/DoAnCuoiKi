@@ -2,6 +2,7 @@ package com.example.doanbanhoa.fragment;
 
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,95 +42,94 @@ import java.util.List;
 public class TrangChuFragment extends Fragment {
     GridView gridView;
 
-//    RecyclerView recyclerView;
-//    RecyclerView recyclerViewngang;
+    RecyclerView recyclerView;
+    RecyclerView recyclerViewngang;
     ImageSlider imgslider;
     ArrayAdapter<String> itemthutugia;
 
+    private Context context;
     FirebaseFirestore firebaseFirestore;
 
-
-
-    List<Hoa> lshoa;
     String[] itemsthutu = {"Gía từ cao đến thấp", "Gía từ thấp đến cao"};
     AutoCompleteTextView autocomple;
-    public TrangChuFragment() {
+    public TrangChuFragment(Context context) {
+        this.context = context;
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        imgslider = view.findViewById(R.id.image_slider);
-//        gridView = view.findViewById(R.id.gridview);
-////        recyclerView = view.findViewById(R.id.recycleviewhoa);
-////        recyclerViewngang = view.findViewById(R.id.recycleviewhoangang);
-//
-//        firebaseFirestore = FirebaseFirestore.getInstance();
-//        //readJson();
-//
-//
-//        firebaseFirestore.collection("Sliders").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if(task.isComplete()){
-//                    List<SlideModel> im = new ArrayList<>();
-//                    for (QueryDocumentSnapshot doc : task.getResult()){
-//                        Slider slider = new Slider(doc.getId(), new SlideModel(doc.get("imageSlider").toString(),ScaleTypes.FIT));
-//                        im.add(slider.getImageSlider());
-//                    }
-//
-//                    imgslider.setImageList(im,ScaleTypes.FIT );
-//                }
-//            }
-//        });
-//
-//        autocomple = view.findViewById(R.id.thutugia);
-//        itemthutugia = new ArrayAdapter<>(getContext(),R.layout.listitem_thutugia,itemsthutu);
-//        autocomple.setAdapter(itemthutugia);
-//        autocomple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                // từ cao đến thấp
-//                if(position == 0){
-//                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if(task.isSuccessful()){
-//                                List<Hoa> listHoaa = new ArrayList<>();
-//                                for(QueryDocumentSnapshot doc : task.getResult()){
-//                                    Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
-//                                    listHoaa.add(newhoa);
-//                                }
-//                                HoaListAdapter adapter = new HoaListAdapter(getContext(),listHoaa);
-//                                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-//                                recyclerView.setAdapter(adapter);
-//
-//                            }
-//                        }
-//                    });
-//                }
-//                else {
-//                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if(task.isSuccessful()){
-//                                List<Hoa> listHoaa = new ArrayList<>();
-//                                for(QueryDocumentSnapshot doc : task.getResult()){
-//                                    Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
-//                                    listHoaa.add(newhoa);
-//                                }
-//                                HoaListAdapter adapter = new HoaListAdapter(getContext(),listHoaa);
-//                                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-//                                recyclerView.setAdapter(adapter);
-//
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//
+        imgslider = view.findViewById(R.id.image_slider);
+        gridView = view.findViewById(R.id.gridview);
+        recyclerView = view.findViewById(R.id.recycleviewhoa);
+        recyclerViewngang = view.findViewById(R.id.recycleviewhoangang);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        //readJson();
+
+
+        firebaseFirestore.collection("Sliders").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isComplete()){
+                    List<SlideModel> im = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : task.getResult()){
+                        Slider slider = new Slider(doc.getId(), new SlideModel(doc.get("imageSlider").toString(),ScaleTypes.FIT));
+                        im.add(slider.getImageSlider());
+                    }
+
+                    imgslider.setImageList(im,ScaleTypes.FIT );
+                }
+            }
+        });
+
+        autocomple = view.findViewById(R.id.thutugia);
+        itemthutugia = new ArrayAdapter<>(getActivity().getBaseContext(),R.layout.listitem_thutugia,itemsthutu);
+        autocomple.setAdapter(itemthutugia);
+        autocomple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // từ cao đến thấp
+                if(position == 0){
+                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                List<Hoa> listHoaa = new ArrayList<>();
+                                for(QueryDocumentSnapshot doc : task.getResult()){
+                                    Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
+                                    listHoaa.add(newhoa);
+                                }
+                                HoaListAdapter adapter = new HoaListAdapter(getActivity().getBaseContext(),listHoaa);
+                                recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
+                                recyclerView.setAdapter(adapter);
+
+                            }
+                        }
+                    });
+                }
+                else {
+                    firebaseFirestore.collection("Hoa").orderBy("gia", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                List<Hoa> listHoaa = new ArrayList<>();
+                                for(QueryDocumentSnapshot doc : task.getResult()){
+                                    Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
+                                    listHoaa.add(newhoa);
+                                }
+                                HoaListAdapter adapter = new HoaListAdapter(getActivity().getBaseContext(),listHoaa);
+                                recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
+                                recyclerView.setAdapter(adapter);
+
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
 
 
 //            firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -138,52 +138,61 @@ public class TrangChuFragment extends Fragment {
 //                    if(task.isSuccessful()){
 //                        List<Hoa> listHoaa = new ArrayList<>();
 //                        for(QueryDocumentSnapshot doc : task.getResult()){
-//                            Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
+//                            Hoa newhoa = doc.toObject(Hoa.class);
 //                            listHoaa.add(newhoa);
 //                        }
 //                        HoaListAdapter adapter = new HoaListAdapter(getActivity().getBaseContext(),listHoaa);
-//                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+//                        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
 //                        recyclerView.setAdapter(adapter);
 //
 //                    }
 //                }
 //            });
 
-//        firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if(task.isSuccessful()){
-//                    List<Hoa> listHoaa = new ArrayList<>();
-//                    for(QueryDocumentSnapshot doc : task.getResult()){
-//                        Hoa newhoa = (Hoa) doc.toObject(Hoa.class);
-//                        listHoaa.add(newhoa);
-//                    }
-//                    HoaListAdapter adapterngang = new HoaListAdapter(getContext(),listHoaa);
-//                    recyclerViewngang.setAdapter(adapterngang);
-//                    recyclerViewngang.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
-//
-//                }
-//            }
-//        });
+          //  List<Hoa> listHoaa = new ArrayList<>();
+        recyclerViewngang.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
+
+
+        firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<Hoa> listHoaa = new ArrayList<>();
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        Hoa newhoa = doc.toObject(Hoa.class);
+                        listHoaa.add(newhoa);
+                    }
+
+                    HoaListAdapter adapterngang = new HoaListAdapter(context,listHoaa);
+                    recyclerViewngang.setAdapter(adapterngang);
+
+                    HoaListAdapter adapter = new HoaListAdapter(context,listHoaa);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
+
+    //    listHoaa.add(new Hoa("1","đư","feifnef","ềof",1323,"fwfwf",4,5,"34"));
+
 
     }
 
 
     public static TrangChuFragment newInstance() {
-        TrangChuFragment fragment = new TrangChuFragment();
+        TrangChuFragment fragment = new TrangChuFragment(newInstance().context);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_trang_chu, container, false);
     }
 

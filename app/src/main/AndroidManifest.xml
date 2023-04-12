@@ -26,6 +26,9 @@
             android:name=".Activity.DanhMucHoaActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.HoaActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ChinhSuaDiaChiActivity"
             android:exported="false" />
         <activity

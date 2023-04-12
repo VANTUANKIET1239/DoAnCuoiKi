@@ -3,6 +3,8 @@ package com.example.doanbanhoa.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 
 import com.example.doanbanhoa.Adapter.ViewPagerAdapter;
 import com.example.doanbanhoa.R;
+import com.example.doanbanhoa.databinding.ActivityMainBinding;
 import com.example.doanbanhoa.fragment.DanhMucFragment;
 import com.example.doanbanhoa.fragment.GioHangFragment;
 import com.example.doanbanhoa.fragment.TaiKhoanFragment;
@@ -21,9 +24,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
-    private ViewPager2 mViewpaper;
 
-
+    ActivityMainBinding binding;
         private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +33,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigationView = findViewById(R.id.navmenu);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+//        fragmentArrayList.add(new TrangChuFragment());
+//        fragmentArrayList.add(new TaiKhoanFragment());
+//        fragmentArrayList.add(new GioHangFragment());
+//        fragmentArrayList.add(new DanhMucFragment());
+        replace(new TrangChuFragment(MainActivity.this));
+        binding.navmenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.trangchu: replace(new TrangChuFragment(MainActivity.this)); break;
+                    case R.id.taikhoan:replace(new TaiKhoanFragment());break;
+                    case R.id.giohang:replace(new GioHangFragment()); break;
+                    case R.id.danhmuc:replace(new DanhMucFragment()); break;
+                }
+                return true;
+            }
+        });
 
 
-        fragmentArrayList.add(new TrangChuFragment());
-        fragmentArrayList.add(new TaiKhoanFragment());
-        fragmentArrayList.add(new GioHangFragment());
-        fragmentArrayList.add(new DanhMucFragment());
 
-        loadFragment(new TrangChuFragment());
+       // loadFragment(new TrangChuFragment());
        /* mViewpaper.setAdapter(setupviewpager(fragmentArrayList));
         mViewpaper.setOffscreenPageLimit(1);
         mViewpaper.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -75,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
+    private void replace(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.relativelayout,fragment);
+        fragmentTransaction.commit();
     }
 //    private ViewPagerAdapter setupviewpager(ArrayList<Fragment> arr){
 //        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,arr);
