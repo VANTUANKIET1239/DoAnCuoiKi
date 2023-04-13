@@ -4,11 +4,10 @@
 
     <gradient
         android:angle="135"
-        android:centerColor="@color/gray_2"
-        android:type="linear" />
+        android:centerColor="@color/gray_2"/>
 
     <size
-        android:width="50dp"
-        android:height="50dp" />
+        android:width="100dp"
+        android:height="100dp" />
 
 </shape>

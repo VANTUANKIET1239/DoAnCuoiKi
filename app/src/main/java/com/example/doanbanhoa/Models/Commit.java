@@ -1,16 +1,20 @@
 package com.example.doanbanhoa.Models;
 
+import com.google.firebase.database.ServerValue;
+
 public class Commit {
     private String id_user;
     private String content;
     private String user_name;
     private String user_img;
+    private Object time;
 
     public Commit(String id_user, String content, String user_name, String user_img) {
         this.id_user = id_user;
         this.content = content;
         this.user_name = user_name;
         this.user_img = user_img;
+        this.time = ServerValue.TIMESTAMP;
     }
     public Commit() {
         this.id_user = id_user;
@@ -18,6 +22,7 @@ public class Commit {
         this.user_name = user_name;
         this.user_img = user_img;
     }
+
 
     public String getId_user() {
         return id_user;
@@ -49,5 +54,13 @@ public class Commit {
 
     public void setUser_img(String user_img) {
         this.user_img = user_img;
+    }
+
+    public Object getTime() {
+        return time;
+    }
+
+    public void setTime(Object time) {
+        this.time = time;
     }
 }
