@@ -63,7 +63,7 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
             public void onClick(View v) {
                 // Create an intent to move to the other activity and pass the item information
                 Intent intent = new Intent(context, HoaActivity.class);
-                intent.putExtra("tenhoa", hoa.getId());
+                intent.putExtra("id", hoa.getId());
                 startActivity(context,intent,null);
 
             }

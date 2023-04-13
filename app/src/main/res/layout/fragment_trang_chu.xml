@@ -140,8 +140,7 @@
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_gravity="center"
-                        android:background="@color/hong"
-                        android:src="@drawable/baseline_restart_alt_24"></ImageButton>
+                        android:background="@color/hong"></ImageButton>
                 </LinearLayout>
 
 
