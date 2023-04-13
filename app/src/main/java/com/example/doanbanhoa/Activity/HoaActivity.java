@@ -1,37 +1,30 @@
 package com.example.doanbanhoa.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.doanbanhoa.Adapter.CommentAdapter;
-import com.example.doanbanhoa.Adapter.HoaListAdapter;
-import com.example.doanbanhoa.Adapter.ListDiaChiAdapter;
-import com.example.doanbanhoa.LayHinhAnh;
-import com.example.doanbanhoa.Models.Commit;
-import com.example.doanbanhoa.Models.DiaChi;
+import com.example.doanbanhoa.Models.Comment;
 import com.example.doanbanhoa.Models.Hoa;
 
 import com.example.doanbanhoa.Models.User;
 import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,28 +35,24 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class HoaActivity extends AppCompatActivity {
 
     ImageView img_anh, img_user, minus, plus;
-    TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong;
+    TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong,txt_ratting;
     Button btn_addcomment;
     BottomNavigationView themgiohang;
     RecyclerView RVcomment;
-    List<Commit> lscmt;
+    RatingBar ratingBar_comment, user_rating;
+    List<Comment> lscmt;
+    List<Float> allrating = new ArrayList<Float>();
     CommentAdapter commentAdapter;
     FirebaseDatabase firebaseDatabase;
     FirebaseFirestore firebaseFirestore;
@@ -71,6 +60,7 @@ public class HoaActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     User users;
     Integer soluong;
+    Float rating_user; Float averageRating = 0f;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +88,13 @@ public class HoaActivity extends AppCompatActivity {
         plus = findViewById(R.id.plus);
         txt_soluong = findViewById(R.id.txt_soluong);
         themgiohang = findViewById(R.id.btn_themgiohang);
+        ratingBar_comment = findViewById(R.id.ratting);
+        txt_ratting = findViewById(R.id.txt_tongratting);
+        user_rating = findViewById(R.id.user_ratting);
 
         Intent intent = getIntent();
         String id_hoa =  intent.getStringExtra("id");
+        RVcomment.addItemDecoration(new MyItemDecoration(10));
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +124,18 @@ public class HoaActivity extends AppCompatActivity {
 
             }
         });
+        user_rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean b) {
+                rating_user = rating;
+//                int count = allrating.size();
+//                float sum = averageRating * count;
+//                sum += rating;
+//                count++;
+//                averageRating = sum / count;
+            }
+        });
         firebaseFirestore.collection("Hoa").whereEqualTo("id",id_hoa)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -148,35 +153,16 @@ public class HoaActivity extends AppCompatActivity {
                 }
             }
         });
-        firebaseDatabase.getReference("Users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User tam = snapshot.getValue(User.class);
-                    String ten = tam.getHoTen();
-                    String urlimage = tam.getImagea();
-                   Picasso.get().load(urlimage).resize(50,50).into(img_user);
-                    users = new User(user.getUid(),urlimage,ten);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         btn_addcomment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 btn_addcomment.setVisibility(View.INVISIBLE);
                 DatabaseReference databaseReference = firebaseDatabase.getReference("Comment").child(id_hoa).push();
                 String comment = txt_comment.getText().toString();
                 String id = users.getId();
-                String user_name = users.getHoTen();
-                String url = users.getImagea();
-                Commit commit = new Commit(id, comment, user_name,url);
+                Comment cmt = new Comment(id, comment,rating_user);
 
-                databaseReference.setValue(commit).addOnSuccessListener(new OnSuccessListener<Void>() {
+                databaseReference.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         ShowMessage("comment add");
@@ -184,14 +170,36 @@ public class HoaActivity extends AppCompatActivity {
                         btn_addcomment.setVisibility(View.VISIBLE);
                     }
                 });
-
             }
         });
+        doSubmit(id_hoa);
+        ItemUser();
         iniRvcomment(id_hoa);
 
     }
     private  void ShowMessage(String mess){
         Toast.makeText(this,mess, Toast.LENGTH_SHORT).show();
+    }
+    public class MyItemDecoration extends RecyclerView.ItemDecoration {
+        private int spacing;
+
+        public MyItemDecoration(int spacing) {
+            this.spacing = spacing;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.left = spacing;
+            outRect.right = spacing;
+            outRect.bottom = spacing;
+
+            // Add top margin only for the first item to avoid double space between items
+            if (parent.getChildAdapterPosition(view) == 0) {
+                outRect.top = spacing;
+            } else {
+                outRect.top = 5;
+            }
+        }
     }
     private void iniRvcomment(String id_hoa){
         RVcomment.setLayoutManager(new LinearLayoutManager(this));
@@ -201,11 +209,12 @@ public class HoaActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 lscmt = new ArrayList<>();
                 for(DataSnapshot snap: snapshot.getChildren()){
-                    Commit cmt = snap.getValue(Commit.class);
+                    Comment cmt = snap.getValue(Comment.class);
                     lscmt.add(cmt);
                 }
-                commentAdapter = new CommentAdapter(getApplicationContext(), lscmt);
+                commentAdapter = new CommentAdapter(getApplicationContext(),lscmt);
                 RVcomment.setAdapter(commentAdapter);
+
             }
 
             @Override
@@ -214,10 +223,47 @@ public class HoaActivity extends AppCompatActivity {
             }
         });
     }
-    private  String timeStamp(long time){
-        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-        calendar.setTimeInMillis(time);
-        String date = DateFormat.format("dd-MM-yyyy",calendar).toString();
-        return date;
+    private void ItemUser(){
+        firebaseDatabase.getReference("Users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User tam = snapshot.getValue(User.class);
+                String ten = tam.getHoTen();
+                String urlimage = tam.getImagea();
+                Picasso.get().load(urlimage).into(img_user);
+                users = new User(user.getUid(),urlimage,ten);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void doSubmit( String id_hoa){
+        DatabaseReference ratingReference = firebaseDatabase.getReference("Comment").child(id_hoa);
+        ratingReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                float sum = 0f;
+                int count = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Comment cmt = snapshot.getValue(Comment.class);
+                    float rating = cmt.getRating();
+                    sum += rating;
+                    count++;
+                    allrating.add(rating);
+                }
+                if (count > 0) {
+                    averageRating = sum / count;
+                    txt_ratting.setText(String.valueOf(averageRating));
+                    ratingBar_comment.setRating(averageRating);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
