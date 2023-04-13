@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,6 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -50,13 +52,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class HoaActivity extends AppCompatActivity {
 
     ImageView img_anh, img_user, minus, plus;
     TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong;
-    Button btn_addcomment, btn_themgiohang;
+    Button btn_addcomment;
+    BottomNavigationView themgiohang;
     RecyclerView RVcomment;
     List<Commit> lscmt;
     CommentAdapter commentAdapter;
@@ -92,7 +97,7 @@ public class HoaActivity extends AppCompatActivity {
         minus = findViewById(R.id.minus);
         plus = findViewById(R.id.plus);
         txt_soluong = findViewById(R.id.txt_soluong);
-        btn_themgiohang = findViewById(R.id.btn_themgiohang);
+        themgiohang = findViewById(R.id.btn_themgiohang);
 
         Intent intent = getIntent();
         String id_hoa =  intent.getStringExtra("id");
@@ -119,10 +124,10 @@ public class HoaActivity extends AppCompatActivity {
                 txt_soluong.setText(soluong.toString());
             }
         });
-        btn_themgiohang.setOnClickListener(new View.OnClickListener() {
+        themgiohang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
             }
         });
 
@@ -208,5 +213,11 @@ public class HoaActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private  String timeStamp(long time){
+        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+        calendar.setTimeInMillis(time);
+        String date = DateFormat.format("dd-MM-yyyy",calendar).toString();
+        return date;
     }
 }
