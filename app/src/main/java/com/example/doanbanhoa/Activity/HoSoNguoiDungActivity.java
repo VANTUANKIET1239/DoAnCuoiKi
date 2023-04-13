@@ -35,14 +35,15 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView ImageCaNhan;
 
-    EditText txtHoTen,txtSDT, txtNgaySinh;
+    EditText txtHoTen, txtSDT, txtNgaySinh;
     Button btnCatNhat;
     TextView email;
-    private  StorageReference mSttorageRef;
+    private StorageReference mSttorageRef;
     private DatabaseReference mDatabaseRef;
 
     private FirebaseAuth auth;
     private Uri Image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         auth = FirebaseAuth.getInstance();
@@ -55,15 +56,9 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
         btnCatNhat = findViewById(R.id.catnhatthongtin);
         email = findViewById(R.id.email);
 
-            mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
+        mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
-//        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Picasso.get().load(uri).resize(150,150).into(ImageCaNhan);
-//            //    Toast.makeText(HoSoNguoiDungActivity.this,uri.toString(),Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
 
         email.setText(auth.getCurrentUser().getEmail());
 
@@ -72,10 +67,10 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 User user = (User) dataSnapshot.getValue(User.class);
 
-                    Picasso.get().load(user.getImagea()).resize(150,150).into(ImageCaNhan);
-                    txtHoTen.setText(user.getHoTen());
-                    txtSDT.setText(user.getSDT());
-                    txtNgaySinh.setText(user.getNgaySinh());
+                Picasso.get().load(user.getImagea()).resize(150, 150).into(ImageCaNhan);
+                txtHoTen.setText(user.getHoTen());
+                txtSDT.setText(user.getSDT());
+                txtNgaySinh.setText(user.getNgaySinh());
 
 
             }
@@ -97,60 +92,62 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
         });
 
     }
-    private void MoAnh(){
+
+    private void MoAnh() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null &&  data.getData() != null){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Image = data.getData();
-            Picasso.get().load(Image).resize(150,150).into(ImageCaNhan);
+            Picasso.get().load(Image).resize(150, 150).into(ImageCaNhan);
         }
     }
 
-    private String getFileEx(Uri uri){
+    private String getFileEx(Uri uri) {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
-    private void uploadthongtin(){
+
+    private void uploadthongtin() {
         FirebaseUser currentuser = auth.getCurrentUser();
 
 
-        if(Image != null){
+        if (Image != null) {
 
-               StorageReference fileRef = mSttorageRef.child(currentuser.getUid() +  "." +
-                       getFileEx(Image));
+            StorageReference fileRef = mSttorageRef.child(currentuser.getUid() + "." +
+                    getFileEx(Image));
 
-               fileRef.putFile(Image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                   @Override
-                   public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                       mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                           @Override
-                           public void onSuccess(Uri uri) {
-                               User user = new User(auth.getCurrentUser().getUid(),uri.toString(),txtHoTen.getText().toString(),email.getText().toString(),txtSDT.getText().toString(),
-                                       txtNgaySinh.getText().toString());
-                               mDatabaseRef.child(auth.getCurrentUser().getUid()).setValue(user);
-                               Toast.makeText(HoSoNguoiDungActivity.this,"Cật nhật thành công!",Toast.LENGTH_SHORT).show();
-                           }
-                       });
-                   }
-               });
-           }
-        else {
+            fileRef.putFile(Image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            User user = new User(auth.getCurrentUser().getUid(), uri.toString(), txtHoTen.getText().toString(), email.getText().toString(), txtSDT.getText().toString(),
+
+                                    txtNgaySinh.getText().toString());
+                            mDatabaseRef.child(auth.getCurrentUser().getUid()).setValue(user);
+                            Toast.makeText(HoSoNguoiDungActivity.this, "Cật nhật thành công!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        } else {
             mDatabaseRef.child(auth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                 @Override
                 public void onSuccess(DataSnapshot dataSnapshot) {
                     User us = dataSnapshot.getValue(User.class);
-                    User user = new User(auth.getCurrentUser().getUid(),us.getImagea(),txtHoTen.getText().toString(),email.getText().toString(),txtSDT.getText().toString(),
+                    User user = new User(auth.getCurrentUser().getUid(), us.getImagea(), txtHoTen.getText().toString(), email.getText().toString(), txtSDT.getText().toString(),
                             txtNgaySinh.getText().toString());
                     mDatabaseRef.child(auth.getCurrentUser().getUid()).setValue(user);
-                    Toast.makeText(HoSoNguoiDungActivity.this,"Cật nhật thành công!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HoSoNguoiDungActivity.this, "Cật nhật thành công!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
