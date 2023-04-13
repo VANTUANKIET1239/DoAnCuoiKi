@@ -56,7 +56,7 @@ public class HoaActivity extends AppCompatActivity {
 
     ImageView img_anh, img_user, minus, plus;
     TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong;
-    Button btn_addcomment;
+    Button btn_addcomment, btn_themgiohang;
     RecyclerView RVcomment;
     List<Commit> lscmt;
     CommentAdapter commentAdapter;
@@ -92,6 +92,7 @@ public class HoaActivity extends AppCompatActivity {
         minus = findViewById(R.id.minus);
         plus = findViewById(R.id.plus);
         txt_soluong = findViewById(R.id.txt_soluong);
+        btn_themgiohang = findViewById(R.id.btn_themgiohang);
 
         Intent intent = getIntent();
         String id_hoa =  intent.getStringExtra("id");
@@ -116,6 +117,12 @@ public class HoaActivity extends AppCompatActivity {
                 int sl = Integer.parseInt(i);
                 soluong = sl +1;
                 txt_soluong.setText(soluong.toString());
+            }
+        });
+        btn_themgiohang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
             }
         });
 
