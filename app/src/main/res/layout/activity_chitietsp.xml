@@ -36,10 +36,10 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
     <androidx.core.widget.NestedScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="45dp"
-        android:layout_marginTop="50dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="45dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +64,28 @@
                         android:textSize="25dp"
                         android:textColor="@color/black"
                         android:gravity="center"/>
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="10dp">
+                        <RatingBar
+                            android:id="@+id/ratting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:numStars="5"
+                            android:layout_gravity="center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"/>
+                        <TextView
+                            android:id="@+id/txt_tongratting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -126,32 +147,52 @@
                         android:layout_marginTop="8dp"
                         android:textSize="20dp"
                         android:layout_marginLeft="10dp"/>
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Bình luận - Nhận xét"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="10dp"/>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="Bình luận - Nhận xét"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="70dp">
+                            <RatingBar
+                                android:id="@+id/user_ratting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="10dp"
+                                android:numStars="5"
+                                android:layout_gravity="center"
+                                app:layout_constraintStart_toStartOf="parent"/>
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"/>
+                    </LinearLayout>
                     <!-- Comment-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="10dp">
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/img_anhdaidien"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_marginLeft="5dp"
-                            android:background="@drawable/oval"/>
+                            app:civ_border_color="@color/black"
+                            android:src="@drawable/oval"/>
 
                         <EditText
                             android:id="@id/edittext_comment"
@@ -160,16 +201,16 @@
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/elip"
                             android:ems="10"
-                            android:hint="Comment"
+                            android:hint="  Comment"
                             android:inputType="textPersonName" />
 
                         <Button
                             android:id="@+id/btn_add"
-                            android:background="@drawable/elip"
                             android:layout_width="match_parent"
+                            android:background = "@drawable/elip"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/pink_2"
                             android:layout_marginLeft="5dp"
+                           android:backgroundTint="@color/pink_2"
                             android:text="Đăng"/>
                     </LinearLayout>
                 </LinearLayout>
