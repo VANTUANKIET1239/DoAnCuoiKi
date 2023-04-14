@@ -22,7 +22,6 @@ import com.example.doanbanhoa.Adapter.CommentAdapter;
 import com.example.doanbanhoa.Models.Comment;
 import com.example.doanbanhoa.Models.Hoa;
 
-import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.Models.User;
 import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,13 +47,12 @@ public class HoaActivity extends AppCompatActivity {
 
     ImageView img_anh, img_user, minus, plus;
     TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong,txt_ratting;
-    Button btn_addcomment, btn_order;
+    Button btn_addcomment;
     BottomNavigationView themgiohang;
     RecyclerView RVcomment;
     RatingBar ratingBar_comment, user_rating;
     List<Comment> lscmt;
     List<Float> allrating = new ArrayList<Float>();
-    Hoa hoa;
     CommentAdapter commentAdapter;
     FirebaseDatabase firebaseDatabase;
     FirebaseFirestore firebaseFirestore;
@@ -77,19 +75,6 @@ public class HoaActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-
-        btn_order.findViewById(R.id.btn_order);
-        btn_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Item item = new Item(hoa, 1);
-                Intent in = new Intent(getBaseContext(), ThanhToanActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("item1", item);
-                in.putExtras(bundle);
-                startActivity(in);
-            }
-        });
 
         img_anh = findViewById(R.id.image_anh);
         txt_ten = findViewById(R.id.txt_tensanpham);
@@ -157,7 +142,7 @@ public class HoaActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        hoa = doc.toObject(Hoa.class);
+                        Hoa hoa = doc.toObject(Hoa.class);
                         txt_ten.setText(hoa.getTenHoa());
                         txt_mota.setText(hoa.getMoTa());
                         Integer gia = hoa.getGia();

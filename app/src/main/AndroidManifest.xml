@@ -47,6 +47,9 @@
             android:name=".Activity.DiaChiActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.CommentActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.HoSoNguoiDungActivity"
             android:exported="false" />
         <activity
