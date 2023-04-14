@@ -1,8 +1,10 @@
 package com.example.doanbanhoa.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static com.example.doanbanhoa.LayHinhAnh.loadImageFromUrl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doanbanhoa.Activity.HoaActivity;
 import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.R;
@@ -74,9 +77,16 @@ public class ItemListAdapter extends BaseAdapter {
         dataitem.price.setText(String.valueOf(mItemList.get(position).getTongGia()) + "Đ");
         dataitem.word.setText(h.getMoTa().substring(0, 25)+"...");
         dataitem.quantity.setText(h.getGia()+" x "+mItemList.get(position).getSoLuong());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, HoaActivity.class);//Chuyen toi trang binh luan
+                intent.putExtra("id", mItemList.get(position).getHoa().getId());
+                startActivity(context,intent,null);
+            }
+        });
         return convertView;
     }
-    public void
 
     private static class MyView{
         ImageView pic;

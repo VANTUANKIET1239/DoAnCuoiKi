@@ -1,8 +1,9 @@
 package com.example.doanbanhoa.Models;
 
-import java.util.List;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable{
 
         private Hoa hoa;
         private int soLuong;

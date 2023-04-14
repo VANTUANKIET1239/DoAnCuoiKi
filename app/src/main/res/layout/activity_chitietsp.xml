@@ -26,13 +26,20 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:textStyle="bold"/>
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btn_order"
+                android:text="Order Now"
+                android:textSize="12dp"/>
             <ImageButton
                 android:id="@+id/btn_giohang"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/baseline_shopping_cart_24"
                 android:layout_gravity="center"
-                android:layout_marginLeft="75dp"/>
+                android:layout_marginLeft="5dp"/>
+
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
     <androidx.core.widget.NestedScrollView
@@ -214,7 +221,9 @@
                             android:text="Đăng"/>
                     </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btn_themgiohang"

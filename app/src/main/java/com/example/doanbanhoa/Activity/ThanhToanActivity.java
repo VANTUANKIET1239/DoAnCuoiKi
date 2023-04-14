@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +41,7 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
     Button btnBack, btnYes;
     ImageButton btnDay, btnTime;
     Calendar now;
-    List<Item> items = new ArrayList<>();
+    List<Item> items;
     String day = "", time="", address ="222";
 
 
@@ -57,9 +58,17 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         btnDay.findViewById(R.id.btnDay);
         btnYes.findViewById(R.id.btnYes);
 
-        /*Lay intent list items
-        items.add(new Item("item1", 2, 10));
-        items.add(new Item("item2", 1, 20));*/
+        /*Lay intent list items*/
+        Intent intent = getIntent();
+        Bundle msg = intent.getExtras();
+        if (msg != null) {
+            byte i = 0;
+            while(msg.getSerializable("item")!=null)
+            {
+                Item item = (Item) msg.getSerializable("item"+i);
+                items.add(item);
+            }
+        }
 
         mAdapter = new ItemListAdapter(getApplicationContext(), items);
         gridItem.setAdapter(mAdapter);
@@ -102,22 +111,23 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
             day = txtDay.getText().toString();
             time = txtTime.getText().toString();
             address = txtAddress.getText().toString();
-            AlertDialog.Builder alConfirm = new AlertDialog.Builder(this);
-            alConfirm.setTitle("Xác nhận đặt hoa");
-            alConfirm.setMessage("Nhận hoa lúc "+time+", "+day+" tại "+address);
-            alConfirm.setIcon(R.drawable.hoamoi);
-            alConfirm.setNegativeButton("Hủy đặt", (dialogInterface, i) -> finish());
-            alConfirm.setPositiveButton("Xác nhận đặt hoa", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    saveBill();
-                }
-            });
+            if(day==null||time==null||address==null){
+                Toast.makeText(getBaseContext(), "Vui lòng nhập đầy đủ thông tin đặt hàng",Toast.LENGTH_SHORT).show();
+            }else{
+                AlertDialog.Builder alConfirm = new AlertDialog.Builder(this);
+                alConfirm.setTitle("Xác nhận đặt hoa");
+                alConfirm.setMessage("Nhận hoa lúc "+time+", "+day+" tại "+address);
+                alConfirm.setIcon(R.drawable.hoamoi);
+                alConfirm.setNeutralButton("Xem lại thông tin", (dialogInterface, i) -> dialogInterface.cancel());
+                alConfirm.setNegativeButton("Hủy đặt", (dialogInterface, i) -> finish());
+                alConfirm.setPositiveButton("Xác nhận đặt hoa", (dialogInterface, i) -> saveBill());
+            }
         }
+
     }
     private void saveBill(){
         database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("bills");
+        DatabaseReference myRef = database.getReference("Bills");
 
         String customerId = auth.getInstance().getCurrentUser().getUid();
         Bill bill = new Bill(customerId, day,time,address, items);
@@ -127,6 +137,11 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Bill b = snapshot.getValue(Bill.class);
                 updateCart(b.getCustomerId(), b.getItems());
+                Intent in = new Intent(getBaseContext(), DonHangActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bill", bill);
+                in.putExtras(bundle);
+                startActivity(in);
             }
 
             @Override
@@ -138,7 +153,7 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void updateCart(String uId, List<Item> items){
-        DatabaseReference gioRef = database.getReference("giohang").child("uId");
+        DatabaseReference gioRef = database.getReference("Giohang").child(uId);
         for(Item i : items){
             gioRef.child(i.getHoa().getId()).removeValue();//Check!!!!!!!!!!!!!!!!!
         }

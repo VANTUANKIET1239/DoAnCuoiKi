@@ -1,9 +1,10 @@
 package com.example.doanbanhoa.Models;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-public class Bill {
+
+public class Bill implements Serializable{
     private String customerId, day, time, Address;
     private List<Item> items;
     private int totalPrice =0;
