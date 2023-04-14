@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doanbanhoa.Adapter.CommentAdapter;
+import com.example.doanbanhoa.Adapter.HoaListAdapter;
 import com.example.doanbanhoa.Models.Comment;
 import com.example.doanbanhoa.Models.Hoa;
 
@@ -44,13 +46,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HoaActivity extends AppCompatActivity {
+    Context context;
 
     ImageView img_anh, img_user, minus, plus;
-    TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong,txt_ratting;
-    Button btn_addcomment;
+    TextView txt_ten, txt_gia, txt_mota, txt_soluong,txt_ratting;
+    ImageView btn_addcomment;
     BottomNavigationView themgiohang;
     RecyclerView RVcomment;
-    RatingBar ratingBar_comment, user_rating;
+    RatingBar ratingBar_comment;
     List<Comment> lscmt;
     List<Float> allrating = new ArrayList<Float>();
     CommentAdapter commentAdapter;
@@ -60,7 +63,8 @@ public class HoaActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     User users;
     Integer soluong;
-    Float rating_user; Float averageRating = 0f;
+    Float averageRating = 0f;
+    String url_hoa;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,17 +84,14 @@ public class HoaActivity extends AppCompatActivity {
         txt_ten = findViewById(R.id.txt_tensanpham);
         txt_gia = findViewById(R.id.txt_giá);
         txt_mota = findViewById(R.id.txt_motasp);
-        txt_comment = findViewById(R.id.edittext_comment);
-        btn_addcomment = findViewById(R.id.btn_add);
         RVcomment = findViewById(R.id.rv_comment);
-        img_user = findViewById(R.id.img_anhdaidien);
         minus = findViewById(R.id.minus);
         plus = findViewById(R.id.plus);
         txt_soluong = findViewById(R.id.txt_soluong);
         themgiohang = findViewById(R.id.btn_themgiohang);
         ratingBar_comment = findViewById(R.id.ratting);
         txt_ratting = findViewById(R.id.txt_tongratting);
-        user_rating = findViewById(R.id.user_ratting);
+        btn_addcomment =findViewById(R.id.btn_add_comment);
 
         Intent intent = getIntent();
         String id_hoa =  intent.getStringExtra("id");
@@ -124,18 +125,6 @@ public class HoaActivity extends AppCompatActivity {
 
             }
         });
-        user_rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean b) {
-                rating_user = rating;
-//                int count = allrating.size();
-//                float sum = averageRating * count;
-//                sum += rating;
-//                count++;
-//                averageRating = sum / count;
-            }
-        });
         firebaseFirestore.collection("Hoa").whereEqualTo("id",id_hoa)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -147,8 +136,8 @@ public class HoaActivity extends AppCompatActivity {
                         txt_mota.setText(hoa.getMoTa());
                         Integer gia = hoa.getGia();
                         txt_gia.setText(gia.toString() + "Đ");
-                        String url = hoa.getImage_Hoa();
-                        Picasso.get().load(url).into(img_anh);
+                        url_hoa = hoa.getImage_Hoa();
+                        Picasso.get().load(url_hoa).into(img_anh);
                     }
                 }
             }
@@ -156,29 +145,17 @@ public class HoaActivity extends AppCompatActivity {
         btn_addcomment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_addcomment.setVisibility(View.INVISIBLE);
-                DatabaseReference databaseReference = firebaseDatabase.getReference("Comment").child(id_hoa).push();
-                String comment = txt_comment.getText().toString();
-                String id = users.getId();
-                Comment cmt = new Comment(id, comment,rating_user);
-
-                databaseReference.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        ShowMessage("comment add");
-                        txt_comment.setText("");
-                        btn_addcomment.setVisibility(View.VISIBLE);
-                    }
-                });
+                Intent intent1 = new Intent(HoaActivity.this,CommentActivity.class);
+                intent1.putExtra("id_hoa", id_hoa);
+                intent1.putExtra("img_hoa",url_hoa );
+                intent1.putExtra("id_user", users.getId());
+                startActivity(intent1);
             }
         });
         doSubmit(id_hoa);
         ItemUser();
         iniRvcomment(id_hoa);
 
-    }
-    private  void ShowMessage(String mess){
-        Toast.makeText(this,mess, Toast.LENGTH_SHORT).show();
     }
     public class MyItemDecoration extends RecyclerView.ItemDecoration {
         private int spacing;
@@ -216,7 +193,6 @@ public class HoaActivity extends AppCompatActivity {
                 RVcomment.setAdapter(commentAdapter);
 
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -230,7 +206,6 @@ public class HoaActivity extends AppCompatActivity {
                 User tam = snapshot.getValue(User.class);
                 String ten = tam.getHoTen();
                 String urlimage = tam.getImagea();
-                Picasso.get().load(urlimage).into(img_user);
                 users = new User(user.getUid(),urlimage,ten);
             }
             @Override
@@ -259,7 +234,6 @@ public class HoaActivity extends AppCompatActivity {
                     ratingBar_comment.setRating(averageRating);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

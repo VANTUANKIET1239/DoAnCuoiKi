@@ -52,4 +52,5 @@ public class Comment {
     public void setRating(Float rating) {
         this.rating = rating;
     }
+
 }

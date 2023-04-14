@@ -76,7 +76,6 @@ public class ItemListAdapter extends BaseAdapter {
         dataitem.quantity.setText(h.getGia()+" x "+mItemList.get(position).getSoLuong());
         return convertView;
     }
-    public void
 
     private static class MyView{
         ImageView pic;
