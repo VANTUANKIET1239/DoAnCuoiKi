@@ -22,6 +22,7 @@ import com.example.doanbanhoa.Adapter.CommentAdapter;
 import com.example.doanbanhoa.Models.Comment;
 import com.example.doanbanhoa.Models.Hoa;
 
+import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.Models.User;
 import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,7 +48,7 @@ public class HoaActivity extends AppCompatActivity {
 
     ImageView img_anh, img_user, minus, plus;
     TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong,txt_ratting;
-    Button btn_addcomment;
+    Button btn_addcomment,btn_order;
     BottomNavigationView themgiohang;
     RecyclerView RVcomment;
     RatingBar ratingBar_comment, user_rating;
@@ -61,6 +62,7 @@ public class HoaActivity extends AppCompatActivity {
     User users;
     Integer soluong;
     Float rating_user; Float averageRating = 0f;
+    Hoa hoa;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +78,34 @@ public class HoaActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
+        btn_order.findViewById(R.id.btn_order);
+        btn_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(getBaseContext(), DonHangActivity.class);
+                Bundle bundle = new Bundle();
+                Item item = new Item(hoa, 1);
+                bundle.putSerializable("item1", item);
+                in.putExtras(bundle);
+                startActivity(in);
+            }
+        });
+
         img_anh = findViewById(R.id.image_anh);
         txt_ten = findViewById(R.id.txt_tensanpham);
         txt_gia = findViewById(R.id.txt_giá);
         txt_mota = findViewById(R.id.txt_motasp);
         txt_comment = findViewById(R.id.edittext_comment);
-        btn_addcomment = findViewById(R.id.btn_add);
+        //btn_addcomment = findViewById(R.id.btn_add);
         RVcomment = findViewById(R.id.rv_comment);
-        img_user = findViewById(R.id.img_anhdaidien);
+        //img_user = findViewById(R.id.img_anhdaidien);
         minus = findViewById(R.id.minus);
         plus = findViewById(R.id.plus);
         txt_soluong = findViewById(R.id.txt_soluong);
         themgiohang = findViewById(R.id.btn_themgiohang);
         ratingBar_comment = findViewById(R.id.ratting);
         txt_ratting = findViewById(R.id.txt_tongratting);
-        user_rating = findViewById(R.id.user_ratting);
+        //user_rating = findViewById(R.id.user_ratting);
 
         Intent intent = getIntent();
         String id_hoa =  intent.getStringExtra("id");
@@ -142,7 +157,7 @@ public class HoaActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        Hoa hoa = doc.toObject(Hoa.class);
+                        hoa = doc.toObject(Hoa.class);
                         txt_ten.setText(hoa.getTenHoa());
                         txt_mota.setText(hoa.getMoTa());
                         Integer gia = hoa.getGia();
