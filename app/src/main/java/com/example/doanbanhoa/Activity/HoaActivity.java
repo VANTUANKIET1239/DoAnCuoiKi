@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.doanbanhoa.Adapter.CommentAdapter;
 import com.example.doanbanhoa.Adapter.HoaListAdapter;
 import com.example.doanbanhoa.Adapter.ListDiaChiAdapter;
