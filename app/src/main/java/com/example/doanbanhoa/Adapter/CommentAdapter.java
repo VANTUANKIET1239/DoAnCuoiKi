@@ -1,6 +1,7 @@
 package com.example.doanbanhoa.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doanbanhoa.Activity.CommentActivity;
 import com.example.doanbanhoa.Models.Comment;
 import com.example.doanbanhoa.Models.User;
 import com.example.doanbanhoa.R;
@@ -49,6 +51,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         holder.tv_date.setText(timeStamp((Long) mdatacomment.get(position).getTime()));
         holder.rb_comment.setRating(mdatacomment.get(position).getRating());
         SetUser(mdatacomment.get(position).getId_user(), holder.tv_name, holder.img_user);
+
     }
 
     @Override

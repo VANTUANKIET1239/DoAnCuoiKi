@@ -16,8 +16,8 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:id="@+id/pic"
-                android:layout_margin="4dp">
-            </ImageView>
+                android:background="@drawable/imgcir"
+                android:layout_margin="4dp"/>
             <LinearLayout
                 android:layout_width="230dp"
                 android:layout_height="match_parent"

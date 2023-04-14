@@ -18,6 +18,9 @@
             android:name=".LichSuDonHangActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.DonHangActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.DoiMatKhauActivity"
             android:exported="false" />
         <activity
@@ -46,6 +49,9 @@
             android:exported="false" />
         <activity
             android:name=".Activity.DiaChiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.CommentActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.HoSoNguoiDungActivity"

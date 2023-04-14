@@ -22,8 +22,10 @@ import com.example.doanbanhoa.Adapter.CommentAdapter;
 import com.example.doanbanhoa.Models.Comment;
 import com.example.doanbanhoa.Models.Hoa;
 
+import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.Models.User;
 import com.example.doanbanhoa.R;
+import com.example.doanbanhoa.fragment.TrangChuFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -45,12 +47,12 @@ import java.util.List;
 
 public class HoaActivity extends AppCompatActivity {
 
-    ImageView img_anh, img_user, minus, plus;
+    ImageView img_anh, minus, plus, btn_trove, btn_addcomment;
     TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong,txt_ratting;
-    Button btn_addcomment;
+    Button btn_order;
     BottomNavigationView themgiohang;
     RecyclerView RVcomment;
-    RatingBar ratingBar_comment, user_rating;
+    RatingBar ratingBar_comment;
     List<Comment> lscmt;
     List<Float> allrating = new ArrayList<Float>();
     CommentAdapter commentAdapter;
@@ -60,7 +62,9 @@ public class HoaActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     User users;
     Integer soluong;
-    Float rating_user; Float averageRating = 0f;
+    String url_hoa;
+     Float averageRating = 0f;
+    Hoa hoa;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,25 +80,42 @@ public class HoaActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
+        btn_order=findViewById(R.id.btn_order);
+        btn_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(getBaseContext(), DonHangActivity.class);
+                Bundle bundle = new Bundle();
+                Item item = new Item(hoa, 1);
+                bundle.putSerializable("item1", item);
+                in.putExtras(bundle);
+                startActivity(in);
+            }
+        });
+        btn_trove = findViewById(R.id.btn_trove);
         img_anh = findViewById(R.id.image_anh);
         txt_ten = findViewById(R.id.txt_tensanpham);
         txt_gia = findViewById(R.id.txt_giá);
         txt_mota = findViewById(R.id.txt_motasp);
         txt_comment = findViewById(R.id.edittext_comment);
-        btn_addcomment = findViewById(R.id.btn_add);
         RVcomment = findViewById(R.id.rv_comment);
-        img_user = findViewById(R.id.img_anhdaidien);
         minus = findViewById(R.id.minus);
         plus = findViewById(R.id.plus);
         txt_soluong = findViewById(R.id.txt_soluong);
         themgiohang = findViewById(R.id.btn_themgiohang);
         ratingBar_comment = findViewById(R.id.ratting);
         txt_ratting = findViewById(R.id.txt_tongratting);
-        user_rating = findViewById(R.id.user_ratting);
+        btn_addcomment = findViewById(R.id.btn_add_comment);
 
         Intent intent = getIntent();
         String id_hoa =  intent.getStringExtra("id");
         RVcomment.addItemDecoration(new MyItemDecoration(10));
+        btn_trove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,31 +145,19 @@ public class HoaActivity extends AppCompatActivity {
 
             }
         });
-        user_rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean b) {
-                rating_user = rating;
-//                int count = allrating.size();
-//                float sum = averageRating * count;
-//                sum += rating;
-//                count++;
-//                averageRating = sum / count;
-            }
-        });
         firebaseFirestore.collection("Hoa").whereEqualTo("id",id_hoa)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        Hoa hoa = doc.toObject(Hoa.class);
+                        hoa = doc.toObject(Hoa.class);
                         txt_ten.setText(hoa.getTenHoa());
                         txt_mota.setText(hoa.getMoTa());
                         Integer gia = hoa.getGia();
                         txt_gia.setText(gia.toString() + "Đ");
-                        String url = hoa.getImage_Hoa();
-                        Picasso.get().load(url).into(img_anh);
+                        url_hoa = hoa.getImage_Hoa();
+                        Picasso.get().load(url_hoa).into(img_anh);
                     }
                 }
             }
@@ -156,29 +165,17 @@ public class HoaActivity extends AppCompatActivity {
         btn_addcomment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_addcomment.setVisibility(View.INVISIBLE);
-                DatabaseReference databaseReference = firebaseDatabase.getReference("Comment").child(id_hoa).push();
-                String comment = txt_comment.getText().toString();
-                String id = users.getId();
-                Comment cmt = new Comment(id, comment,rating_user);
-
-                databaseReference.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        ShowMessage("comment add");
-                        txt_comment.setText("");
-                        btn_addcomment.setVisibility(View.VISIBLE);
-                    }
-                });
+                Intent intent1 = new Intent(HoaActivity.this, CommentActivity.class);
+                intent1.putExtra("id_hoa", id_hoa);
+                intent1.putExtra("id_user", user.getUid());
+                intent1.putExtra("img_hoa",url_hoa);
+                startActivity(intent1);
             }
         });
         doSubmit(id_hoa);
         ItemUser();
         iniRvcomment(id_hoa);
 
-    }
-    private  void ShowMessage(String mess){
-        Toast.makeText(this,mess, Toast.LENGTH_SHORT).show();
     }
     public class MyItemDecoration extends RecyclerView.ItemDecoration {
         private int spacing;
@@ -230,7 +227,6 @@ public class HoaActivity extends AppCompatActivity {
                 User tam = snapshot.getValue(User.class);
                 String ten = tam.getHoTen();
                 String urlimage = tam.getImagea();
-                Picasso.get().load(urlimage).into(img_user);
                 users = new User(user.getUid(),urlimage,ten);
             }
             @Override
@@ -248,7 +244,8 @@ public class HoaActivity extends AppCompatActivity {
                 int count = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Comment cmt = snapshot.getValue(Comment.class);
-                    float rating = cmt.getRating();
+                    Float tam = new Float(cmt.getRating());
+                    float rating = tam.floatValue();
                     sum += rating;
                     count++;
                     allrating.add(rating);
