@@ -1,5 +1,8 @@
 package com.example.doanbanhoa.Models;
-public class Hoa {
+
+import java.io.Serializable;
+
+public class Hoa implements Serializable {
 
     private String Id;
     private String Image_Hoa;
