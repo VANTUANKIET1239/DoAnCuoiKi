@@ -79,7 +79,8 @@ public class ItemListAdapter extends BaseAdapter {
         dataitem.title.setText(h.getTenHoa());
         loadImageFromUrl(h.getImage_Hoa(),dataitem.pic);
         dataitem.price.setText(String.valueOf(mItemList.get(position).getTongGia()) + "Đ");
-        dataitem.word.setText(h.getMoTa().substring(0, 25)+"...");
+        if(h.getMoTa().length()<25) {dataitem.word.setText(h.getMoTa());}
+        else{   dataitem.word.setText(h.getMoTa().substring(0, 25)+"...");}
         dataitem.quantity.setText(h.getGia()+" x "+mItemList.get(position).getSoLuong());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
