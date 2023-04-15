@@ -38,6 +38,7 @@
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleitem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -71,8 +72,9 @@
 
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <Button
         android:id="@+id/giohang"
+        android:text="Thanh toán"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
