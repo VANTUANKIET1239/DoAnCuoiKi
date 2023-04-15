@@ -83,6 +83,7 @@ public class ItemListAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, HoaActivity.class);//Chuyen toi trang binh luan
                 intent.putExtra("id", mItemList.get(position).getHoa().getId());
                 startActivity(context,intent,null);
+
             }
         });
         return convertView;

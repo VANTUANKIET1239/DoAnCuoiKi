@@ -143,7 +143,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnYes"
+        android:id="@+id/btn_Yes"
         android:layout_width="101dp"
         android:layout_height="57dp"
         android:text="Đặt hàng" />

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.doanbanhoa.Adapter.ItemListAdapter;
 import com.example.doanbanhoa.Models.Bill;
+import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,10 +39,11 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
     GridView gridItem;
     ItemListAdapter mAdapter;
     TextView txtDay, txtAddress, txtTime;
-    Button btnBack, btnYes;
+    Button btnYes;
+    ImageButton btnBack;
     ImageButton btnDay, btnTime;
     Calendar now;
-    List<Item> items;
+    List<Item> items = new ArrayList<>();
     String day = "", time="", address ="222";
 
 
@@ -50,23 +52,28 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thanh_toan);
         gridItem = (GridView) findViewById(R.id.gridItem);
-        txtTime.findViewById(R.id.txtTime);
-        txtDay.findViewById(R.id.txtDay);
-        txtAddress.findViewById(R.id.txtAddress);
-        btnBack.findViewById(R.id.btnBack);
-        btnTime.findViewById(R.id.btnTime);
-        btnDay.findViewById(R.id.btnDay);
-        btnYes.findViewById(R.id.btnYes);
+        txtTime = findViewById(R.id.txtTime);
+        txtDay=findViewById(R.id.txtDay);
+        txtAddress=findViewById(R.id.txtAddress);
+        btnBack=findViewById(R.id.btnBack);
+        btnTime=findViewById(R.id.btnTime);
+        btnDay=findViewById(R.id.btnDay);
+        btnYes=(Button) findViewById(R.id.btn_Yes);
+
+        Item item = new Item(new Hoa(), 0);
 
         /*Lay intent list items*/
         Intent intent = getIntent();
         Bundle msg = intent.getExtras();
         if (msg != null) {
             byte i = 0;
-            while(msg.getSerializable("item")!=null)
+            String ite = "item1";
+            while(msg.getSerializable(ite)!=null)
             {
-                Item item = (Item) msg.getSerializable("item"+i);
+                item = (Item) msg.getSerializable(ite);
                 items.add(item);
+                i++;
+                ite = ite.concat(String.valueOf(i));
             }
         }
 
@@ -104,24 +111,34 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
                     -> txtTime.setText(h+" : "+m),10,10,true);
             time.show();
         }
-        if(view.getId() == R.id.btnBack){
+        /*if(view.getId() == R.id.btnBack){
 
-        }
-        if(view.getId() == R.id.btnYes){
+        }*/
+        if(view.getId() == R.id.btn_Yes){
+            txtAddress.setText("123123123");//Test
             day = txtDay.getText().toString();
             time = txtTime.getText().toString();
             address = txtAddress.getText().toString();
-            if(day==null||time==null||address==null){
+            /*if(day==null||time==null||address==null){
                 Toast.makeText(getBaseContext(), "Vui lòng nhập đầy đủ thông tin đặt hàng",Toast.LENGTH_SHORT).show();
-            }else{
+            }else{*/
                 AlertDialog.Builder alConfirm = new AlertDialog.Builder(this);
                 alConfirm.setTitle("Xác nhận đặt hoa");
                 alConfirm.setMessage("Nhận hoa lúc "+time+", "+day+" tại "+address);
                 alConfirm.setIcon(R.drawable.hoamoi);
-                alConfirm.setNeutralButton("Xem lại thông tin", (dialogInterface, i) -> dialogInterface.cancel());
-                alConfirm.setNegativeButton("Hủy đặt", (dialogInterface, i) -> finish());
-                alConfirm.setPositiveButton("Xác nhận đặt hoa", (dialogInterface, i) -> saveBill());
-            }
+                alConfirm.setCancelable(true);
+                //alConfirm.setNeutralButton("Xem lại thông tin", (dialogInterface, i) -> dialogInterface.cancel());
+                alConfirm.setPositiveButton("Huy dat", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                /*alConfirm.setNegativeButton("Hủy đặt", (dialogInterface, i) -> finish());
+                alConfirm.setPositiveButton("Xác nhận đặt hoa", (dialogInterface, i) -> saveBill());*/
+                AlertDialog alCo = alConfirm.create();
+                alConfirm.show();
+            //}
         }
 
     }

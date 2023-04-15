@@ -65,7 +65,6 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
                 Intent intent = new Intent(context, HoaActivity.class);
                 intent.putExtra("id", hoa.getId());
                 startActivity(context,intent,null);
-
             }
         });
     }

@@ -84,7 +84,7 @@ public class HoaActivity extends AppCompatActivity {
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(getBaseContext(), DonHangActivity.class);
+                Intent in = new Intent(getBaseContext(), ThanhToanActivity.class);
                 Bundle bundle = new Bundle();
                 Item item = new Item(hoa, 1);
                 bundle.putSerializable("item1", item);
