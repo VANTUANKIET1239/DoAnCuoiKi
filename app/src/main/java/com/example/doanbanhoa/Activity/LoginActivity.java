@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,18 @@ public class LoginActivity extends AppCompatActivity {
     private Button dangnhap;
     private FirebaseAuth auth;
 
+    CheckBox checknhomk;
+
+    public static final String SHARE_PRES = "com.example.doanbanhoa";
+    public static final String MK = "matkhau";
+
+    public static final String TK = "taikhoan";
+    public static final String check = "check";
+
+    private String MKsh;
+
+    private boolean checkbox;
+    private String TKsh;
     private FirebaseDatabase firebaseDatabase;
 
     private StorageReference firebaseStorage;
@@ -45,9 +59,25 @@ public class LoginActivity extends AppCompatActivity {
         matkhau = findViewById(R.id.matkhau_dn);
         dangnhap = findViewById(R.id.dangnhap);
         regis = findViewById(R.id.regis);
+        checknhomk = findViewById(R.id.checknho);
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
+
+        loadData();
+        setview();
+
+        checknhomk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checknhomk.isChecked()){
+                    SaveData();
+                }
+                else {
+                    deletedata();
+                }
+            }
+        });
         regis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,5 +106,35 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    public void SaveData(){
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARE_PRES,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putString(MK,matkhau.getText().toString());
+        editor.putString(TK,Email.getText().toString());
+        editor.putBoolean(check,true);
+        editor.apply();
+    }
+    public void deletedata(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARE_PRES,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putString(MK,"");
+        editor.putString(TK,"");
+        editor.putBoolean(check,false);
+        editor.apply();
+    }
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARE_PRES,MODE_PRIVATE);
+        MKsh = sharedPreferences.getString(MK,"");
+        TKsh = sharedPreferences.getString(TK,"");
+        checkbox = sharedPreferences.getBoolean(check,false);
+    }
+    public void setview(){
+        matkhau.setText(MKsh);
+        Email.setText(TKsh);
+        checknhomk.setChecked(checkbox);
     }
 }

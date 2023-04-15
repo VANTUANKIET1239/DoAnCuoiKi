@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ThanhToanActivity extends AppCompatActivity implements View.OnClickListener {
@@ -45,64 +46,85 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
     FirebaseDatabase database;
     GridView gridItem;
     ItemListAdapter mAdapter;
-
     AutoCompleteTextView autodiachi;
-
     ArrayAdapter<String> diachiadapter;
-
     String[] itemdiachi;
-
     TextView txtDay, txtAddress, txtTime;
     Button btnYes,themdiachi;
-
-
     ImageButton btnDay, btnTime, btnBack;
     Calendar now;
     List<Item> items;
-    String day = "", time="", address ="222";
+    String day = "", time="", address ="";
 
     public static final String SHARE_PRES = "com.example.doanbanhoa";
-     public static final String DiaChi = "diachi";
+     public static final String Address = "diachi";
 
-    public static final String Ngay = "ngay";
+    public static final String Day = "ngay";
 
-    public static final String Gio = "gio";
-
-
-     private String getdiachi;
-    private String getNgay;
-    private String getGio;
-
+    public static final String Time = "gio";
 
      @Override
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_thanh_toan);
-         gridItem = (GridView) findViewById(R.id.gridItem);
+         gridItem = findViewById(R.id.gridItem);
          txtTime = findViewById(R.id.txtTime);
          txtDay = findViewById(R.id.txtDay);
-        // txtAddress = findViewById(R.id.txtAddress);
          btnBack = findViewById(R.id.btnBack);
          btnTime = findViewById(R.id.btnTime);
          btnDay = findViewById(R.id.btnDay);
          btnYes = findViewById(R.id.btnYes);
-         auth = FirebaseAuth.getInstance();
          autodiachi = findViewById(R.id.listdiachi);
          themdiachi = findViewById(R.id.themdiachi);
+         auth = FirebaseAuth.getInstance();
+
+         database = FirebaseDatabase.getInstance();
+
          /*Lay intent list items*/
-        Intent intent = getIntent();
-        Bundle msg = intent.getExtras();
+         Intent intent = getIntent();
+         Bundle msg = intent.getExtras();
+         if (msg != null) {
+             byte i = 0;
+             String ite = "item";
+             while(msg.getSerializable(ite.concat(String.valueOf(i)))!=null)
+             {
+                 Item item = (Item) msg.getSerializable(ite);
+                 items.add(item);
+                 i++;
+             }
+             if(msg.getSerializable("item1") != null){
+                 Item item = (Item) msg.getSerializable("item1");
+                 items = new ArrayList<>();
+                 items.add(item);
+                 mAdapter = new ItemListAdapter(getBaseContext(), items, true);
+                 gridItem.setAdapter(mAdapter);
+             }
+         }
+         else {
+             database.getReference("GioHang").child(auth.getCurrentUser().getUid().trim()).addValueEventListener(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                     items = new ArrayList<>();
+                     for(DataSnapshot dt : snapshot.getChildren()){
+                         Item item = dt.getValue(Item.class);
+                         items.add(item);
+                     }
+                     mAdapter = new ItemListAdapter(getBaseContext(), items, true);
+                     gridItem.setAdapter(mAdapter);
+                 }
 
-        database = FirebaseDatabase.getInstance();
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError error) {
 
-        themdiachi.setOnClickListener(new View.OnClickListener() {
+                 }
+             });
+         }
+         /*themdiachi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),ThemDiaChiActivity.class));
             }
-        });
-        loadData();
-        setview();
+        });*/
         autodiachi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -121,7 +143,6 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
                 diachiadapter = new ArrayAdapter<>(getApplicationContext(),R.layout.listitem_thutugia,itemdiachi);
                 autodiachi.setAdapter(diachiadapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -129,39 +150,17 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         });
 
 
-//        if (msg != null) {
-//            byte i = 0;
-//            if(msg.getSerializable("item1")!=null)
-//            {
-//                Item item = (Item) msg.getSerializable("item"+i);
-//                items.add(item);
-//            }
-//        }
-
-        if(msg.getSerializable("item1") != null){
-            Item item = (Item) msg.getSerializable("item1");
-            items = new ArrayList<>();
-            items.add(item);
-            mAdapter = new ItemListAdapter(getApplicationContext(), items);
-            gridItem.setAdapter(mAdapter);
-        }
 
 
         //gridItem.setLayoutManager(new LinearLayoutManager(this));
 
-        /*Intent in = getIntent();
-        if(in.getStringExtra("day")!=null)
-            {day = in.getStringExtra("day");}
-        if(in.getStringExtra("address")!=null)
-            {address = in.getStringExtra("address");}*/
-
         btnBack.setOnClickListener(this);
         btnTime.setOnClickListener(this);
         btnDay.setOnClickListener(this);
-
-//        txtAddress.setText(address);
-        txtDay.setText(day);
-
+        btnYes.setOnClickListener(this);
+        themdiachi.setOnClickListener(this);
+         loadData();
+         setview();
     }
 
     @Override
@@ -169,7 +168,7 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         if(view.getId() == R.id.btnDay){
             now = Calendar.getInstance();//co can +7 hay ko?
             DatePickerDialog day = new DatePickerDialog(this, (datePicker, y, m, d)
-                    -> txtDay.setText("Ngày "+d+" tháng "+m+" năm "+y),
+                    -> txtDay.setText("Ngày "+d+" tháng "+(m+1)+" năm "+y),
                     now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
             day.show();
         }
@@ -184,8 +183,8 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         if(view.getId() == R.id.btnYes){
             day = txtDay.getText().toString();
             time = txtTime.getText().toString();
-            address = txtAddress.getText().toString();
-            if(day==null||time==null||address==null){
+            address = autodiachi.getText().toString();
+            if(day.equals("")||time.equals("")||address.equals("")){
                 Toast.makeText(getBaseContext(), "Vui lòng nhập đầy đủ thông tin đặt hàng",Toast.LENGTH_SHORT).show();
             }else{
                 AlertDialog.Builder alConfirm = new AlertDialog.Builder(this);
@@ -195,62 +194,65 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
                 alConfirm.setNeutralButton("Xem lại thông tin", (dialogInterface, i) -> dialogInterface.cancel());
                 alConfirm.setNegativeButton("Hủy đặt", (dialogInterface, i) -> finish());
                 alConfirm.setPositiveButton("Xác nhận đặt hoa", (dialogInterface, i) -> saveBill());
+                alConfirm.show();
             }
+        }
+        if(view.getId() == R.id.themdiachi){
+            startActivity(new Intent(getApplicationContext(),ThemDiaChiActivity.class));
         }
 
     }
     private void saveBill(){
         database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Bills");
-
         String customerId = auth.getInstance().getCurrentUser().getUid();
-        Bill bill = new Bill(customerId, day,time,address, items);
-        myRef.push().setValue(bill);
-        myRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference myRef = database.getReference("Bill").child(customerId.trim()).push();
+        String key = myRef.getKey();
+        String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());
+        auth = FirebaseAuth.getInstance();
+        Bill bill = new Bill(key,timestamp, day,time,address, items);
+        myRef.setValue(bill);
+
+        DatabaseReference db = database.getReference("Bill").child(customerId.trim());
+        db.child(key.trim()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Bill b = snapshot.getValue(Bill.class);
-                updateCart(b.getCustomerId(), b.getItems());
+                updateCart(auth.getCurrentUser().getUid().trim());
                 Intent in = new Intent(getBaseContext(), DonHangActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bill", bill);
                 in.putExtras(bundle);
                 startActivity(in);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getBaseContext(), "Rất tiếc, đặt hoa thất bại!",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
-    private void updateCart(String uId, List<Item> items){
-        DatabaseReference gioRef = database.getReference("Giohang").child(uId);
-        for(Item i : items){
-            gioRef.child(i.getHoa().getId()).removeValue();//Check!!!!!!!!!!!!!!!!!
-        }
+    private void updateCart(String uId){
+        DatabaseReference gioRef = database.getReference("GioHang").child(uId);
+       gioRef.removeValue();
 
     }
 
     public void SaveData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARE_PRES,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(DiaChi,autodiachi.getText().toString());
-        editor.putString(Ngay,txtDay.getText().toString());
-        editor.putString(Gio,txtTime.getText().toString());
+        editor.putString(Address,autodiachi.getText().toString());
+        editor.putString(Day,txtDay.getText().toString());
+        editor.putString(Time,txtTime.getText().toString());
         editor.apply();
     }
     public void loadData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARE_PRES,MODE_PRIVATE);
-        getdiachi = sharedPreferences.getString(DiaChi,"Trống");
-        getGio = sharedPreferences.getString(Gio,"Trống");
-        getNgay = sharedPreferences.getString(Ngay,"Trống");
+        address = sharedPreferences.getString(Address,"");
+        time = sharedPreferences.getString(Time,"");
+        day = sharedPreferences.getString(Day,"");
     }
     public void setview(){
-        autodiachi.setText(getdiachi);
-        txtDay.setText(getNgay);
-        txtTime.setText(getGio);
+        autodiachi.setText(address);
+        txtDay.setText(day);
+        txtTime.setText(time);
     }
 }

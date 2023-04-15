@@ -121,7 +121,6 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                         lshoa.add(hoa);
                     }
                     HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
- //                   listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
                     listhoadanhmuc.setAdapter(adapter);
                 }
             }
@@ -130,29 +129,23 @@ public class DanhMucHoaActivity extends AppCompatActivity {
         btntimkiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String tensp = timkiemdanhmuc.getText().toString();
                 if(tensp.length() != 0){
-
-                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                          firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
                                 List<Hoa> lshoa = new ArrayList<>();
-
                                 for(QueryDocumentSnapshot doc : task.getResult()){
                                     Hoa hoa = doc.toObject(Hoa.class);
                                     if (hoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
                                         lshoa.add(hoa);
-
                                     }
                                 }
                                 HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
- //                               listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                                 listhoadanhmuc.setAdapter(adapter);
                             }
                         }
-
                     });
                 }
                 else {
@@ -182,16 +175,16 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                 String queryloaihoa = autocompleloaihoa.getText().toString();
                 String querythutugia = autocomplethutugia.getText().toString();
 
-                if (querythutugia.equals("") || querythutugia.equals("Thứ Tự Giá") || queryloaihoa.equals("") || queryloaihoa.equals("Loại Hoa")) {
+                if (querythutugia.equals("") || querythutugia.equals("Thứ Tự Giá") || queryloaihoa.equals("") || queryloaihoa.equals("Điều Kiện")) {
                     Toast.makeText(getBaseContext(), "Chưa chọn hoặc để trống điều kiện lọc", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (querythutugia == "Giá Từ Cao Đến Thấp") {
+                    if (querythutugia.trim().equals("Giá Từ Cao Đến Thấp")) {
 
                       thutu = Query.Direction.DESCENDING;
-                        xapxep(thutu,queryloaihoa);
+                        locdulieu(thutu,queryloaihoa,iddm);
                     } else {
                         thutu = Query.Direction.ASCENDING;
-                        xapxep(thutu,queryloaihoa);
+                        locdulieu(thutu,queryloaihoa,iddm);
                     }
 
                 }
@@ -200,15 +193,19 @@ public class DanhMucHoaActivity extends AppCompatActivity {
 
 
         }
-        private void xapxep(Query.Direction k,String queryloaihoa){
-            firebaseFirestore.collection("Hoa").orderBy("gia", k).whereEqualTo("loaiHoa", queryloaihoa).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        private void locdulieu(Query.Direction k,String queryloaihoa,String iddm){
+
+            firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).orderBy("gia", k).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         List<Hoa> lshoa = new ArrayList<>();
                         for (QueryDocumentSnapshot doc : task.getResult()) {
+
                             Hoa hoa = doc.toObject(Hoa.class);
-                            lshoa.add(hoa);
+                            if(hoa.getLoaiHoa().toLowerCase().equals(queryloaihoa.trim().toLowerCase())){
+                                lshoa.add(hoa);
+                            }
                         }
                         HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
                         listhoadanhmuc.setAdapter(adapter);

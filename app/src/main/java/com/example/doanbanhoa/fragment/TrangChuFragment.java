@@ -188,7 +188,6 @@ public class TrangChuFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Query.Direction direction;
-                // từ cao đến thấp
                 if(position == 0){
                     direction = Query.Direction.DESCENDING;
                 }
@@ -205,12 +204,9 @@ public class TrangChuFragment extends Fragment {
                                 if (newhoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
                                     listHoaa.add(newhoa);
                                 }
-
                             }
                             HoaListAdapter adapter = new HoaListAdapter(context,listHoaa);
-//                                recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
                             recyclerView.setAdapter(adapter);
-
                         }
                     }
                 });

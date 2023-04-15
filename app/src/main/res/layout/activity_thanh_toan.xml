@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -65,7 +65,7 @@
             <Button
                 android:id="@+id/themdiachi"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:text="Thêm Địa Chỉ Mới" />
 
             <TextView
@@ -76,47 +76,7 @@
                 android:textStyle="bold"/>
         </LinearLayout>
         <!--Gio-->
-        <!--<TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp">
-            <TableRow>
-                <Button
-                    android:id="@+id/khunggio1"
-                    android:text="7h-9h"
-                    android:backgroundTint="@color/gray_2"
-                    android:textColor="@color/black"/>
-                <Button
-                    android:id="@+id/khungio2"
-                    android:text="9h-11h"
-                    android:layout_marginLeft="25dp"
-                    android:backgroundTint="@color/gray_2"
-                    android:textColor="@color/black"/>
-                <Button
-                    android:id="@+id/khunggio3"
-                    android:text="11h-13h"
-                    android:layout_marginLeft="25dp"
-                    android:backgroundTint="@color/gray_2"
-                    android:textColor="@color/black"/>
 
-            </TableRow>
-            <TableRow>
-                <Button
-                    android:id="@+id/khunggio4"
-                    android:text="13h-15h"
-
-                    android:backgroundTint="@color/gray_2"
-                    android:textColor="@color/black"/>
-                <Button
-                    android:id="@+id/khunggio5"
-                    android:text="15h-17h"
-                    android:layout_marginLeft="25dp"
-                    android:backgroundTint="@color/gray_2"
-                    android:textColor="@color/black"/>
-            </TableRow>
-        </TableLayout>-->
-        <!--  Lịch-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -168,13 +128,13 @@
         <GridView
             android:id="@+id/gridItem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp" />
 
         <Button
             android:id="@+id/btnYes"
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="wrap_content"
             android:text="Đặt hàng" />
     </LinearLayout>
 
@@ -187,4 +147,4 @@
         android:background="#EAAFAF"
         app:itemTextColor="@color/white"
         app:itemTextAppearanceActive="@style/navTextInactive"/>-->
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

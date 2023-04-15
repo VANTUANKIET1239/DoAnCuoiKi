@@ -102,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
                             firebaseDatabase.getReference("Users").child(auth.getCurrentUser().getUid()).setValue(newus);
                             Toast.makeText(RegisterActivity.this, "đăng ký thành công", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getBaseContext(), LoginActivity.class));
-                            // finish();
                         }
                     });
 
