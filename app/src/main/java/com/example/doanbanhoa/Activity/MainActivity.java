@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.doanbanhoa.Adapter.ViewPagerAdapter;
 import com.example.doanbanhoa.R;
 import com.example.doanbanhoa.databinding.ActivityMainBinding;
 import com.example.doanbanhoa.fragment.DanhMucFragment;
