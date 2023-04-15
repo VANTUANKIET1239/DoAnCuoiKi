@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class DanhMucHoaActivity extends AppCompatActivity {
     AutoCompleteTextView autocompleloaihoa;
     AutoCompleteTextView autocomplethutugia;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     TextView tendanhmuc;
 
     Query.Direction thutu;
@@ -54,6 +57,23 @@ public class DanhMucHoaActivity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
 
 
+    private void refreshdata(String iddanhmuc){
+        firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddanhmuc).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    List<Hoa> lshoa = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : task.getResult()){
+                        Hoa hoa = doc.toObject(Hoa.class);
+                        lshoa.add(hoa);
+                    }
+                    HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
+                    //                   listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+                    listhoadanhmuc.setAdapter(adapter);
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +88,8 @@ public class DanhMucHoaActivity extends AppCompatActivity {
         loc = findViewById(R.id.loc);
         btntimkiem = findViewById(R.id.btntimkiem);
         timkiemdanhmuc = findViewById(R.id.timkiemhoadanhmuc);
+        swipeRefreshLayout = findViewById(R.id.refreshdata);
+
 
 
         itemthutugiaAD = new ArrayAdapter<>(getBaseContext(),R.layout.listitem_thutugia,itemthutugia);
@@ -80,6 +102,13 @@ public class DanhMucHoaActivity extends AppCompatActivity {
         String iddm =  intent.getStringExtra("iddanhmuc");
         String tendm = intent.getStringExtra("tendanhmuc");
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshdata(iddm);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         tendanhmuc.setText(tendm);
         firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -102,48 +131,48 @@ public class DanhMucHoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                String tensp = timkiemdanhmuc.getText().toString();
-//                if(tensp.length() != 0){
-//
-//                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if(task.isSuccessful()){
-//                                List<Hoa> lshoa = new ArrayList<>();
-//
-//                                for(QueryDocumentSnapshot doc : task.getResult()){
-//                                    Hoa hoa = doc.toObject(Hoa.class);
-//                                    if (hoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
-//                                        lshoa.add(hoa);
-//
-//                                    }
-//                                }
-//                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
-// //                               listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-//                                listhoadanhmuc.setAdapter(adapter);
-//                            }
-//                        }
-//
-//                    });
-//                }
-//                else {
-//                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if (task.isSuccessful()){
-//                                List<Hoa> lshoa = new ArrayList<>();
-//                                for (QueryDocumentSnapshot doc : task.getResult()){
-//                                    Hoa hoa = doc.toObject(Hoa.class);
-//                                    lshoa.add(hoa);
-//                                }
-//                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
-//                                listhoadanhmuc.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                   Toast.makeText(getBaseContext(),"Không tìm thấy sản phẩm",Toast.LENGTH_SHORT).show();
-//
-//                }
+                String tensp = timkiemdanhmuc.getText().toString();
+                if(tensp.length() != 0){
+
+                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                List<Hoa> lshoa = new ArrayList<>();
+
+                                for(QueryDocumentSnapshot doc : task.getResult()){
+                                    Hoa hoa = doc.toObject(Hoa.class);
+                                    if (hoa.getTenHoa().toLowerCase().contains(tensp.toLowerCase())){
+                                        lshoa.add(hoa);
+
+                                    }
+                                }
+                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
+ //                               listhoadanhmuc.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                                listhoadanhmuc.setAdapter(adapter);
+                            }
+                        }
+
+                    });
+                }
+                else {
+                    firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()){
+                                List<Hoa> lshoa = new ArrayList<>();
+                                for (QueryDocumentSnapshot doc : task.getResult()){
+                                    Hoa hoa = doc.toObject(Hoa.class);
+                                    lshoa.add(hoa);
+                                }
+                                HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(),lshoa);
+                                listhoadanhmuc.setAdapter(adapter);
+                            }
+                        }
+                    });
+                   Toast.makeText(getBaseContext(),"Không tìm thấy sản phẩm",Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });

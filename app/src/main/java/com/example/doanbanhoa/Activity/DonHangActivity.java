@@ -26,7 +26,7 @@ public class DonHangActivity extends AppCompatActivity {
         Bundle msg = intent.getExtras();
         Bill b;
         if (msg != null) {
-            b = (Bill) msg.getSerializable("bill");
+            b = (Bill) intent.getSerializableExtra("bill");
             listItem = b.getItems();
         }
 

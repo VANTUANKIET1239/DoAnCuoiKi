@@ -26,6 +26,7 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
     private final LayoutInflater mInflater;
     private Context context;
 
+
     private List<Hoa> mHoaList = new ArrayList<>();
 
     public List<Hoa> getmWordList() {
@@ -58,6 +59,8 @@ public class HoaListAdapter extends RecyclerView.Adapter<HoaViewHolder> {
         loadImageFromUrl(mHoaList.get(position).getImage_Hoa(), holder.iv_photo);
         holder.tv_giahoa.setText(convertpricetostring(mHoaList.get(position).getGia()) + "Đ");
         Hoa hoa = mHoaList.get(position);
+        holder.soluongdanhgiavahang.setText((new DecimalFormat("0.0").format(mHoaList.get(position).getHangDanhGia())) + "(" + mHoaList.get(position).getSoLuongDanhGia() + ")");
+        holder.hangdanhgiasao.setRating(mHoaList.get(position).getHangDanhGia());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

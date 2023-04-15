@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.doanbanhoa.Activity.DiaChiActivity;
 import com.example.doanbanhoa.Activity.DoiMatKhauActivity;
 import com.example.doanbanhoa.Activity.HoSoNguoiDungActivity;
+import com.example.doanbanhoa.Activity.LichSuDonHangActivity;
 import com.example.doanbanhoa.Activity.LoginActivity;
 import com.example.doanbanhoa.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,11 +35,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaiKhoanFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TaiKhoanFragment extends Fragment {
 
 
@@ -46,7 +43,6 @@ public class TaiKhoanFragment extends Fragment {
     ImageView anhcanhan;
 
     Button btnTKhoan;
-    private StorageReference mSttorageRef;
 
     private FirebaseAuth auth;
 
@@ -57,22 +53,7 @@ public class TaiKhoanFragment extends Fragment {
         // Required empty public constructor
         this.context = context;
     }
-//    private void refreshdata(){
-//        mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Picasso.get().load(uri).resize(150,150).into(anhcanhan);
-//
-//            }
-//        });
-//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
-//        mDatabaseRef.child(auth.getCurrentUser().getUid()).child("hoTen").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-//            @Override
-//            public void onSuccess(DataSnapshot dataSnapshot) {
-//                username.setText(dataSnapshot.getValue().toString());
-//            }
-//        });
-//    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -83,7 +64,6 @@ public class TaiKhoanFragment extends Fragment {
         String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Lịch Sử Mua Hàng","Đổi Mật Khẩu","Đăng Xuất"};
 
         auth = FirebaseAuth.getInstance();
-        mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
         ArrayAdapter<String> op = new ArrayAdapter<>(getContext(),R.layout.layout_listview_itemtaikhoan,options);
         lstoptaikhoan.setAdapter(op);
 
@@ -97,8 +77,9 @@ public class TaiKhoanFragment extends Fragment {
 
 
                         switch (position){
-                            case 0: startActivity(new Intent(getContext(), DiaChiActivity.class));break;
-                            case 1: startActivity(new Intent(getContext(), HoSoNguoiDungActivity.class));break;
+                            case 0: startActivity(new Intent(context, DiaChiActivity.class));break;
+                            case 1: startActivity(new Intent(context, HoSoNguoiDungActivity.class));break;
+                            case 2: startActivity(new Intent(context, LichSuDonHangActivity.class)); break;
                             case 3:
                                 Intent intent = new Intent(context, DoiMatKhauActivity.class);
                                 startActivity(intent);
