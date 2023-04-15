@@ -181,8 +181,9 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <Button
         android:id="@+id/btn_themgiohang"
+        android:text="Thêm Vào giỏ Hàng"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"

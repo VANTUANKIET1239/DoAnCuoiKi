@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText Email;
     private EditText matkhau;
     private Button register;
-    private  EditText xacnhanmatkhau;
+    private EditText xacnhanmatkhau;
 
     private FirebaseAuth auth;
 

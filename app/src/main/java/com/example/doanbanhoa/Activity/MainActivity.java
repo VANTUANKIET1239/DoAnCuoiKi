@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.trangchu: replace(new TrangChuFragment(MainActivity.this)); break;
                     case R.id.taikhoan:replace(new TaiKhoanFragment(MainActivity.this));break;
-                    case R.id.giohang:replace(new GioHangFragment()); break;
+                    case R.id.giohang:replace(new GioHangFragment(MainActivity.this)); break;
                     case R.id.danhmuc:replace(new DanhMucFragment(MainActivity.this)); break;
                 }
                 return true;
