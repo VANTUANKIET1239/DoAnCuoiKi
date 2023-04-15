@@ -44,10 +44,10 @@ public class CommentActivity extends AppCompatActivity {
         firebaseDatabase =FirebaseDatabase.getInstance();
         firebaseAuth =FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+        String id_user = user.getUid();//hay getProvidedId??????????????
 
         Intent intent = getIntent();
         String id_hoa = intent.getStringExtra("id_hoa");
-        String id_user = intent.getStringExtra("id_user");
         String url_hoa = intent.getStringExtra("img_hoa");
         Picasso.get().load(url_hoa).into(img_hoa);
 

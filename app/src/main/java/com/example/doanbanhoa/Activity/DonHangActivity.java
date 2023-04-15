@@ -11,12 +11,13 @@ import com.example.doanbanhoa.Models.Bill;
 import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DonHangActivity extends AppCompatActivity {
     GridView gridItem;
     ItemListAdapter mAdapter;
-    List<Item> listItem;
+    List<Item> listItem = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class DonHangActivity extends AppCompatActivity {
         }
 
         gridItem = (GridView) findViewById(R.id.gridItem);
-        mAdapter = new ItemListAdapter(getApplicationContext(), listItem);
+        mAdapter = new ItemListAdapter(getBaseContext(), listItem, false);
         gridItem.setAdapter(mAdapter);
     }
 }

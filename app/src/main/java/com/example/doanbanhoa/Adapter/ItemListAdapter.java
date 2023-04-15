@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doanbanhoa.Activity.CommentActivity;
 import com.example.doanbanhoa.Activity.HoaActivity;
 import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.Models.Item;
@@ -26,10 +27,13 @@ import java.util.List;
 public class ItemListAdapter extends BaseAdapter {
     private Context context;
     private List<Item> mItemList ;
+    private boolean whichPage; //HoaActivity true, CommentActivity false;
 
-    public ItemListAdapter(Context context, List<Item> itemList) {
+
+    public ItemListAdapter(Context context, List<Item> itemList, boolean whichPage) {
         this.mItemList = itemList;
         this.context = context;
+        this.whichPage = whichPage;
     }
 
     @Override
@@ -75,14 +79,26 @@ public class ItemListAdapter extends BaseAdapter {
         dataitem.title.setText(h.getTenHoa());
         loadImageFromUrl(h.getImage_Hoa(),dataitem.pic);
         dataitem.price.setText(String.valueOf(mItemList.get(position).getTongGia()) + "Đ");
-        dataitem.word.setText(h.getMoTa().substring(0, 25)+"...");
+        if(h.getMoTa().length()<25) {dataitem.word.setText(h.getMoTa());}
+        else{   dataitem.word.setText(h.getMoTa().substring(0, 25)+"...");}
         dataitem.quantity.setText(h.getGia()+" x "+mItemList.get(position).getSoLuong());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, HoaActivity.class);//Chuyen toi trang binh luan
-                intent.putExtra("id", mItemList.get(position).getHoa().getId());
-                startActivity(context,intent,null);
+                if(whichPage){
+                    Intent intent = new Intent(context, HoaActivity.class);//Chuyen toi trang chitietsp
+                    intent.putExtra("id", h.getId());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(context,intent,null);
+                }
+                else{
+                    Intent intent = new Intent(context, CommentActivity.class);//Chuyen toi trang binh luan
+                    intent.putExtra("id_hoa", h.getId());
+                    intent.putExtra("img_hoa", h.getImage_Hoa());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(context,intent,null);
+                }
+
             }
         });
         return convertView;
