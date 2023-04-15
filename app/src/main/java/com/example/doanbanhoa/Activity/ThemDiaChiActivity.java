@@ -42,17 +42,22 @@ public class ThemDiaChiActivity extends AppCompatActivity {
         btnthemdichi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = firebaseDatabase.getReference("DiaChi").child(currentuser.getUid()).push();
-                DiaChi newdiachi = new DiaChi(databaseReference.getKey(),txthoten.getText().toString(),txtsdt.getText().toString(),txtdiachi.getText().toString());
+              if(txthoten.getText().toString().length() != 0 || txtsdt.getText().toString().length() != 0 || txtdiachi.getText().toString().length() != 0){
+                  DatabaseReference databaseReference = firebaseDatabase.getReference("DiaChi").child(currentuser.getUid()).push();
+                  DiaChi newdiachi = new DiaChi(databaseReference.getKey(),txthoten.getText().toString(),txtsdt.getText().toString(),txtdiachi.getText().toString());
 
-               databaseReference.setValue(newdiachi).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(getBaseContext(), "Thêm Địa Chỉ Thành Công",Toast.LENGTH_SHORT).show();
-                       // startActivity(new Intent(getBaseContext(),DiaChiActivity.class));
-                        finish();
-                    }
-                });
+                  databaseReference.setValue(newdiachi).addOnSuccessListener(new OnSuccessListener<Void>() {
+                      @Override
+                      public void onSuccess(Void unused) {
+                          Toast.makeText(getBaseContext(), "Thêm Địa Chỉ Thành Công",Toast.LENGTH_SHORT).show();
+                          // startActivity(new Intent(getBaseContext(),DiaChiActivity.class));
+                          finish();
+                      }
+                  });
+              }
+              else {
+                  Toast.makeText(getApplicationContext(),"Thông tin không được để trống!",Toast.LENGTH_SHORT);
+              }
             }
         });
 

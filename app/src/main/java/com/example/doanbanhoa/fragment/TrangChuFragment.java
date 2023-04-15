@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,8 @@ public class TrangChuFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView recyclerViewngang;
     ImageSlider imgslider;
+
+    SwipeRefreshLayout swipeRefreshLayout;
     private ArrayAdapter<String> itemthutugia;
 
     EditText timkiemtrangchu;
@@ -67,7 +70,26 @@ public class TrangChuFragment extends Fragment {
         this.context = context;
 
     }
+    private void refreshdata(){
+        firebaseFirestore.collection("Hoa").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<Hoa> listHoaa = new ArrayList<>();
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        Hoa newhoa = doc.toObject(Hoa.class);
+                        listHoaa.add(newhoa);
+                    }
 
+                    HoaListAdapter adapterngang = new HoaListAdapter(context,listHoaa);
+                    recyclerViewngang.setAdapter(adapterngang);
+
+                    HoaListAdapter adapter = new HoaListAdapter(context,listHoaa);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,6 +103,15 @@ public class TrangChuFragment extends Fragment {
         recyclerViewngang.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.HORIZONTAL,false));
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getBaseContext(),2));
         btnreset = view.findViewById(R.id.btnreset);
+        swipeRefreshLayout = view.findViewById(R.id.pullToRefresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshdata();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         btnreset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

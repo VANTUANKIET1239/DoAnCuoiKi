@@ -15,7 +15,7 @@
         android:theme="@style/Theme.DoAnBanHoa"
         tools:targetApi="31" >
         <activity
-            android:name=".LichSuDonHangActivity"
+            android:name=".Activity.LichSuDonHangActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.DonHangActivity"

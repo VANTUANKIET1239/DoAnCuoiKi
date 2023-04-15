@@ -7,14 +7,11 @@ public class Hoa {
     private String LoaiHoa;
     private int Gia;
     private String MoTa;
-
-
-    private int HangDanhGia;
+    private Float HangDanhGia;
     private int SoLuongDanhGia;
-    //private  boolean IsDelete;
     private String ID_DanhMuc;
 
-    public Hoa(String ID_Hoa, String Image_Hoa, String TenHoa, String LoaiHoa, int Gia, String MoTa, int HangDanhGia, int SoLuongDanhGia, String ID_DanhMuc) {
+    public Hoa(String ID_Hoa, String Image_Hoa, String TenHoa, String LoaiHoa, int Gia, String MoTa, Float HangDanhGia, int SoLuongDanhGia, String ID_DanhMuc) {
         this.Id = ID_Hoa;
         this.Image_Hoa = Image_Hoa;
         this.TenHoa = TenHoa;
@@ -23,7 +20,6 @@ public class Hoa {
         this.MoTa = MoTa;
         this.HangDanhGia = HangDanhGia;
         this.SoLuongDanhGia = SoLuongDanhGia;
-     //   IsDelete = isDelete;
         this.ID_DanhMuc = ID_DanhMuc;
     }
     public Hoa(Hoa k) {
@@ -34,12 +30,11 @@ public class Hoa {
         MoTa = k.getMoTa();
         HangDanhGia = k.getHangDanhGia();
         SoLuongDanhGia = k.getSoLuongDanhGia();
-      //  IsDelete = k.isDelete();
         this.ID_DanhMuc = k.getID_DanhMuc();
     }
 
     public void LayHoa(Hoa k) {
-        //this.ID_Hoa = k.ID_Hoa;
+        this.Id = k.Id;
         this.Image_Hoa = k.getImage_Hoa();
         this.TenHoa = k.getTenHoa();
         this.LoaiHoa = k.getLoaiHoa();
@@ -47,19 +42,17 @@ public class Hoa {
         this. MoTa = k.getMoTa();
         this.HangDanhGia = k.getHangDanhGia();
         this.SoLuongDanhGia = k.getSoLuongDanhGia();
-     //   this.IsDelete = k.isDelete();
         this.ID_DanhMuc = k.getID_DanhMuc();
     }
     public Hoa() {
-       // this.ID_Hoa = 0;
+        this.Id = "";
         Image_Hoa = "";
         TenHoa = "";
         LoaiHoa = "";
         Gia = 0;
         MoTa = "";
-        HangDanhGia = 0;
+        HangDanhGia = 0f;
         SoLuongDanhGia = 0;
-     //   IsDelete = true;
         this.ID_DanhMuc = "";
     }
 
@@ -121,11 +114,11 @@ public class Hoa {
         MoTa = moTa;
     }
 
-    public int getHangDanhGia() {
+    public Float getHangDanhGia() {
         return HangDanhGia;
     }
 
-    public void setHangDanhGia(int hangDanhGia) {
+    public void setHangDanhGia(Float hangDanhGia) {
         HangDanhGia = hangDanhGia;
     }
 

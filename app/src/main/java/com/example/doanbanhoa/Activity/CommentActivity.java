@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.remote.EspressoRemoteMessage;
 
 import com.example.doanbanhoa.Models.Comment;
 import com.example.doanbanhoa.R;
@@ -60,22 +61,28 @@ public class CommentActivity extends AppCompatActivity {
         btn_danhgia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_danhgia.setVisibility(View.INVISIBLE);
-                DatabaseReference databaseReference = firebaseDatabase.getReference("Comment").child(id_hoa).push();
-                String comment = user_comment.getText().toString();
-                String id = id_user;
-                Comment cmt = new Comment(id, comment,ratting_bar);
+                if(user_comment.length() != 0 || ratting_bar != 0){
+                    btn_danhgia.setVisibility(View.INVISIBLE);
+                    DatabaseReference databaseReference = firebaseDatabase.getReference("Comment").child(id_hoa).push();
+                    String comment = user_comment.getText().toString();
+                    String id = id_user;
+                    Comment cmt = new Comment(id, comment,ratting_bar);
 
-                databaseReference.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        ShowMessage("Đánh giá thành công");
-                        user_comment.setText("");
-                        btn_danhgia.setVisibility(View.VISIBLE);
-                    }
-                });
-                ratting_user_comment.setRating(0);
-                user_comment.setText("");
+                    databaseReference.setValue(cmt).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            ShowMessage("Đánh giá thành công");
+                            user_comment.setText("");
+                            btn_danhgia.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    ratting_user_comment.setRating(0);
+                    user_comment.setText("");
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Bạn chưa đánh giá",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -35,11 +35,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaiKhoanFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TaiKhoanFragment extends Fragment {
 
 
@@ -47,7 +43,6 @@ public class TaiKhoanFragment extends Fragment {
     ImageView anhcanhan;
 
     Button btnTKhoan;
-    private StorageReference mSttorageRef;
 
     private FirebaseAuth auth;
 
@@ -69,7 +64,6 @@ public class TaiKhoanFragment extends Fragment {
         String[] options = {"Địa Chỉ", "Hồ Sơ Người Dùng","Lịch Sử Mua Hàng","Đổi Mật Khẩu","Đăng Xuất"};
 
         auth = FirebaseAuth.getInstance();
-        mSttorageRef = FirebaseStorage.getInstance().getReference("uploadsCaNhan");
         ArrayAdapter<String> op = new ArrayAdapter<>(getContext(),R.layout.layout_listview_itemtaikhoan,options);
         lstoptaikhoan.setAdapter(op);
 

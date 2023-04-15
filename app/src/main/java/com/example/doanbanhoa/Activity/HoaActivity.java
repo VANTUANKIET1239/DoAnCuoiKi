@@ -42,8 +42,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HoaActivity extends AppCompatActivity {
 
@@ -249,11 +252,17 @@ public class HoaActivity extends AppCompatActivity {
                     sum += rating;
                     count++;
                     allrating.add(rating);
+
                 }
                 if (count > 0) {
+                    firebaseFirestore.collection("Hoa").document(id_hoa.trim()).update("soLuongDanhGia",count);
                     averageRating = sum / count;
-                    txt_ratting.setText(String.valueOf(averageRating));
+                    txt_ratting.setText(String.valueOf(new DecimalFormat("0.0").format(averageRating)));
                     ratingBar_comment.setRating(averageRating);
+                    Map<String,Object> hoadg = new HashMap<>();
+                    hoadg.put("hangDanhGia",averageRating);
+                    firebaseFirestore.collection("Hoa").document(id_hoa.trim()).update("hangDanhGia",averageRating);
+
                 }
             }
 
