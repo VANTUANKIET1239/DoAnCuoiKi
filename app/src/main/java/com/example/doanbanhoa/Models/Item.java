@@ -8,7 +8,7 @@ public class Item implements Serializable{
         private Hoa hoa;
         private int soLuong;
         private int tongGia;
-
+        public Item() {}
         public Hoa getHoa() {
             return hoa;
         }

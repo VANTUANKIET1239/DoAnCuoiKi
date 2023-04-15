@@ -25,6 +25,7 @@ import com.example.doanbanhoa.Models.Hoa;
 import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.Models.User;
 import com.example.doanbanhoa.R;
+import com.example.doanbanhoa.fragment.GioHangFragment;
 import com.example.doanbanhoa.fragment.TrangChuFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,7 +54,7 @@ public class HoaActivity extends AppCompatActivity {
     ImageView img_anh, minus, plus, btn_trove, btn_addcomment;
     TextView txt_ten, txt_gia, txt_mota, txt_comment, txt_soluong,txt_ratting;
     Button btn_order;
-    BottomNavigationView themgiohang;
+    Button themgiohang;
     RecyclerView RVcomment;
     RatingBar ratingBar_comment;
     List<Comment> lscmt;
@@ -66,7 +67,7 @@ public class HoaActivity extends AppCompatActivity {
     User users;
     Integer soluong;
     String url_hoa;
-     Float averageRating = 0f;
+    Float averageRating = 0f;
     Hoa hoa;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -125,7 +126,7 @@ public class HoaActivity extends AppCompatActivity {
                 String i = txt_soluong.getText().toString();
                 int sl = Integer.parseInt(i);
                 if(sl >0){
-                    soluong = sl -1;
+                    soluong = sl - 1;
                     txt_soluong.setText(soluong.toString());
                 }else {
                     Toast.makeText(HoaActivity.this, "Không thể thêm sản phẩm", Toast.LENGTH_SHORT).show();
@@ -138,14 +139,18 @@ public class HoaActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String i = txt_soluong.getText().toString();
                 int sl = Integer.parseInt(i);
-                soluong = sl +1;
+                soluong = sl + 1;
                 txt_soluong.setText(soluong.toString());
             }
         });
         themgiohang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String customerId = firebaseAuth.getInstance().getCurrentUser().getUid();
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = firebaseDatabase.getReference("GioHang").child(customerId).push();
+                Item item = new Item(hoa, Integer.valueOf(txt_soluong.getText().toString()));
+                myRef.setValue(item);
             }
         });
         firebaseFirestore.collection("Hoa").whereEqualTo("id",id_hoa)
