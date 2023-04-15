@@ -71,8 +71,6 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
                 txtHoTen.setText(user.getHoTen());
                 txtSDT.setText(user.getSDT());
                 txtNgaySinh.setText(user.getNgaySinh());
-
-
             }
         });
 
@@ -117,22 +115,16 @@ public class HoSoNguoiDungActivity extends AppCompatActivity {
 
     private void uploadthongtin() {
         FirebaseUser currentuser = auth.getCurrentUser();
-
-
         if (Image != null) {
-
             StorageReference fileRef = mSttorageRef.child(currentuser.getUid() + "." +
                     getFileEx(Image));
-
             fileRef.putFile(Image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mSttorageRef.child(auth.getCurrentUser().getUid() + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            User user = new User(auth.getCurrentUser().getUid(), uri.toString(), txtHoTen.getText().toString(), email.getText().toString(), txtSDT.getText().toString(),
-
-                                    txtNgaySinh.getText().toString());
+                            User user = new User(auth.getCurrentUser().getUid(), uri.toString(), txtHoTen.getText().toString(), email.getText().toString(), txtSDT.getText().toString(),txtNgaySinh.getText().toString());
                             mDatabaseRef.child(auth.getCurrentUser().getUid()).setValue(user);
                             Toast.makeText(HoSoNguoiDungActivity.this, "Cật nhật thành công!", Toast.LENGTH_SHORT).show();
                         }

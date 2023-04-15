@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_margin="5dp"
-            android:hint="Loại Hoa"
+            android:hint="Điều Kiện"
             android:textColorHint="@color/black">
 
             <AutoCompleteTextView
