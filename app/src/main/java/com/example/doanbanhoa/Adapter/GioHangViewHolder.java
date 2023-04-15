@@ -24,7 +24,7 @@ public class GioHangViewHolder extends RecyclerView.ViewHolder {
         title = itemView.findViewById(R.id.title);
         soLuong = itemView.findViewById(R.id.soluong);
         tonggia= itemView.findViewById(R.id.totalprice);
-    }
+}
 
 }
 

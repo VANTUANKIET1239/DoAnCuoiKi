@@ -53,7 +53,7 @@ public class DanhMucHoaActivity extends AppCompatActivity {
 
     String[] itemthutugia = {"Giá Từ Cao Đến Thấp","Giá Từ Thấp Đến Cao"};
 
-    String[] itemloaihoa = {"Cơ Bản","Nâng Cao", "Bán Chạy"};
+    String[] itemloaihoa = {"Cơ Bản","Nâng Cao"};
     FirebaseFirestore firebaseFirestore;
 
 
@@ -178,13 +178,13 @@ public class DanhMucHoaActivity extends AppCompatActivity {
                 if (querythutugia.equals("") || querythutugia.equals("Thứ Tự Giá") || queryloaihoa.equals("") || queryloaihoa.equals("Điều Kiện")) {
                     Toast.makeText(getBaseContext(), "Chưa chọn hoặc để trống điều kiện lọc", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (querythutugia == "Giá Từ Cao Đến Thấp") {
+                    if (querythutugia.trim().equals("Giá Từ Cao Đến Thấp")) {
 
                       thutu = Query.Direction.DESCENDING;
-                        locdulieu(thutu,queryloaihoa);
+                        locdulieu(thutu,queryloaihoa,iddm);
                     } else {
                         thutu = Query.Direction.ASCENDING;
-                        locdulieu(thutu,queryloaihoa);
+                        locdulieu(thutu,queryloaihoa,iddm);
                     }
 
                 }
@@ -193,15 +193,19 @@ public class DanhMucHoaActivity extends AppCompatActivity {
 
 
         }
-        private void locdulieu(Query.Direction k,String queryloaihoa){
-            firebaseFirestore.collection("Hoa").orderBy("gia", k).whereGreaterThanOrEqualTo("soLuongDanhGia", queryloaihoa).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        private void locdulieu(Query.Direction k,String queryloaihoa,String iddm){
+
+            firebaseFirestore.collection("Hoa").whereEqualTo("id_DanhMuc",iddm).orderBy("gia", k).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         List<Hoa> lshoa = new ArrayList<>();
                         for (QueryDocumentSnapshot doc : task.getResult()) {
+
                             Hoa hoa = doc.toObject(Hoa.class);
-                            lshoa.add(hoa);
+                            if(hoa.getLoaiHoa().toLowerCase().equals(queryloaihoa.trim().toLowerCase())){
+                                lshoa.add(hoa);
+                            }
                         }
                         HoaListAdapter adapter = new HoaListAdapter(getApplicationContext(), lshoa);
                         listhoadanhmuc.setAdapter(adapter);

@@ -1,6 +1,7 @@
 package com.example.doanbanhoa.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.doanbanhoa.Activity.ThanhToanActivity;
 import com.example.doanbanhoa.Adapter.GioHangAdapter;
 import com.example.doanbanhoa.Models.Item;
 import com.example.doanbanhoa.Models.User;
@@ -72,17 +74,26 @@ public class GioHangFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycleitem);
         itemArrayList = new ArrayList<>();
         gioHangAdapter = new GioHangAdapter(this.context, itemArrayList);
-        createItemList();
         recyclerView.setAdapter(gioHangAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.context));
         editText = view.findViewById(R.id.soluong);
         tvTotalPrice = view.findViewById(R.id.id_giatamtinh);
         Thanhtoan = view.findViewById(R.id.giohang);
+        createItemList();
+
     }
     private void createItemList() {
         String customerId = firebaseAuth.getInstance().getCurrentUser().getUid();
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("GioHang").child(customerId);
+
+        Thanhtoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getBaseContext(),ThanhToanActivity.class);
+                startActivity(intent);
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

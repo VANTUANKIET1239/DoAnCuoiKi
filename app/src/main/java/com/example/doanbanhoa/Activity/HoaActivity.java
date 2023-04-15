@@ -151,6 +151,7 @@ public class HoaActivity extends AppCompatActivity {
                 DatabaseReference myRef = firebaseDatabase.getReference("GioHang").child(customerId).push();
                 Item item = new Item(hoa, Integer.valueOf(txt_soluong.getText().toString()));
                 myRef.setValue(item);
+                Toast.makeText(getApplicationContext(),"Thêm Thành Công!",Toast.LENGTH_SHORT);
             }
         });
         firebaseFirestore.collection("Hoa").whereEqualTo("id",id_hoa)

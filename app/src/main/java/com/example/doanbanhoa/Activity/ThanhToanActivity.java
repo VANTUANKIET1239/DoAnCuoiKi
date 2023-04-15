@@ -92,6 +92,32 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
                  items.add(item);
                  i++;
              }
+             if(msg.getSerializable("item1") != null){
+                 Item item = (Item) msg.getSerializable("item1");
+                 items = new ArrayList<>();
+                 items.add(item);
+                 mAdapter = new ItemListAdapter(getBaseContext(), items, true);
+                 gridItem.setAdapter(mAdapter);
+             }
+         }
+         else {
+             database.getReference("GioHang").child(auth.getCurrentUser().getUid().trim()).addValueEventListener(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                     items = new ArrayList<>();
+                     for(DataSnapshot dt : snapshot.getChildren()){
+                         Item item = dt.getValue(Item.class);
+                         items.add(item);
+                     }
+                     mAdapter = new ItemListAdapter(getBaseContext(), items, true);
+                     gridItem.setAdapter(mAdapter);
+                 }
+
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError error) {
+
+                 }
+             });
          }
          /*themdiachi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,13 +150,8 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         });
 
 
-        if(msg.getSerializable("item1") != null){
-            Item item = (Item) msg.getSerializable("item1");
-            items = new ArrayList<>();
-            items.add(item);
-            mAdapter = new ItemListAdapter(getBaseContext(), items, true);
-            gridItem.setAdapter(mAdapter);
-        }
+
+
         //gridItem.setLayoutManager(new LinearLayoutManager(this));
 
         btnBack.setOnClickListener(this);
@@ -183,16 +204,20 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
     }
     private void saveBill(){
         database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Bill");
-        String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());
         String customerId = auth.getInstance().getCurrentUser().getUid();
-        Bill bill = new Bill(customerId,timestamp, day,time,address, items);
-        myRef.push().setValue(bill);
-        myRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference myRef = database.getReference("Bill").child(customerId.trim()).push();
+        String key = myRef.getKey();
+        String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());
+        auth = FirebaseAuth.getInstance();
+        Bill bill = new Bill(key,timestamp, day,time,address, items);
+        myRef.setValue(bill);
+
+        DatabaseReference db = database.getReference("Bill").child(customerId.trim());
+        db.child(key.trim()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Bill b = snapshot.getValue(Bill.class);
-                updateCart(b.getCustomerId(), b.getItems());
+                updateCart(auth.getCurrentUser().getUid().trim());
                 Intent in = new Intent(getBaseContext(), DonHangActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bill", bill);
@@ -205,11 +230,9 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
             }
         });
     }
-    private void updateCart(String uId, List<Item> items){
+    private void updateCart(String uId){
         DatabaseReference gioRef = database.getReference("GioHang").child(uId);
-        for(Item i : items){
-            gioRef.child(i.getHoa().getId()).removeValue();
-        }
+       gioRef.removeValue();
 
     }
 

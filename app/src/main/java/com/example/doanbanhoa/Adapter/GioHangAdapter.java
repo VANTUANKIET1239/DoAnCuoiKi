@@ -70,16 +70,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangViewHolder> {
         }
         holder.soLuong.setText(Integer.toString(mItemList.get(position).getSoLuong()));
         holder.tonggia.setText(convertpricetostring(mItemList.get(position).getHoa().getGia()*mItemList.get(position).getSoLuong()) + "Đ");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an intent to move to the other activity and pass the item information
-                Intent intent = new Intent(context, GioHangAdapter.class);
-                intent.putExtra("id", item.getHoa().getId());
-                startActivity(context,intent,null);
 
-            }
-        });
     }
     public int getSelectedPosition() {
         return selectedPosition;

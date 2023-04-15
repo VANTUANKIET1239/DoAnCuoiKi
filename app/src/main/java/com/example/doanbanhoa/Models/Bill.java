@@ -5,19 +5,19 @@ import java.util.List;
 
 
 public class Bill implements Serializable{
-    private String customerId, timestamp, day, time, Address;
+    private String Billid, timestamp, day, time, Address;
     private List<Item> items;
     private int totalPrice =0;
 
     public Bill() {
-        this.customerId = "";
+        this.Billid = "";
         this.day = "";
         this.time = "";
         Address = "223";
     }
 
     public Bill(String customerId, String timestamp, String day, String time, String address, List<Item> items) {
-        this.customerId = customerId;
+        this.Billid = customerId;
         this.timestamp = timestamp;
         this.day = day;
         this.time = time;
@@ -40,15 +40,15 @@ public class Bill implements Serializable{
     }
 
     public void setTimestamp(String timestamp) {
-        this.customerId = timestamp;
+        this.Billid = timestamp;
     }
 
     public String getCustomerId() {
-        return customerId;
+        return Billid;
     }
 
     public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+        this.Billid = customerId;
     }
 
     public String getDay() {

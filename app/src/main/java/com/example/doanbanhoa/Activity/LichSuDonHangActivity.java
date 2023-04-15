@@ -2,6 +2,7 @@ package com.example.doanbanhoa.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -31,12 +32,16 @@ public class LichSuDonHangActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lich_su_don_hang);
+        database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+        reBill = findViewById(R.id.reBill);
+        reBill.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         database.getReference("Bill").child(auth.getCurrentUser().getUid().trim()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Bill> b = new ArrayList<>();
                 for(DataSnapshot doc : snapshot.getChildren()){
-                    Bill bill = doc.getValue(Bill.class);
+                      Bill bill = doc.getValue(Bill.class);
                     b.add(bill);
                 }
                 mBillList = new BillListAdapter(getApplicationContext(),b);
