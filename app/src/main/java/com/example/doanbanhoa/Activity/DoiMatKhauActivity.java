@@ -2,6 +2,8 @@ package com.example.doanbanhoa.Activity;
 
 import static android.content.ContentValues.TAG;
 
+
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,38 +49,61 @@ public class DoiMatKhauActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (txtxnmkm.getText().toString().equals(txtmkmoi.getText().toString())) {
-                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (   txtxnmkm.getText().toString().length() == 0
+                        || txtmkcu.getText().toString().length() == 0
+                        || txtmkmoi.getText().toString().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Không Được Để Trống", Toast.LENGTH_SHORT).show();
 
 
+
+
+                }
+                else if(txtmkmoi.getText().toString().length() < 6){
+                    Toast.makeText(getApplicationContext(), "Mật Khẩu Phải Dài Hơn hoặc bằng 6 kí tự", Toast.LENGTH_SHORT).show();
+                }
+                else if(txtmkmoi.getText().toString().equals(txtmkcu.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Mật Khẩu mới không được trùng với cũ", Toast.LENGTH_SHORT).show();
+                }
+                else if(txtxnmkm.getText().toString().equals(txtmkmoi.getText().toString()))
+                {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     AuthCredential credential = EmailAuthProvider
                             .getCredential(user.getEmail(), txtmkcu.getText().toString().trim());
                     user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                user.updatePassword(txtmkmoi.getText().toString())
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(getApplicationContext(), "Đổi Mật Khẩu Thành Công", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                                    auth.signOut();
-                                                    finish();
-                                                    MainActivity.main.finish();
-                                                } else {
-                                                    Toast.makeText(getApplicationContext(), "Đổi Mật Khẩu Thất Bại", Toast.LENGTH_SHORT).show();
+                                FirebaseUser us = auth.getCurrentUser();
+                                try {
+                                    us.updatePassword(txtmkmoi.getText().toString())
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(getApplicationContext(), "Đổi Mật Khẩu Thành Công", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                                        auth.signOut();
+                                                        finish();
+                                                        MainActivity.main.finish();
+                                                    } else {
+                                                        Toast.makeText(getApplicationContext(), "Đổi Mật Khẩu Thất Bại", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 }
-                                            }
 
-                                        });
+                                            });
+                                }
+                                catch (Exception e){
+                                    System.out.print(e.getMessage());
+                                }
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(),"Mật Khẩu Cũ Không Đúng",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
 
-
-                } else {
+                }
+                else {
                     Toast.makeText(getApplicationContext(), "Mật khẩu mới xác nhận không khớp", Toast.LENGTH_SHORT).show();
                 }
 
