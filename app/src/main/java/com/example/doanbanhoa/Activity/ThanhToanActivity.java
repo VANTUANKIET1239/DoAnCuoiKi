@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ThanhToanActivity extends AppCompatActivity implements View.OnClickListener {
@@ -132,12 +133,6 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         }
         //gridItem.setLayoutManager(new LinearLayoutManager(this));
 
-        /*Intent in = getIntent();
-        if(in.getStringExtra("day")!=null)
-            {day = in.getStringExtra("day");}
-        if(in.getStringExtra("address")!=null)
-            {address = in.getStringExtra("address");}*/
-
         btnBack.setOnClickListener(this);
         btnTime.setOnClickListener(this);
         btnDay.setOnClickListener(this);
@@ -152,7 +147,7 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
         if(view.getId() == R.id.btnDay){
             now = Calendar.getInstance();//co can +7 hay ko?
             DatePickerDialog day = new DatePickerDialog(this, (datePicker, y, m, d)
-                    -> txtDay.setText("Ngày "+d+" tháng "+m+" năm "+y),
+                    -> txtDay.setText("Ngày "+d+" tháng "+(m+1)+" năm "+y),
                     now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
             day.show();
         }
@@ -189,34 +184,31 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
     private void saveBill(){
         database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Bill");
-
+        String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis());
         String customerId = auth.getInstance().getCurrentUser().getUid();
-        Bill bill = new Bill(customerId, day,time,address, items);
+        Bill bill = new Bill(customerId,timestamp, day,time,address, items);
         myRef.push().setValue(bill);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Bill b = snapshot.getValue(Bill.class);
-                //updateCart(b.getCustomerId(), b.getItems());
+                updateCart(b.getCustomerId(), b.getItems());
                 Intent in = new Intent(getBaseContext(), DonHangActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bill", bill);
                 in.putExtras(bundle);
                 startActivity(in);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getBaseContext(), "Rất tiếc, đặt hoa thất bại!",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
     private void updateCart(String uId, List<Item> items){
-        DatabaseReference gioRef = database.getReference("Giohang").child(uId);
+        DatabaseReference gioRef = database.getReference("GioHang").child(uId);
         for(Item i : items){
-            gioRef.child(i.getHoa().getId()).removeValue();//Check!!!!!!!!!!!!!!!!!
+            gioRef.child(i.getHoa().getId()).removeValue();
         }
 
     }
